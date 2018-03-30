@@ -10,8 +10,9 @@ PHP folder contains all the PHP files needed for the server.
   3. index.php simply returns the contents of the table.
   
 Currently there are two records in the table. Below are the property names and the records:
+
 id | userName | name | created | comments
------------------------------------------
+
 1 | JohnDoe | John Doe | ... | Hello World!
--------------------------------------------
+
 2 | JaneDoe | Jane Doe | ... | Goodbye!
