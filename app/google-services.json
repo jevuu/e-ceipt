@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "138048874746",
+    "firebase_url": "https://e-ceipt.firebaseio.com",
+    "project_id": "e-ceipt",
+    "storage_bucket": "e-ceipt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138048874746:android:676f3949d4dbff0a",
+        "android_client_info": {
+          "package_name": "com.example.d8.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "138048874746-dqc655qsmp2tu0jnqjcsmj51cnl22s2o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.d8.myapplication",
+            "certificate_hash": "de52fe7973b7b64805ec5f21df4275bf2fd143b7"
+          }
+        },
+        {
+          "client_id": "138048874746-v4ud75v5ioltfgl9fai1s7dl2ris3i03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyrWk1LEf-hpBBVxbOqISSO0Mwgn9sC_I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "138048874746-v4ud75v5ioltfgl9fai1s7dl2ris3i03.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
