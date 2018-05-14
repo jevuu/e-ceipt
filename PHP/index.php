@@ -17,3 +17,9 @@ if(mysqli_num_rows($result) > 0){
 }
 
 ?>
+<!--
+<form action="login.php" method="post">
+<input type="text" name="userName">
+<input type="submit">
+</form>
+--!>
