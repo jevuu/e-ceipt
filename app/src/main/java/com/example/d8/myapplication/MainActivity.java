@@ -1,5 +1,6 @@
 package com.example.d8.myapplication;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
         passET = (EditText)findViewById(R.id.main_pwd);
     }
 
+    public void onRegister(View view){
+
+    Intent goToReg = new Intent(this, RegisterActivity.class);
+    startActivity(goToReg);
+
+
+    }
     public void onLogin(View view) {
         String userString = userET.getText().toString();
         String passString = ""; //passET.getText().toString();

@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#ff4081</color>
     <color name="colorEceiptBlue">#266fd6</color>
-    <color name="colorEceiptLightBlue">#00d4ff</color>
+    <color name="colorEceiptLightBlue">#00f7ff</color>
     <color name="colorEceiptWhite">#ffffff</color>
 </resources>
