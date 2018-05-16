@@ -26,3 +26,4 @@ public class MainActivity extends AppCompatActivity {
         bgWorker.execute(type, userString, passString);
     }
 }
+John

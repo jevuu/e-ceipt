@@ -45,13 +45,13 @@
             android:textSize="24sp" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/main_btn_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
             android:background="@drawable/btn_roundcorner"
             android:padding="2dp"
-
+            android:onClick="onLogin"
             android:text="@string/main_login"
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
