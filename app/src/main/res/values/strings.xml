@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string-array name="home_spinner_days_select">
+        <item>1 day</item>
+        <item>7 days</item>
+        <item>15 days</item>
+        <item>30 days</item>
+        <item>60 days</item>
+        <item>90 days</item>
+        <item>180 days</item>
+        <item>360 days</item>
+    </string-array>
+    <string-array name="home_spinner_category">
+        <item>Food service</item>
+        <item>Retail</item>
+    </string-array>
 </resources>
