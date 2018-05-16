@@ -50,11 +50,29 @@
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
             android:background="@drawable/btn_roundcorner"
-            android:padding="2dp"
             android:onClick="onLogin"
+            android:padding="2dp"
+            android:paddingBottom="12dp"
             android:text="@string/main_login"
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" />
+
+        </LinearLayout>
+
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

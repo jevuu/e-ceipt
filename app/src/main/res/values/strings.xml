@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="main_GAccountLogin">Sign In with Google</string>
     <string name="main_login">Sign In</string>
     <string name="main_hint_uid">Email</string>
     <string name="main_hint_pwd">Password</string>
