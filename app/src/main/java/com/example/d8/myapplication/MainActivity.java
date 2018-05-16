@@ -12,8 +12,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        userET = (EditText)findViewById(R.id.userName);
-        passET = (EditText)findViewById(R.id.password);
+        userET = (EditText)findViewById(R.id.main_uid);
+        passET = (EditText)findViewById(R.id.main_pwd);
     }
 
     public void onLogin(View view) {
