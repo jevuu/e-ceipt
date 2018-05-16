@@ -5,17 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_splash"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="64dp"
         android:orientation="vertical"
         android:paddingBottom="32dp"
         android:paddingTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.781"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,9 @@
             android:ems="10"
             android:hint="@string/main_hint_uid"
             android:inputType="textPersonName"
-            android:singleLine="false"
+            android:singleLine="true"
+            android:textColor="@color/colorEceiptWhite"
+            android:textColorHint="@color/colorEceiptWhite"
             android:textSize="24sp" />
 
         <EditText
@@ -42,7 +45,20 @@
             android:ems="10"
             android:hint="@string/main_hint_pwd"
             android:inputType="textPassword"
+            android:textColor="@color/colorEceiptWhite"
+            android:textColorHint="@color/colorEceiptWhite"
             android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/main_fgtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/main_fgtPass"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/colorEceiptWhite"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/main_btn_login"
@@ -50,12 +66,13 @@
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
             android:background="@drawable/btn_roundcorner"
+            android:drawableStart="@drawable/ic_main_logo"
             android:onClick="onLogin"
             android:padding="2dp"
             android:paddingBottom="12dp"
             android:text="@string/main_login"
             android:textColor="@android:color/background_light"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
 
