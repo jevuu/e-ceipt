@@ -136,7 +136,7 @@ public class HomeActivity extends AppCompatActivity {
 
         public View getView(int i, View view, ViewGroup viewgroup) {
             TextView txt = new TextView(HomeActivity.this);
-            txt.setGravity(Gravity.LEFT);
+            txt.setGravity(Gravity.CENTER);
             txt.setPadding(16, 16, 16, 16);
             txt.setTextSize(16);
             //txt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down, 0);
