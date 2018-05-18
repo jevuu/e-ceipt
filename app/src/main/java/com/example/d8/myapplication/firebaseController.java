@@ -7,7 +7,14 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 
 class firebaseController {
+    //Attributes
     private FirebaseAuth mAuth; //Firebase Connection
+    private  boolean isLoggedIn = false;
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
+    }
+
 
 
     public void isLoggedIn(
