@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+
     <style name="Line_hor">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">4dp</item>
