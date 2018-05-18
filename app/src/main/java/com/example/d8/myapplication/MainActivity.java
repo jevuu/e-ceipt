@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in
-         firebase.currentUser = mAuth.getCurrentUser();
+     //    firebase.currentUser = mAuth.getCurrentUser();
         Toast.makeText(this, "User Already Logged in? Invalid Exit.",
                 Toast.LENGTH_SHORT).show();
     }
