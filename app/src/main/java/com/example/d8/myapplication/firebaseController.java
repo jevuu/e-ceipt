@@ -10,8 +10,8 @@ class firebaseController {
     private FirebaseAuth mAuth; //Firebase Connection
 
 
-    public isLoggedIn(
+    public void isLoggedIn(
 
-
+    ){}
 
 }
