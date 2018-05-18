@@ -1,9 +1,46 @@
 package com.example.d8.myapplication;
 
-/**
- * Created by Lord Alistair on 2018-05-16.
- */
+import android.support.annotation.NonNull;
+import android.widget.Toast;
 
-public class authUser extends User {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.concurrent.Executor;
+
+
+class authUser extends User {
+    //Attributes
+    public FirebaseAuth mAuth; //Firebase Connection
+    boolean loggedIn = false;
+    authUser() {
+        this.mAuth = FirebaseAuth.getInstance();
+
+    }
+
+
+    //Returns true when a user's sessions is still active(they can timeout for instance)
+    //Possible security risk?
+    boolean isLoggedIn() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        loggedIn = (currentUser != null);
+        return loggedIn;
+
+    }
+
+
 
 }
+
+
+
+
+
+
+
+
+
+
