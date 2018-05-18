@@ -5,10 +5,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     //Attributes
     EditText userET, passET;
     authUser aUser;
-
+    private FirebaseAuth eAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +38,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
-
-
+        eAuth = FirebaseAuth.getInstance();
         userET = (EditText)findViewById(R.id.main_uid);
         passET = (EditText)findViewById(R.id.main_pwd);
     }
@@ -63,25 +63,42 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onLogin(View view) {
 
-
+        try {
+            int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+            if (status == ConnectionResult.SUCCESS) {
+                //Success! Do what you want
+                System.out.println("GOOD!");
+            } else {
+                throw new Exception("Install Google Play Services ASAP");
+            }
+        }catch(Exception e){
+            System.exit(-1);
+        }
 
         String userString = userET.getText().toString();
         String passString = passET.getText().toString();
         String type = "login";
 
 
-        aUser.mAuth.signInWithEmailAndPassword( userString, passString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    System.out.println("Connection OK!");
-                } else {
+        eAuth.signInWithEmailAndPassword(userString, passString)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
 
-                    System.out.println("Connection FAILED!");
-                }
+                            Toast.makeText(MainActivity.this, "Authentication OK!.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
 
-            }
-        });
+                        }
+
+                    }
+                });
+
 
         BackgroundWorker bgWorker = new BackgroundWorker(this);
 

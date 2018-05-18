@@ -19,6 +19,8 @@ class authUser extends User {
     authUser() {
         this.mAuth = FirebaseAuth.getInstance();
 
+
+
     }
 
 
