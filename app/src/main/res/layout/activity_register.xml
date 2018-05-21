@@ -33,7 +33,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/reg_Title" />
 
         <TextView
             android:id="@+id/reg_welcome"
@@ -58,11 +59,13 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="347dp"
-        android:layout_height="466dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="470dp"
         android:orientation="vertical"
+        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
@@ -70,8 +73,9 @@
             android:id="@+id/reg_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/reg_Email"
             android:textColor="@color/colorEceiptWhite"
-            tools:text="@string/reg_Email" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editText4"
@@ -86,8 +90,9 @@
             android:id="@+id/reg_emailConf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/reg_ConfEmail"
             android:textColor="@color/colorEceiptWhite"
-            tools:text="@string/reg_ConfEmail" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editText6"
@@ -102,8 +107,9 @@
             android:id="@+id/reg_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/reg_pass"
             android:textColor="@color/colorEceiptWhite"
-            tools:text="@string/reg_pass" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editText10"
@@ -115,13 +121,46 @@
             android:textColor="@color/colorEceiptWhite" />
 
         <Button
+            android:id="@+id/reg_btn_verify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:background="@color/colorEceiptOrange"
+            android:lineSpacingExtra="14sp"
+            android:text="@string/reg_verify"
+            android:textAlignment="center"
+            android:textColor="@color/colorEceiptWhite"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <Button
             android:id="@+id/reg_btn_signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/btn_roundcorner_alt"
             android:text="@string/reg_signUp"
-            android:textColor="@color/colorEceiptWhite" />
+            android:textAlignment="center"
+            android:textColor="@color/colorEceiptWhite"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="OR"
+            android:textAlignment="center"
+            android:textColor="@color/colorEceiptOrange"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/reg_google"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign in with Google" />
 
     </LinearLayout>
 

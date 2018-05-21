@@ -15,6 +15,6 @@
     <string name="reg_ConfEmail">Confirm Your Email:</string>
     <string name="reg_pass">Enter a Password:</string>
     <string name="reg_signUp">Sign Up</string>
-
+    <string name="reg_verify">Verify Email</string>
 
 </resources>
