@@ -11,19 +11,15 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.concurrent.Executor;
 
-
+//Represents the authorized user(the active user) within the App.
 class authUser extends User {
     //Attributes
     public FirebaseAuth mAuth; //Firebase Connection
-    boolean loggedIn = false;
+    private boolean loggedIn = false;
     authUser() {
         this.mAuth = FirebaseAuth.getInstance();
 
-
-
     }
-
-
     //Returns true when a user's sessions is still active(they can timeout for instance)
     //Possible security risk?
     boolean isLoggedIn() {

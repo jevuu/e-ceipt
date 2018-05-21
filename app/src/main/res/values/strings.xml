@@ -6,6 +6,7 @@
     <string name="main_hint_pwd">Password</string>
     <string name="main_Register">Create An Account</string>
     <string name="main_fgtPass"> <u>Forgot Password?</u></string>
+    <string name="reg_welcome_str">We need some information from you &#8230;</string>
 
 
 </resources>

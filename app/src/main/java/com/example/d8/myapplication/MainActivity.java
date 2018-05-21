@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     //Attributes
     EditText userET, passET;
     authUser aUser;
-
+    Button btnSign;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         userET = (EditText)findViewById(R.id.main_uid);
         passET = (EditText)findViewById(R.id.main_pwd);
+        btnSign = (Button)findViewById(R.id.main_btn_login);
     }
 
 
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             if (status != ConnectionResult.SUCCESS) {
                 throw new Exception("Install Google Play Services ASAP");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.exit(-1);
         }
 
@@ -85,26 +87,42 @@ public class MainActivity extends AppCompatActivity {
         String type = "login";
 
 
-        //Firebase Authentication
-        aUser.mAuth.signInWithEmailAndPassword(userString, passString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
+        //===========Ensure data exists before sending to firebase==========
+        if (userString.isEmpty() || passString.isEmpty()) {
+            Toast.makeText(MainActivity.this, "Username/Password cannot be empty!",
+                    Toast.LENGTH_SHORT).show();
+        } else {
 
-                    Toast.makeText(MainActivity.this, "Authentication OK!.",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(MainActivity.this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
+            btnSign.setText("Please Wait...");
+            btnSign.setClickable(false);
+
+            //Firebase Authentication
+            aUser.mAuth.signInWithEmailAndPassword(userString, passString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Toast.makeText(MainActivity.this, "Authentication Passed",
+                                Toast.LENGTH_SHORT).show();
+                        btnSign.setText(getString(R.string.main_login));
+                        btnSign.setClickable(true);
+
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(MainActivity.this, "Authentication Failed.",
+                                Toast.LENGTH_SHORT).show();
+                        btnSign.setText(getString(R.string.main_login));
+                        btnSign.setClickable(true);
+
+                    }
                 }
-            }
-        });
+            });
+            //My.SQL VM Connection
+            BackgroundWorker bgWorker = new BackgroundWorker(this);
+            bgWorker.execute(type, userString, passString);
+        }
+        //===================================//
 
-        //My.SQL VM Connection
-        BackgroundWorker bgWorker = new BackgroundWorker(this);
-
-        bgWorker.execute(type, userString, passString);
     }
+
 }
