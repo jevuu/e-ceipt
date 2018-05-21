@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">ECeipt</string>
+
+    <!--<string name="app_name">My Application</string>-->
+
+    <string name="app_name">eCeipt</string>
     <string name="main_GAccountLogin">Sign In with Google</string>
     <string name="main_login">Sign In</string>
     <string name="main_hint_uid">Email</string>
@@ -8,5 +11,7 @@
     <string name="main_fgtPass"> <u>Forgot Password?</u></string>
     <string name="reg_welcome_str">We just need some information from you&#8230;</string>
     <string name="reg_Title"><u>Sign Up</u></string>
+
+
 
 </resources>
