@@ -1,6 +1,7 @@
 package com.example.d8.myapplication;
 
 import android.content.Intent;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -64,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     //Opens the Registration Activity
-   // public void onReady(View view){
-   //     Intent goToReg = new Intent(this, HomeActivity.class);
-   //     startActivity(goToReg);
+    public void onReady(OnCompleteListener<AuthResult> view){
+        Intent goToReg = new Intent(this, HomeActivity.class);
+        startActivity(goToReg);
 
-   // }
+   }
     public void onLogin(View view) {
 
         //Checks if GMS services are available(for emulators) for safety
@@ -107,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
 
+                        //Go to home screen
+                        onReady(this);
+
+
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(MainActivity.this, "Authentication Failed.",
@@ -120,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
             //My.SQL VM Connection
             BackgroundWorker bgWorker = new BackgroundWorker(this);
             bgWorker.execute(type, userString, passString);
+
+
         }
         //===================================//
 
