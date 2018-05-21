@@ -6,4 +6,5 @@
     <color name="colorEceiptBlue">#266fd6</color>
     <color name="colorEceiptLightBlue">#00f7ff</color>
     <color name="colorEceiptWhite">#ffffff</color>
+    <color name="colorEceiptDarkGrey">#595959</color>
 </resources>
