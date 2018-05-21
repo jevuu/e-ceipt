@@ -118,7 +118,10 @@
             android:id="@+id/reg_btn_signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/reg_signUp" />
+            android:layout_marginTop="24dp"
+            android:background="@drawable/btn_roundcorner_alt"
+            android:text="@string/reg_signUp"
+            android:textColor="@color/colorEceiptWhite" />
 
     </LinearLayout>
 
