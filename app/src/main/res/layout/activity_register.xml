@@ -70,59 +70,55 @@
             android:id="@+id/reg_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:textColor="@color/colorEceiptWhite"
+            tools:text="@string/reg_Email" />
 
         <EditText
             android:id="@+id/editText4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textEmailAddress" />
+            android:hint="@string/main_hint_uid"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorEceiptWhite" />
 
         <TextView
             android:id="@+id/reg_emailConf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:textColor="@color/colorEceiptWhite"
+            tools:text="@string/reg_ConfEmail" />
 
         <EditText
             android:id="@+id/editText6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textEmailAddress" />
+            android:hint="@string/main_hint_uid"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorEceiptWhite" />
 
         <TextView
-            android:id="@+id/reg_"
+            android:id="@+id/reg_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:textColor="@color/colorEceiptWhite"
+            tools:text="@string/reg_pass" />
 
         <EditText
-            android:id="@+id/editText8"
+            android:id="@+id/editText10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="phone" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <EditText
-            android:id="@+id/editText9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword" />
+            android:hint="@string/main_hint_pwd"
+            android:inputType="textPassword"
+            android:textColor="@color/colorEceiptWhite" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/reg_btn_signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="@string/reg_signUp" />
 
     </LinearLayout>
 
