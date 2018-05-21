@@ -4,119 +4,132 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/gradient_splash"
-    android:padding="16dp"
-    tools:context=".MainActivity">
 
-
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:orientation="vertical"
-        android:paddingBottom="32dp"
-        android:paddingTop="32dp"
-        android:weightSum="4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/main_uid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:drawableStart="@drawable/ic_main_username"
-            android:ems="10"
-            android:hint="@string/main_hint_uid"
-            android:inputType="textPersonName"
-            android:singleLine="false"
-            android:textColor="@color/colorEceiptWhite"
-            android:textColorHint="@color/colorEceiptWhite"
-            android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/main_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            android:drawableStart="@drawable/ic_main_password"
-            android:ems="10"
-            android:hint="@string/main_hint_pwd"
-            android:inputType="textPassword"
-            android:textColor="@color/colorEceiptWhite"
-            android:textColorHint="@color/colorEceiptWhite"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/main_fgtPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/main_fgtPass"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/colorEceiptWhite"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/main_btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/btn_roundcorner"
-            android:drawableStart="@drawable/ic_main_logo"
-            android:onClick="onLogin"
-            android:padding="2dp"
-            android:paddingBottom="12dp"
-            android:text="@string/main_login"
-            android:textAlignment="center"
-            android:textColor="@android:color/background_light"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+        android:background="@drawable/gradient_splash"
+        android:padding="12dp"
+        tools:context=".MainActivity">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            android:paddingBottom="32dp"
+            android:paddingTop="32dp"
+            android:weightSum="4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/sign_in_button"
+            <EditText
+                android:id="@+id/main_uid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp" />
+                android:layout_marginTop="12dp"
+                android:drawableStart="@drawable/ic_main_username"
+                android:ems="10"
+                android:hint="@string/main_hint_uid"
+                android:inputType="textPersonName"
+                android:singleLine="false"
+                android:textColor="@color/colorEceiptWhite"
+                android:textColorHint="@color/colorEceiptWhite"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/main_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:drawableStart="@drawable/ic_main_password"
+                android:ems="10"
+                android:hint="@string/main_hint_pwd"
+                android:inputType="textPassword"
+                android:textColor="@color/colorEceiptWhite"
+                android:textColorHint="@color/colorEceiptWhite"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/main_fgtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/main_fgtPass"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/colorEceiptOrange"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/main_btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btn_roundcorner"
+                android:drawableStart="@drawable/ic_main_logo"
+                android:onClick="onLogin"
+                android:padding="2dp"
+                android:paddingBottom="12dp"
+                android:text="@string/main_login"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/sign_in_buttonAlt2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="12dp" />
+
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" />
+
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/sign_in_buttonAlt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/main_btn_reg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="45dp"
+                android:background="@drawable/btn_roundcorner_alt"
+                android:drawableStart="@drawable/ic_main_reg"
+                android:elevation="14dp"
+                android:onClick="onRegister"
+                android:padding="2dp"
+                android:paddingBottom="12dp"
+                android:text="@string/main_Register"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/main_btn_reg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginTop="45dp"
-            android:background="@drawable/btn_roundcorner_alt"
-            android:drawableStart="@drawable/ic_main_reg"
-            android:elevation="14dp"
-            android:onClick="onRegister"
-            android:padding="2dp"
-            android:paddingBottom="12dp"
-            android:text="@string/main_Register"
-            android:textAlignment="center"
-            android:textColor="@android:color/background_light"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </ScrollView>
