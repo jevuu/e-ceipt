@@ -2,21 +2,25 @@
 
 require "conn.php";
 
+//Get from JSON object the username, nam, and email
 $json = file_get_contents('php://input');
 $obj = json_decode($json);
 $userName = $obj->{'userName'};
 $name = $obj->{'name'}
 
+//If they don't exist, just enter dummy data. THIS IS ONLY FOR TESTING PURPOSES. REMOVE IN FINAL
 if($userName == ""){
 	$userName = "regTest";
 }
-if($name == "")
+if($name == ""){
 	$name = "registration test";
 }
+if($email == ""){
+	$email = "regTest@example.com";
+}
 
-//BIG TEST BELOW
-//Create user
-$qString = "INSERT INTO users (`userName`,`name`,`creationDate`) VALUES ('" . $userName . "','" . $name . "', CURRENT_DATE)";
+//Create user, return info
+$qString = "INSERT INTO users (`userName`,`name`,`creationDate`,`email`) VALUES ('" . $userName . "','" . $name . "', CURRENT_DATE,'" . $email . "')";
 mysqli_query($conn, $qString);
 
 $qString = "SELECT userID, userName, name, creationDate FROM users WHERE name='" . $userName. "'";

@@ -2,18 +2,21 @@
 
 require "conn.php";
 
+//Get userName from JSON
 $json = file_get_contents('php://input');
 $obj = json_decode($json);
 $userName = $obj->{'userName'};
 
+//If userName doesn't exist, use grab from John Doe. ONLY FOR TESTING PURPOSES. REMOVE IN FINAL
 if($userName == ""){
-	$userName = "John Doe";
+	$userName = "johnDoe";
 }
 
+//Get all receipts from userName
 $qString = "SELECT u.name, r.receiptID, r.creationDate, r.totalCost, r.tax 
 FROM users u 
 INNER JOIN receipts r ON r.userID = u.userID 
-WHERE u.name= '$userName'" ;
+WHERE u.userName= '$userName'" ;
 $qReceipt= mysqli_query($conn, $qString);
 if(mysqli_num_rows($qReceipt) > 0){
 	while($receipt= mysqli_fetch_row($qReceipt)){
