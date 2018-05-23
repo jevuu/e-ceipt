@@ -49,7 +49,12 @@ public class HomeActivity extends AppCompatActivity {
         getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         initCustomSpinner();
 
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getBaseContext(),""+position, Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
@@ -190,7 +195,14 @@ public class HomeActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+
+                try{
+                    loadIntoListView(s);
+                }catch(Exception e){
+
+                }
+
+                //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 //Toast.makeText(getApplicationContext(), "dhfjshjfs", Toast.LENGTH_SHORT).show();
                 //Log.i("Json:" , s.toString());
             }
@@ -215,18 +227,18 @@ public class HomeActivity extends AppCompatActivity {
 
                     //We will use a buffered reader to read the string from service
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-//                    Log.i("HHHHHHHH","aaa");
-//                    //A simple string to read values from each line
-//                    String json;
-//
-//                    //reading until we don't find null
-//                    while ((json = bufferedReader.readLine()) != null) {
-//                        Log.d("HHHHHHHH", json);
-//                        //appending it to string builder
-//                        sb.append(json + "\n");
-//                    }
-//
-//                    //finally returning the read string
+                    Log.i("HHHHHHHH","aaa");
+                    //A simple string to read values from each line
+                    String json;
+
+                    //reading until we don't find null
+                    while ((json = bufferedReader.readLine()) != null) {
+                        Log.d("HHHHHHHH", json);
+                        //appending it to string builder
+                        sb.append(json + "\n");
+                    }
+
+                    //finally returning the read string
                     return sb.toString().trim();
                 } catch (Exception e) {
                     Log.i("FAIL222",e.toString());
@@ -239,7 +251,6 @@ public class HomeActivity extends AppCompatActivity {
 
         //creating asynctask object and executing it
         GetJSON getJSON = new GetJSON();
-        //Toast.makeText(getApplicationContext(), "2222dhfjshjfs", Toast.LENGTH_SHORT).show();
         getJSON.execute();
     }
 
@@ -249,7 +260,8 @@ public class HomeActivity extends AppCompatActivity {
         String[] receipts = new String[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-            receipts[i] = obj.getString("receiptID");
+            //receipts[i] = obj.getString("receiptID")+"   "+obj.getString("date")+"  "+obj.getString("totalCost");
+            receipts[i] = String.format("%-35s%-12s%20s",obj.getString("receiptID"), obj.getString("date"), obj.getString("totalCost"));
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, receipts);
         listView.setAdapter(arrayAdapter);
