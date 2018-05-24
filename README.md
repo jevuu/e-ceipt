@@ -9,7 +9,7 @@ habits.
 
 ### Installation
 
-The following are instructions to set up a personal/local server and development environment. If you just want set up for Android Studio development follow steps 5 and 8 only.
+The following are instructions to set up a personal/local server and development environment. If you just want set up for Android Studio development follow steps 5 and 9 only.
 
 1) Install Ubuntu 16.04 or similar Linux OS on your server
 2) Follow this guide to install Apache, MySQL, and PHP: https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04
@@ -18,7 +18,7 @@ The following are instructions to set up a personal/local server and development
 5) Fork/clone the repo
 6) Using PHPMyAdmin, import the createTables.sql file to create the database and tables. Optionally, you can also import populateTables.sql to populate the table with dummy data
 7) Copy the PHP files into your server's html folder. If you followed the guide above, the address will be /var/www/html
-8) Create a "conn.php" file to set up a connection class.
+8) Create a "conn.php" file to set up a connection class and save it on the server in /var/www/html.
 9) Get "googleserverices.json" from our Discord server (or contact Alistair) and save it into the repo's app folder
 
 Now that everything is installed, you can run Android Studio and build the app.
