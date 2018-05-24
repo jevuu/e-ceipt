@@ -24,9 +24,14 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.DriverManager;
@@ -49,12 +54,19 @@ public class HomeActivity extends AppCompatActivity {
         getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         initCustomSpinner();
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getBaseContext(),""+position, Toast.LENGTH_LONG).show();
             }
         });
+        try{
+            String json = readJsonFile();
+            loadIntoListView(json);
+        }catch(JSONException e){
+            Log.e("JSON ERROR", e.toString());
+        }
 
     }
 
@@ -197,9 +209,10 @@ public class HomeActivity extends AppCompatActivity {
 
 
                 try{
-                    loadIntoListView(s);
+                    //loadIntoListView(s);
+                    storeJsonToLocal(s);
                 }catch(Exception e){
-
+                    Log.e("ERROR:", e.toString());
                 }
 
                 //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
@@ -255,14 +268,49 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    private void storeJsonToLocal(String json) throws JSONException{
+        //String username = Information.user.getUserName();
+        String filename = "_receipts"+".txt";
+
+        try {
+            FileOutputStream outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream.write(json.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String readJsonFile(){
+        //String username = Information.user.getUserName();
+        String filename = "_receipts"+".txt";
+        String json = "";
+        try{
+            FileInputStream inputStream = openFileInput(filename);
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
+            inputStream.read(buffer);
+            inputStream.close();
+            json = new String(buffer);
+            //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
+            return json;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private void loadIntoListView(String json) throws JSONException {
         JSONArray jsonArray = new JSONArray(json);
         String[] receipts = new String[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
             //receipts[i] = obj.getString("receiptID")+"   "+obj.getString("date")+"  "+obj.getString("totalCost");
-            receipts[i] = String.format("%-35s%-12s%20s",obj.getString("receiptID"), obj.getString("date"), obj.getString("totalCost"));
+            receipts[i] = String.format("%-35s%-12s%20s",obj.getString("businessName"), obj.getString("date"), obj.getString("totalCost"));
         }
+
+
+
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, receipts);
         listView.setAdapter(arrayAdapter);
     }
