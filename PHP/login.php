@@ -8,10 +8,12 @@ $json = file_get_contents('php://input');
 $obj = json_decode($json);
 $userName = $obj->{'userName'};
 
-//$userName = $_POST["userName"];
-//$password = $_POST["password"];
+//Testing only. remove in final
+if($userName == ""){
+	$userName = "johnDoe";
+}
 
-$qString = "SELECT * FROM test WHERE userName='$userName'";
+$qString = "SELECT * FROM users WHERE userName='$userName'";
 
 $result = mysqli_query($conn, $qString);
 
