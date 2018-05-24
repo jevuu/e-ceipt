@@ -119,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".25"
                     android:gravity="right"
-                    android:text="Cost"
+                    android:text="Cost($)"
                     android:textColor="@color/colorEceiptDarkGrey"
                     android:textSize="22dp"
                     android:textStyle="bold" />
