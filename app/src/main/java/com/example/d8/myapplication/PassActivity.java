@@ -52,10 +52,13 @@ public class PassActivity extends AppCompatActivity {
                                     Intent goToMain = new Intent(PassActivity.this, MainActivity.class);
                                     startActivity(goToMain);
                                 }else{
-                                    FirebaseAuthException e = (FirebaseAuthException)task.getException();
+                                    try {
+                                        throw task.getException();
+                                    }catch(Exception e){
 
-                                    Toast.makeText(PassActivity.this, "This email appears to be invalid error was: " + e.getMessage(),
-                                            Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(PassActivity.this, "This email appears to be invalid error was: " + e.getMessage(),
+                                                Toast.LENGTH_SHORT).show();
+                                    }
                                     btnSign.setText(R.string.pass_email);
                                     btnSign.setEnabled(true);
                                 }

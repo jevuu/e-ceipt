@@ -58,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onDestroy(){
+    super.onDestroy();
+        FirebaseAuth.getInstance().signOut();
+
+
+    }
     //Opens the Registration Activity
     public void onRegister(View view){
     Intent goToReg = new Intent(this, RegisterActivity.class);
