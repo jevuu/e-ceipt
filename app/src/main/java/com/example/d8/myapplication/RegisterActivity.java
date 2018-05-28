@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 
 
@@ -61,7 +62,9 @@ public class RegisterActivity extends AppCompatActivity {
                                     startActivity(goToMain);
 
                                 } else {
-                                    Toast.makeText(RegisterActivity.this, "Unable to Register, please verify your information",
+                                    FirebaseAuthException e = (FirebaseAuthException)task.getException();
+
+                                    Toast.makeText(RegisterActivity.this, "Unable to Register, please verify your information" + e.getMessage(),
                                             Toast.LENGTH_SHORT).show();
                                     btnVerify.setEnabled(true);
                                     btnVerify.setText(R.string.reg_verify);

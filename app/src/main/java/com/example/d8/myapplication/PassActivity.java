@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 
 
 //This activity handles all registration login for creating a user
@@ -51,7 +52,9 @@ public class PassActivity extends AppCompatActivity {
                                     Intent goToMain = new Intent(PassActivity.this, MainActivity.class);
                                     startActivity(goToMain);
                                 }else{
-                                    Toast.makeText(PassActivity.this, "This email appears to be invalid",
+                                    FirebaseAuthException e = (FirebaseAuthException)task.getException();
+
+                                    Toast.makeText(PassActivity.this, "This email appears to be invalid error was: " + e.getMessage(),
                                             Toast.LENGTH_SHORT).show();
                                     btnSign.setText(R.string.pass_email);
                                     btnSign.setEnabled(true);
