@@ -31,9 +31,12 @@
 
             <ImageView
                 android:id="@+id/main_logo"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/app_name"
+                android:cropToPadding="false"
+                android:scaleType="center"
                 app:srcCompat="@drawable/logo" />
 
             <EditText
@@ -69,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
+                android:onClick="onPassW"
                 android:text="@string/main_fgtPass"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/colorEceiptOrange"

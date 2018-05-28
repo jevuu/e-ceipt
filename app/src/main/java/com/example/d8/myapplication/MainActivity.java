@@ -70,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(goToReg);
 
    }
+    //Opens the Password Reset  Activity
+    public void onPassW(View view){
+        Intent goToPws = new Intent(this, PassActivity.class);
+        startActivity(goToPws);
+    }
+
     public void onLogin(View view) {
 
         //Checks if GMS services are available(for emulators) for safety

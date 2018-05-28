@@ -16,5 +16,6 @@
     <string name="reg_pass">Enter a Password:</string>
     <string name="reg_signUp">Sign Up</string>
     <string name="reg_verify">Verify Email</string>
-
+    <string name="pass_email">Send Reset Link</string>
+    <string name="pass_title">Reset Password</string>
 </resources>

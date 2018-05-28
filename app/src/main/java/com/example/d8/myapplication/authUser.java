@@ -29,6 +29,20 @@ class authUser extends User {
 
     }
 
+//Reset a target password via email
+    void resetPassword(String email){
+
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        //...
+                    }
+                });
+
+
+    }
+
 
 
 }
