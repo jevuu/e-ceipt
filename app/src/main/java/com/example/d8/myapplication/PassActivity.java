@@ -46,6 +46,8 @@ public class PassActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     btnSign.setEnabled(true);
+                                    Toast.makeText(PassActivity.this, "An email has been sent to reset your password",
+                                            Toast.LENGTH_SHORT).show();
                                     Intent goToMain = new Intent(PassActivity.this, MainActivity.class);
                                     startActivity(goToMain);
                                 }else{
