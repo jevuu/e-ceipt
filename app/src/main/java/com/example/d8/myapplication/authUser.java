@@ -14,7 +14,7 @@ import java.util.concurrent.Executor;
 //Represents the authorized user(the active user) within the App.
 class authUser extends User {
     //Attributes
-    public FirebaseAuth mAuth; //Firebase Connection
+    FirebaseAuth mAuth; //Firebase Connection
     private boolean loggedIn = false;
     authUser() {
         this.mAuth = FirebaseAuth.getInstance();

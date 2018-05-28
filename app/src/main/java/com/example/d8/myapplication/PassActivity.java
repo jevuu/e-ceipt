@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 
 //This activity handles all registration login for creating a user
-
 public class PassActivity extends AppCompatActivity {
 
     Button btnSign;
@@ -32,22 +31,28 @@ public class PassActivity extends AppCompatActivity {
 
     }
 
+    //Send an email to a user assuming it passes validation
     public void sendEmail(View view){
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String emailAddress = emailET.getText().toString();
 
             try {
+                btnSign.setText("Please Wait...");
+                btnSign.setEnabled(false);
                 auth.sendPasswordResetEmail(emailAddress)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
+                                    btnSign.setEnabled(true);
                                     Intent goToMain = new Intent(PassActivity.this, MainActivity.class);
                                     startActivity(goToMain);
                                 }else{
                                     Toast.makeText(PassActivity.this, "This email appears to be invalid",
                                             Toast.LENGTH_SHORT).show();
+                                    btnSign.setText(R.string.pass_email);
+                                    btnSign.setEnabled(true);
                                 }
                             }
                         });
@@ -57,6 +62,8 @@ public class PassActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Toast.makeText(PassActivity.this, "This email appears to be invalid",
                         Toast.LENGTH_SHORT).show();
+                btnSign.setText(R.string.pass_email);
+                btnSign.setEnabled(true);
 
             }
 

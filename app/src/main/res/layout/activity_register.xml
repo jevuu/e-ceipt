@@ -78,7 +78,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/reg_ems"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -95,7 +95,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText6"
+            android:id="@+id/reg_emsConf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -112,7 +112,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText10"
+            android:id="@+id/reg_passw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -128,6 +128,7 @@
             android:layout_marginTop="24dp"
             android:background="@color/colorEceiptOrange"
             android:lineSpacingExtra="14sp"
+            android:onClick="verifyEmail"
             android:text="@string/reg_verify"
             android:textAlignment="center"
             android:textColor="@color/colorEceiptWhite"
@@ -146,7 +147,7 @@
             android:visibility="visible" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/reg_OR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
