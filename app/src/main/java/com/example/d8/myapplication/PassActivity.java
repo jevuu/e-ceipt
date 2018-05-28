@@ -54,6 +54,9 @@ public class PassActivity extends AppCompatActivity {
                                 }else{
                                     try {
                                         throw task.getException();
+                                    }catch(FirebaseAuthException e){
+                                        Toast.makeText(PassActivity.this, "Unable to Register, please verify your information" + e.getMessage(),
+                                                Toast.LENGTH_SHORT).show();
                                     }catch(Exception e){
 
                                         Toast.makeText(PassActivity.this, "This email appears to be invalid error was: " + e.getMessage(),

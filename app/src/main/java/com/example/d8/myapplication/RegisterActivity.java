@@ -64,6 +64,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 } else {
                                     try {
                                         throw task.getException();
+                                    }catch(FirebaseAuthException e){
+                                        Toast.makeText(RegisterActivity.this, "Unable to Register, please verify your information" + e.getMessage(),
+                                                Toast.LENGTH_SHORT).show();
                                     }catch(Exception e) {
 
                                         Toast.makeText(RegisterActivity.this, "Unable to Register, please verify your information" + e.getMessage(),
