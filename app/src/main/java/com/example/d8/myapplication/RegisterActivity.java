@@ -31,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
-        btnSignIn = (Button)findViewById(R.id.reg_btn_signIn);
+     //   btnSignIn = (Button)findViewById(R.id.reg_btn_signIn);
         btnVerify = (Button)findViewById(R.id.reg_btn_verify);
         emailEms = (EditText)findViewById(R.id.reg_ems);
         emailPass = (EditText)findViewById(R.id.reg_passw);
@@ -56,10 +56,13 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(RegisterActivity.this, "Registered",
+                                    Toast.makeText(RegisterActivity.this, "Registered, please check your email to verify",
                                             Toast.LENGTH_SHORT).show();
+
+
                                     Intent goToMain = new Intent(RegisterActivity.this, MainActivity.class);
                                     startActivity(goToMain);
+
 
                                 } else {
                                     try {
