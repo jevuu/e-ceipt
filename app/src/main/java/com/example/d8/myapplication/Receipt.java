@@ -8,7 +8,8 @@ public class Receipt {
     private String date;
     private double totalCost;
     private double tax;
-    private ArrayList<Item> items;
+    private String businessName;
+    private ArrayList<Item> items = new ArrayList<Item>();
 
     //getter
     public String getReceipId() {
@@ -29,6 +30,10 @@ public class Receipt {
 
     public double getTax() {
         return tax;
+    }
+
+    public String getBusinessName() {
+        return businessName;
     }
 
     public ArrayList<Item> getItems() {
@@ -57,14 +62,61 @@ public class Receipt {
         this.tax = tax;
     }
 
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
     public void setItems(ArrayList<Item> items) {
         this.items = items;
     }
+
+    public void addItem(String itemName, String itemDesc, double itemPrice){
+        Item item = new Item(itemName, itemDesc, itemPrice);
+        items.add(item);
+    }
+
+
 
     public class Item{
         public String itemName;
         public String itemDesc;
         public double itemPrice;
+
+        public Item(String itemName, String itemDesc, double itemPrice) {
+            this.itemName = itemName;
+            this.itemDesc = itemDesc;
+            this.itemPrice = itemPrice;
+        }
+
+        public Item(){
+            this.itemName = "N/A";
+            this.itemDesc = "N/A";
+            this.itemPrice = 0.00;
+        }
+
+        public String getItemName() {
+            return itemName;
+        }
+
+        public String getItemDesc() {
+            return itemDesc;
+        }
+
+        public double getItemPrice() {
+            return itemPrice;
+        }
+
+        public void setItemName(String itemName) {
+            this.itemName = itemName;
+        }
+
+        public void setItemDesc(String itemDesc) {
+            this.itemDesc = itemDesc;
+        }
+
+        public void setItemPrice(double itemPrice) {
+            this.itemPrice = itemPrice;
+        }
     }
 
 }

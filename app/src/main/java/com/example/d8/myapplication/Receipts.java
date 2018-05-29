@@ -6,6 +6,6 @@ public class Receipts {
     public ArrayList<Receipt> receipts;
 
     public static void loadReceipt(Receipt receipt){
-
+        //receipts.add(receipt);
     }
 }

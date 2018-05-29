@@ -1,6 +1,7 @@
 package com.example.d8.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,7 @@ import java.net.URL;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -52,21 +54,32 @@ public class HomeActivity extends AppCompatActivity {
 
         //getData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
+        //new SyncronizeData().execute("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         initCustomSpinner();
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getBaseContext(),""+position, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(),""+position, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getBaseContext(),ReceiptDetailActivity.class);
+                intent.putExtra("RECEIPTINDEX", Integer.toString(position));
+                startActivity(intent);
             }
         });
         try{
             String json = readJsonFile();
-            loadIntoListView(json);
+            if(Information.receipts.isEmpty()){
+                loadReceiptsObj(json);
+            }
+            //loadIntoListView(json);
+            loadReceiptObjToListView();
         }catch(JSONException e){
             Log.e("JSON ERROR", e.toString());
         }
+
+        //Log.d("RECEIPTOBJ:",Information.receipts.size().);
+        Log.d("RECEIPTOBJ3:",Information.receipts.get(1).getReceipId());
 
     }
 
@@ -309,6 +322,61 @@ public class HomeActivity extends AppCompatActivity {
             receipts[i] = String.format("%-35s%-12s%20s",obj.getString("businessName"), obj.getString("date"), obj.getString("totalCost"));
         }
 
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, receipts);
+        listView.setAdapter(arrayAdapter);
+    }
+
+    private void loadReceiptsObj(String json) throws JSONException {
+        JSONArray jsonArray = new JSONArray(json);
+        Receipt receipt;
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject obj = jsonArray.getJSONObject(i);
+
+            receipt =  new Receipt();
+            Log.d("RECEIPTname:", obj.getString("name"));
+            receipt.setName(obj.getString("name"));
+            Log.d("RECEIPTid:", obj.getString("receiptID"));
+            receipt.setReceipId(obj.getString("receiptID"));
+            Log.d("RECEIPTdate:", obj.getString("date"));
+            receipt.setDate(obj.getString("date"));
+            Log.d("RECEIPTtotalcost:", obj.getString("totalCost"));
+            receipt.setTotalCost(Double.parseDouble(obj.getString("totalCost")));
+            Log.d("RECEIPTtax:", obj.getString("tax"));
+            receipt.setTax(Double.parseDouble(obj.getString("tax")));
+            Log.d("RECEIPTtax:", obj.getString("businessName"));
+            receipt.setBusinessName(obj.getString("businessName"));
+
+            Log.d("RECEIPTOBJ", "name:"+receipt.getName()+
+                    "id:"+receipt.getReceipId()+
+                    "date:"+receipt.getDate()+
+                    "totalCost:"+receipt.getTotalCost()+receipt.getTax());
+
+
+            JSONArray itemarray = obj.getJSONArray("items");
+            //List<Receipt.Item> itemList = new ArrayList<Receipt.Item>();
+            //Receipt.Item item = new Receipt().new Item();
+
+            for(int j=0; j<itemarray.length();j++){
+                JSONObject itemObj = itemarray.getJSONObject(i);
+                receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")));
+            }
+
+            Information.receipts.add(receipt);
+
+        }
+        if(!Information.receipts.get(0).getItems().isEmpty()){
+            Log.d("RECEIPTOBJ2:",Information.receipts.get(0).getItems().get(0).getItemName());
+
+        }
+    }
+
+    void loadReceiptObjToListView(){
+        String[] receipts = new String[Information.receipts.size()];
+
+        for(int i=0; i<Information.receipts.size(); i++){
+            receipts[i] = String.format("%-35s%-12s%20s",Information.receipts.get(i).getBusinessName(), Information.receipts.get(i).getDate(), Information.receipts.get(i).getTotalCost());
+        }
 
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, receipts);

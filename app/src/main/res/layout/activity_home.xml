@@ -132,7 +132,7 @@
                 </LinearLayout>
 
                 <View
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="center"
                     android:background="@android:color/holo_blue_dark" />
@@ -140,11 +140,11 @@
                 <ListView
                     android:id="@+id/receipts_list_view"
                     android:layout_width="match_parent"
-                    android:layout_height="282dp"
+                    android:layout_height="match_parent"
                     android:layout_weight=".40" />
 
                 <View
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_gravity="center"
                     android:background="@android:color/holo_blue_dark" />
