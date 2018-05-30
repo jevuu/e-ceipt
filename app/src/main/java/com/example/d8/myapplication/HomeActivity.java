@@ -43,7 +43,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     ListView listView;
-
+    String username = "johnDoe";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
