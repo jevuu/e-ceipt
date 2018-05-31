@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(MainActivity.this, "Authentication Passed",
+                        Toast.makeText(MainActivity.this, "Authentication Passed"+userString,
                                 Toast.LENGTH_SHORT).show();
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);

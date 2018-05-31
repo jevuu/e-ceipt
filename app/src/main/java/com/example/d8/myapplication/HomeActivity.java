@@ -51,7 +51,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Log.i("SignInByUser: ", Information.user.getUserName());
+        //Log.i("SignInByUser: ", Information.user.getUserName());
 
         listView = (ListView)findViewById(R.id.receipts_list_view);
 
