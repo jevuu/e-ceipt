@@ -38,6 +38,7 @@ class authUser extends User {
     //Possible security risk?
     boolean isLoggedIn() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        //Information.user.setUserName(currentUser.getUid());
         loggedIn = (currentUser != null);
         return loggedIn;
 

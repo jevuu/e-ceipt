@@ -8,9 +8,7 @@ import java.util.List;
  */
 public class Information {
     public static List<Receipt> receipts = new ArrayList<Receipt>();
+    public static authUser autUser;
+
     public static User user;
-
-
-
-
 }

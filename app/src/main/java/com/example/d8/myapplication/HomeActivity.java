@@ -3,6 +3,7 @@ package com.example.d8.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.icu.text.IDNA;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,6 +50,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Log.i("SignInByUser: ", Information.user.getUserName());
 
         listView = (ListView)findViewById(R.id.receipts_list_view);
 
@@ -231,6 +234,12 @@ public class HomeActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 //Toast.makeText(getApplicationContext(), "dhfjshjfs", Toast.LENGTH_SHORT).show();
                 //Log.i("Json:" , s.toString());
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+
             }
 
             //in this method we are fetching the json string

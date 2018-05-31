@@ -48,6 +48,8 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                 String totalCost = "100";
                 String tax = "14";
 
+
+
                 try{
                     JSONArray jsonArray = new JSONArray();
                     JSONObject jsonObject = new JSONObject();
