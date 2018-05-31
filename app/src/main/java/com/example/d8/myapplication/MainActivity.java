@@ -94,16 +94,12 @@ public class MainActivity extends AppCompatActivity {
     super.onDestroy();
         FirebaseAuth.getInstance().signOut();
 
-
     }
 
     //Opens the Google Sign In applicaiton
     public void onGoogle(View view){
-
         Intent signInIntent = aUser.mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, 9001);
-
-
 
     }
     @Override
@@ -137,68 +133,6 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Google Auth Passed",
                                     Toast.LENGTH_SHORT).show();
                             onReady(this);
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this, "Google Auth Failed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-
-    @Override
-    public void onDestroy(){
-    super.onDestroy();
-        FirebaseAuth.getInstance().signOut();
-
-
-    }
-
-    //Opens the Registration Activity
-    public void onGoogle(View view){
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        aUser.mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        Intent signInIntent = aUser.mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, 9001);
-
-
-
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == 9001) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-
-            } catch (ApiException e) {
-
-                // ...
-            }
-        }
-    }
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        aUser.mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = aUser.mAuth.getCurrentUser();
-                            Toast.makeText(MainActivity.this, "Google Auth Passed",
-                                    Toast.LENGTH_SHORT).show();
 
                         } else {
                             // If sign in fails, display a message to the user.
