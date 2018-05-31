@@ -22,6 +22,7 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".WelcomeActivity" />
         <activity android:name=".ReceiptDetailActivity"></activity>
+        <activity android:name=".PassActivity"></activity>
         <activity
             android:name=".MainHomeActivity"
             android:label="@string/title_activity_main_home"

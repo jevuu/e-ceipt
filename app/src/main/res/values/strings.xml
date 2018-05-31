@@ -15,7 +15,12 @@
     <string name="reg_ConfEmail">Confirm Your Email:</string>
     <string name="reg_pass">Enter a Password:</string>
     <string name="reg_signUp">Sign Up</string>
-    <string name="reg_verify">Verify Email</string>
+     <string name="reg_verify">Create Your Account</string>
+    <string name="pass_email">Send Reset Link</string>
+    <string name="pass_title">Reset Password</string>
+
+    <!-- Drawer strings -->
+    <!--<string name="reg_verify">Verify Email</string>-->
     <string name="title_activity_main_home">e-Ceipt</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -39,5 +44,4 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_changeBGColor_fragment">Hello change BG color fragment</string>
-
 </resources>
