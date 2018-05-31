@@ -15,7 +15,33 @@
     <string name="reg_ConfEmail">Confirm Your Email:</string>
     <string name="reg_pass">Enter a Password:</string>
     <string name="reg_signUp">Sign Up</string>
-    <string name="reg_verify">Create Your Account</string>
+     <string name="reg_verify">Create Your Account</string>
     <string name="pass_email">Send Reset Link</string>
     <string name="pass_title">Reset Password</string>
+
+    <!-- Drawer strings -->
+    <!--<string name="reg_verify">Verify Email</string>-->
+    <string name="title_activity_main_home">e-Ceipt</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_profile_fragment">Hello Profile fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_changeTheme_fragment">Hello Theme fragment</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_setting_fragment">Hello setting fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_home_fragment">Hello home fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_changeBGColor_fragment">Hello change BG color fragment</string>
 </resources>

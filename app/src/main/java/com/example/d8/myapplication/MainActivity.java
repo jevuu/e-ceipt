@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     }
     //Opens the Registration Activity
     public void onReady(OnCompleteListener<AuthResult> view){
-        Intent goToReg = new Intent(this, HomeActivity.class);
+        Intent goToReg = new Intent(this, MainHomeActivity.class);
         startActivity(goToReg);
 
    }
