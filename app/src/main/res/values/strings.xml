@@ -18,4 +18,6 @@
     <string name="reg_verify">Create Your Account</string>
     <string name="pass_email">Send Reset Link</string>
     <string name="pass_title">Reset Password</string>
+    <string name="reg_verifySuper">You must verify your email to continue!</string>
+
 </resources>
