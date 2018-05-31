@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -24,6 +25,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import java.nio.charset.MalformedInputException;
+
 
 
 //Last modification: Alistair
@@ -54,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
         passET = (EditText)findViewById(R.id.main_pwd);
         btnSign = (Button)findViewById(R.id.main_btn_login);
         btnGms = (Button)findViewById(R.id.sign_in_google);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        aUser.mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
 
@@ -62,12 +72,81 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in
-        if(aUser.isLoggedIn()) {
+        FirebaseAuth.getInstance().signOut();
+
             Toast.makeText(this, "User Already Logged in? Invalid Exit.",
                     Toast.LENGTH_SHORT).show();
          FirebaseAuth.getInstance().signOut();
+
+         aUser.mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                 new OnCompleteListener<Void>() {
+                     @Override
+                     public void onComplete(@NonNull Task<Void> task) {
+                         Toast.makeText(MainActivity.this, "User Already Logged in? Invalid Exit.",
+                                 Toast.LENGTH_SHORT).show();
+                     }
+                 });
+
+    }
+
+    @Override
+    public void onDestroy(){
+    super.onDestroy();
+        FirebaseAuth.getInstance().signOut();
+
+
+    }
+
+    //Opens the Google Sign In applicaiton
+    public void onGoogle(View view){
+
+        Intent signInIntent = aUser.mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, 9001);
+
+
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == 9001) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+
+            } catch (ApiException e) {
+
+                // ...
+            }
         }
     }
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        aUser.mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = aUser.mAuth.getCurrentUser();
+                            Toast.makeText(MainActivity.this, "Google Auth Passed",
+                                    Toast.LENGTH_SHORT).show();
+                            onReady(this);
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(MainActivity.this, "Google Auth Failed",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
 
     @Override
     public void onDestroy(){
