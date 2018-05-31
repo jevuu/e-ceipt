@@ -34,8 +34,8 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-        String login_URL = "http://myvmlab.senecacollege.ca:6207/login.php";
-        if(type.equals("login")){
+        String login_URL = params[1];
+        if(type.equals("register")){
 
             OutputStream os = null;
             InputStream is = null;
@@ -45,7 +45,9 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
                     //constants
                     URL url = new URL(login_URL);
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("userName", params[1]);
+                    jsonObject.put("userName", params[2]);
+                    jsonObject.put("name", params[3]);
+                    jsonObject.put("email", params[4]);
 
                     String message = jsonObject.toString();
 
@@ -102,7 +104,7 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String result){
         aDialog.setMessage(result);
-        aDialog.show();
+       System.out.println(result);
 
     }
 

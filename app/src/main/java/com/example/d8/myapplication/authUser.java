@@ -1,5 +1,6 @@
 package com.example.d8.myapplication;
 
+import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -18,6 +19,7 @@ class authUser extends User{
     FirebaseUser mUser; //The active user
     GoogleSignInClient mGoogleSignInClient; //Google connection
 
+    BackgroundWorker e;
     //=============================================//
     Uri photoUrl; //Only applicable to auth user
 
@@ -25,6 +27,12 @@ class authUser extends User{
     authUser() {
         this.mAuth = FirebaseAuth.getInstance();
 
+
+    }
+    void contactSql(Context ct){
+        e = new BackgroundWorker(ct);
+        e.execute("register","http://myvmlab.senecacollege.ca:6207/register.php", getUserId(), getNickName(), getEmail());
+        System.out.println("D");
 
     }
     void MUser(){
@@ -69,9 +77,6 @@ class authUser extends User{
                           }
                       }
                   });
-
-         //TODO Call BG Worker with My.SQL Data
-
 
 
           System.out.println("Account is as follows:" + getNickName() + " " + getEmail() + " " + photoUrl);
