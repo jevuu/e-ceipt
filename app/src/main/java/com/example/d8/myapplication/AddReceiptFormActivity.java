@@ -53,9 +53,9 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject();
 
                     jsonObject.put("name", username);
-                    jsonObject.put("receiptID", "232");
-                    jsonObject.put("date", date);
-                    jsonObject.put("totalCost", totalCost);
+                    //jsonObject.put("receiptID", "232");
+                    //jsonObject.put("date", date);
+                    //jsonObject.put("totalCost", totalCost);
                     jsonObject.put("tax", tax);
                     jsonObject.put("businessName", company);
 
