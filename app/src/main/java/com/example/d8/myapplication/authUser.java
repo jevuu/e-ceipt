@@ -61,10 +61,6 @@ class authUser extends User {
 
 
     }
-    public void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-
-
-    }
     //Returns true when a user's sessions is still active(they can timeout for instance)
     //Possible security risk?
     boolean isLoggedIn() {
