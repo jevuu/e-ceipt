@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/textViewBeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Beta 1.0"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewLastCheckLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Last Check:"
+                android:textAlignment="textEnd"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/textViewLastCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="textStart"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

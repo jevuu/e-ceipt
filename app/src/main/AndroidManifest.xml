@@ -18,11 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".HomeActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".WelcomeActivity" />
-        <activity android:name=".ReceiptDetailActivity"></activity>
-        <activity android:name=".PassActivity"></activity>
+        <activity android:name=".ReceiptDetailActivity" />
+        <activity android:name=".PassActivity" />
+        <activity
+            android:name=".MenuActivity"
+            android:label="@string/title_activity_menu"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

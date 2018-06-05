@@ -34,8 +34,8 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-        String login_URL = params[1];
-        if(type.equals("register")){
+        String login_URL = "http://myvmlab.senecacollege.ca:6207/login.php";
+        if(type.equals("login")){
 
             OutputStream os = null;
             InputStream is = null;
@@ -45,10 +45,19 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
                     //constants
                     URL url = new URL(login_URL);
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("userName", params[2]);
-                    jsonObject.put("name", params[3]);
-                    jsonObject.put("email", params[4]);
-
+                    jsonObject.put("userName", params[1]);
+                    /*
+                    jsonObject.put("comment", "OK");
+                    jsonObject.put("category", "pro");
+                    jsonObject.put("day", "19");
+                    jsonObject.put("month", "8");
+                    jsonObject.put("year", "2015");
+                    jsonObject.put("hour", "16");
+                    jsonObject.put("minute", "41");
+                    jsonObject.put("day_of_week", "3");
+                    jsonObject.put("week", "34");
+                    jsonObject.put("rate_number", "1");
+                    */
                     String message = jsonObject.toString();
 
                     conn = (HttpURLConnection) url.openConnection();
@@ -72,6 +81,33 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
                 //clean up
                 os.flush();
 
+                /*
+                String userName = params[1];
+                //String password = params[2];    //There is no password property in the SQL table. This data isn't passed.
+
+
+                URL url = new URL(login_URL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+                httpURLConnection.setDoInput(true);
+                //httpURLConnection.setFixedLengthStreamingMode(queryString.getBytes().length);
+                //Uri.Builder builder = new Uri.Builder().appendQueryParameter("userName", userName);
+                //String query = builder.build().getEncodedQuery();
+
+                OutputStream os = httpURLConnection.getOutputStream();
+                BufferedWriter bWriter = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                String postData = URLEncoder.encode("userName", "UTF-8")+"="+URLEncoder.encode(userName,"UTF-8");
+                                //+"&"+URLEncoder.encode("password", "UTF-8")+"="+URLEncoder.encode(password,"UTF-8");
+                bWriter.write(postData);
+                bWriter.flush();
+                bWriter.close();
+                os.close();
+
+                //httpURLConnection.connect();
+                */
+                //InputStream
                 is = conn.getInputStream();
                 BufferedReader bReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
                 String result = "";
@@ -104,7 +140,7 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String result){
         aDialog.setMessage(result);
-       System.out.println(result);
+        aDialog.show();
 
     }
 

@@ -8,6 +8,8 @@
     android:background="@drawable/gradient_splash"
     tools:context="com.example.d8.myapplication.HomeActivity">
 
+    <!--    android:background="@drawable/gradient_splash"  -->
+
     <LinearLayout
         android:id="@+id/spinner_layout"
         android:layout_width="match_parent"
