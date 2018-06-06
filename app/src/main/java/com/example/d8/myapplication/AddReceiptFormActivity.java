@@ -66,7 +66,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                         myCalendar.set(Calendar.YEAR, selectedyear);
                         myCalendar.set(Calendar.MONTH, selectedmonth);
                         myCalendar.set(Calendar.DAY_OF_MONTH, selectedday);
-                        String myFormat = "dd/MM/yyyy"; //Change as you need
+                        String myFormat = "yyyy-MM-dd"; //Change as you need
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
                         receiptDate.setText(sdf.format(myCalendar.getTime()));
 
@@ -99,7 +99,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
                     jsonObject.put("name", username);
                     //jsonObject.put("receiptID", "232");
-                    //jsonObject.put("date", date);
+                    jsonObject.put("date", date);
                     //jsonObject.put("totalCost", totalCost);
                     jsonObject.put("tax", tax);
                     jsonObject.put("businessName", company);
@@ -228,8 +228,13 @@ public class AddReceiptFormActivity extends AppCompatActivity {
         int cMinute = calender.get(Calendar.MINUTE);
         int cSecond = calender.get(Calendar.SECOND);
 
+
+
         //String cDateTime = ""+cDay+"/"+cMonth+"/"+cYear+" "+cHour+":"+cMinute+":"+cSecond;
-        String cDateInString = ""+cDay+"/"+cMonth+"/"+cYear;
+        //String cDateInString = ""+cYear+"-"+cMonth+"-"+cDay;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CANADA);
+        String cDateInString = sdf.format(calender.getTime()).toString();
+
 
         return cDateInString;
     }

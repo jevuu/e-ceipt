@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         //new SyncronizeData().execute("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         initCustomSpinner();
-
+        //createEmptyFile();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -72,13 +72,16 @@ public class HomeActivity extends AppCompatActivity {
         });
         try{
             String json = readJsonFile();
+            Log.i("JSONINMAIN:", json);
             if(Information.receipts.isEmpty()){
+                Log.i("RECEIPTSEMPTY","Empty");
                 loadReceiptsObj(json);
+                Log.i("RECEIPTSEMPTY2","Empty");
             }
             //loadIntoListView(json);
             loadReceiptObjToListView();
         }catch(JSONException e){
-            Log.e("JSON ERROR", e.toString());
+            Log.e("JSONERROR", e.toString());
         }
 
         //Log.d("RECEIPTOBJ:",Information.receipts.size().);
@@ -227,12 +230,15 @@ public class HomeActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 
-
+                Log.i("JSONFROMDB", s);
                 try{
                     //loadIntoListView(s);
+
                     storeJsonToLocal(s);
+
+
                 }catch(Exception e){
-                    Log.e("ERROR:", e.toString());
+                    Log.e("ERRORZZZZ:", e.toString());
                 }
 
                 //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
@@ -252,9 +258,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 try {
                     //creating a URL
-                    Log.i("HHHHHHHH","wwwww");
                     URL url = new URL(urlWebService);
-
 
                     //Opening the URL using HttpURLConnection
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -266,17 +270,22 @@ public class HomeActivity extends AppCompatActivity {
 
                     //We will use a buffered reader to read the string from service
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    Log.i("HHHHHHHH","aaa");
                     //A simple string to read values from each line
                     String json;
 
                     //reading until we don't find null
                     while ((json = bufferedReader.readLine()) != null) {
-                        Log.d("HHHHHHHH", json);
+                        Log.d("JSONARRAY", json);
                         //appending it to string builder
                         sb.append(json + "\n");
                     }
 
+
+
+                    String jsonReturn = sb.toString().trim();
+
+                    Log.i("JSONRETURN", jsonReturn);
+                    //storeJsonToLocal(jsonReturn);
                     //finally returning the read string
                     return sb.toString().trim();
                 } catch (Exception e) {
@@ -304,8 +313,23 @@ public class HomeActivity extends AppCompatActivity {
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e("STOREERROR:", e.toString());
         }
     }
+
+//    private void createEmptyFile(){
+//        String filename = "_receipts"+".txt";
+//
+//        try {
+//            FileOutputStream outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+//            outputStream.write("[]".getBytes());
+//            outputStream.close();
+//            Log.i("FILECREATE","Done!");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            Log.e("CREATEFILEERROR:", e.toString());
+//        }
+//    }
 
     private String readJsonFile(){
         //String username = Information.user.getUserName();
@@ -343,6 +367,9 @@ public class HomeActivity extends AppCompatActivity {
         JSONArray jsonArray = new JSONArray(json);
         Receipt receipt;
 
+        Log.i("JSONOOOOOO",json);
+        Log.i("JSONLENGHT", Integer.toString(jsonArray.length()));
+
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
 
@@ -370,10 +397,10 @@ public class HomeActivity extends AppCompatActivity {
             //List<Receipt.Item> itemList = new ArrayList<Receipt.Item>();
             //Receipt.Item item = new Receipt().new Item();
 
-            for(int j=0; j<itemarray.length();j++){
-                JSONObject itemObj = itemarray.getJSONObject(i);
-                receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")));
-            }
+//            for(int j=0; j<itemarray.length();j++){
+//                JSONObject itemObj = itemarray.getJSONObject(i);
+//                receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")));
+//            }
 
             Information.receipts.add(receipt);
 
@@ -385,14 +412,17 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     void loadReceiptObjToListView(){
-        String[] receipts = new String[Information.receipts.size()];
+        //if(!Information.receipts.isEmpty()){
+            String[] receipts = new String[Information.receipts.size()];
+            Log.i("RECEIPTSSIZE", Integer.toString(Information.receipts.size()));
 
-        for(int i=0; i<Information.receipts.size(); i++){
-            receipts[i] = String.format("%-35s%-12s%20s",Information.receipts.get(i).getBusinessName(), Information.receipts.get(i).getDate(), Information.receipts.get(i).getTotalCost());
-        }
+            for(int i=0; i<Information.receipts.size(); i++){
+                receipts[i] = String.format("%-35s%-12s%20s",Information.receipts.get(i).getBusinessName(), Information.receipts.get(i).getDate(), Information.receipts.get(i).getTotalCost());
+            }
+            Log.i("RECEIPTSLOADING:", receipts.toString());
 
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, receipts);
-        listView.setAdapter(arrayAdapter);
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, receipts);
+            listView.setAdapter(arrayAdapter);
+        //}
     }
 }
