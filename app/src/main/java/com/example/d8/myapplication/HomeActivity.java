@@ -1,6 +1,7 @@
 package com.example.d8.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -159,7 +160,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    public void onOCR(View view){
+        Intent goOCR = new Intent(this, OCRActivity.class);
+        startActivity(goOCR);
 
+    }
 
 
 
