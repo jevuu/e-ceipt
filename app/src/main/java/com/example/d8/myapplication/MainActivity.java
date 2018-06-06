@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -24,6 +26,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import java.nio.charset.MalformedInputException;
+
+import static android.content.ContentValues.TAG;
 
 
 //Last modification: Alistair
@@ -54,6 +59,13 @@ public class MainActivity extends AppCompatActivity {
         passET = (EditText)findViewById(R.id.main_pwd);
         btnSign = (Button)findViewById(R.id.main_btn_login);
         btnGms = (Button)findViewById(R.id.sign_in_google);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        aUser.mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
 
@@ -62,11 +74,21 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in
-        if(aUser.isLoggedIn()) {
+        FirebaseAuth.getInstance().signOut();
+
             Toast.makeText(this, "User Already Logged in? Invalid Exit.",
                     Toast.LENGTH_SHORT).show();
          FirebaseAuth.getInstance().signOut();
-        }
+
+         aUser.mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                 new OnCompleteListener<Void>() {
+                     @Override
+                     public void onComplete(@NonNull Task<Void> task) {
+                         Toast.makeText(MainActivity.this, "User Already Logged in? Invalid Exit.",
+                                 Toast.LENGTH_SHORT).show();
+                     }
+                 });
+
     }
 
     @Override
@@ -74,20 +96,12 @@ public class MainActivity extends AppCompatActivity {
     super.onDestroy();
         FirebaseAuth.getInstance().signOut();
 
-
     }
 
-    //Opens the Registration Activity
+    //Opens the Google Sign In applicaiton
     public void onGoogle(View view){
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        aUser.mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         Intent signInIntent = aUser.mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, 9001);
-
-
 
     }
     @Override
@@ -120,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = aUser.mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Google Auth Passed",
                                     Toast.LENGTH_SHORT).show();
+                            onReady(this, "a");
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -137,8 +152,14 @@ public class MainActivity extends AppCompatActivity {
     startActivity(goToReg);
 
     }
-    //Opens the Registration Activity
-    public void onReady(OnCompleteListener<AuthResult> view){
+    //Opens the Home Activity
+    public void onReady(OnCompleteListener<AuthResult> view, String execType){
+        //Excute VM connections
+        BackgroundWorker bgWorker = new BackgroundWorker(MainActivity.this);
+        bgWorker.execute(execType, aUser.getUserId(), aUser.getNickName());
+
+
+
         Intent goToReg = new Intent(this, HomeActivity.class);
         startActivity(goToReg);
 
@@ -180,7 +201,9 @@ public class MainActivity extends AppCompatActivity {
             aUser.mAuth.signInWithEmailAndPassword(userString, passString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
+                    aUser.MUser();
+
+                    if (task.isSuccessful() && aUser.mUser.isEmailVerified()) {
                         // Sign in success, update UI with the signed-in user's information
 
                         //get part before @ sign in email address
@@ -195,23 +218,40 @@ public class MainActivity extends AppCompatActivity {
 
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
-                        //Go to home screen
-                        onReady(this);
+                        onReady(this, type);
 
+                    } else if(task.isSuccessful() && aUser.mUser.isEmailVerified() == false) {
+                        //============Fail States for Sign In=================
 
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(MainActivity.this, "Authentication Failed.",
+                        Toast.makeText(MainActivity.this, "Please verify your email to continue, an email has been resent",
                                 Toast.LENGTH_SHORT).show();
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
+                        //Send Validation Email
+                        aUser.mUser.sendEmailVerification()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.d(TAG, "Email sent!");
+                                        }else{
 
+                                            Log.d(TAG, "Failed Email Verification!");
+                                        }
+                                    }
+                                });
+
+                    }else {
+                          Toast.makeText(MainActivity.this, "Username/Password Incorrect",
+                                  Toast.LENGTH_SHORT).show();
+                          btnSign.setText(getString(R.string.main_login));
+                          btnSign.setClickable(true);
+                      }
                     }
-                }
+                 //===================================//
+
             });
-            //My.SQL VM Connection
-            BackgroundWorker bgWorker = new BackgroundWorker(this);
-            bgWorker.execute(type, userString, passString);
+
 
 
         }
