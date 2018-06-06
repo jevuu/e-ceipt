@@ -160,9 +160,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    public void onBarcode(View view){
-        Intent goBarcode = new Intent(this, BarcodeActivity.class);
-        startActivity(goBarcode);
+    public void onOCR(View view){
+        Intent goOCR = new Intent(this, OCRActivity.class);
+        startActivity(goOCR);
 
     }
 
