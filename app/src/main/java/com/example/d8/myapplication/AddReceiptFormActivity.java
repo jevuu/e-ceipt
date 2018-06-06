@@ -1,11 +1,13 @@
 package com.example.d8.myapplication;
 
+import android.app.DatePickerDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,12 +24,19 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class AddReceiptFormActivity extends AppCompatActivity {
     EditText companyName;
     EditText receiptDate;
     Button receiptSubmitButton;
 
+    int mYear;
+    int mMonth;
+    int mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +45,40 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
         companyName = (EditText)findViewById(R.id.company_name);
         receiptDate = (EditText)findViewById(R.id.receipt_date);
+
+        String cDateInString = getCurrentDate();
+
+        receiptDate.setText(cDateInString);
+
+        receiptDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                // To show current date in the datepicker
+                Calendar mcurrentDate = Calendar.getInstance();
+                mYear = mcurrentDate.get(Calendar.YEAR);
+                mMonth = mcurrentDate.get(Calendar.MONTH);
+                mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(AddReceiptFormActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        Calendar myCalendar = Calendar.getInstance();
+                        myCalendar.set(Calendar.YEAR, selectedyear);
+                        myCalendar.set(Calendar.MONTH, selectedmonth);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, selectedday);
+                        String myFormat = "dd/MM/yyyy"; //Change as you need
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
+                        receiptDate.setText(sdf.format(myCalendar.getTime()));
+
+                        mDay = selectedday;
+                        mMonth = selectedmonth;
+                        mYear = selectedyear;
+                    }
+                }, mYear, mMonth, mDay);
+                //mDatePicker.setTitle("Select date");
+                mDatePicker.show();
+            }
+        });
 
         receiptSubmitButton = (Button)findViewById(R.id.receipt_submit_btn);
 
@@ -173,5 +216,23 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
         new SendDB().execute();
     }
+
+    String getCurrentDate(){
+        //get current date and time
+        Date currentDate = new Date();
+        Calendar calender = Calendar.getInstance();
+        int cDay = calender.get(Calendar.DAY_OF_MONTH);
+        int cMonth = calender.get(Calendar.MONTH) + 1;
+        int cYear = calender.get(Calendar.YEAR);
+        int cHour = calender.get(Calendar.HOUR);
+        int cMinute = calender.get(Calendar.MINUTE);
+        int cSecond = calender.get(Calendar.SECOND);
+
+        //String cDateTime = ""+cDay+"/"+cMonth+"/"+cYear+" "+cHour+":"+cMinute+":"+cSecond;
+        String cDateInString = ""+cDay+"/"+cMonth+"/"+cYear;
+
+        return cDateInString;
+    }
+
 
 }
