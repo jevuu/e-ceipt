@@ -61,15 +61,7 @@ public class HomeActivity extends AppCompatActivity {
         initCustomSpinner();
         //createEmptyFile();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(getBaseContext(),""+position, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getBaseContext(),ReceiptDetailActivity.class);
-                intent.putExtra("RECEIPTINDEX", Integer.toString(position));
-                startActivity(intent);
-            }
-        });
+
         try{
             String json = readJsonFile();
             Log.i("JSONINMAIN:", json);
@@ -86,6 +78,16 @@ public class HomeActivity extends AppCompatActivity {
 
         //Log.d("RECEIPTOBJ:",Information.receipts.size().);
         Log.d("RECEIPTOBJ3:",Information.receipts.get(1).getReceipId());
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(getBaseContext(),""+position, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getBaseContext(),ReceiptDetailActivity.class);
+                intent.putExtra("RECEIPTINDEX", Integer.toString(position));
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -181,12 +183,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void getData(final String urlWebService) {
 
-        try{
-            URL url = new URL(urlWebService);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        }catch(Exception e){
 
-        }
     }
 
 
@@ -203,7 +200,7 @@ public class HomeActivity extends AppCompatActivity {
 
     //code from "https://www.simplifiedcoding.net/android-json-parsing-tutorial/"
     //this method is actually fetching the json string
-    private void getJSON(final String urlWebService) {
+    private String getJSON(final String urlWebService) {
         /*
         * As fetching the json string is a network operation
         * And we cannot perform a network operation in main thread
@@ -234,7 +231,7 @@ public class HomeActivity extends AppCompatActivity {
                 try{
                     //loadIntoListView(s);
 
-                    storeJsonToLocal(s);
+                    //storeJsonToLocal(s);
 
 
                 }catch(Exception e){
@@ -285,7 +282,7 @@ public class HomeActivity extends AppCompatActivity {
                     String jsonReturn = sb.toString().trim();
 
                     Log.i("JSONRETURN", jsonReturn);
-                    //storeJsonToLocal(jsonReturn);
+                    storeJsonToLocal(jsonReturn);
                     //finally returning the read string
                     return sb.toString().trim();
                 } catch (Exception e) {
@@ -299,7 +296,16 @@ public class HomeActivity extends AppCompatActivity {
 
         //creating asynctask object and executing it
         GetJSON getJSON = new GetJSON();
-        getJSON.execute();
+        String result="";
+        try{
+            result = getJSON.execute().get();
+        }catch (Exception e){
+
+        }
+
+        Log.i("REEEESULT:", result);
+        return result;
+
     }
 
 
