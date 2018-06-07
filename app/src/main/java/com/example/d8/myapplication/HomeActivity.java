@@ -20,6 +20,9 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.barcode.Barcode;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -175,10 +178,34 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void onAddOption(View view){
+
+    public void onAddOption(View view) {
         Intent goOption = new Intent(this, AddReceiptOptionActivity.class);
         startActivity(goOption);
-
+    }
+//
+//    public void onOCR(View view){
+//        Intent goOCR = new Intent(this, OCRActivity.class);
+//        startActivity(goOCR);
+//    }
+//>>>>>>> f29c41e8b3cae03b1ba883630dd8afb9ad4bf52e
+//
+    public void onBarcode(View view){
+        Intent goBarcode = new Intent(this, BarcodeActivity.class);
+        startActivity(goBarcode);
+    }
+    //Called when Barcode scanner picks up a result
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == 0){
+            if (resultCode == CommonStatusCodes.SUCCESS){
+                if (data != null){
+                    Barcode barcode = data.getParcelableExtra("barcode");
+                    Toast.makeText(getBaseContext(), "Barcode value: " + barcode.displayValue, Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getBaseContext(), "No barcode found", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
     //code from "https://www.simplifiedcoding.net/android-json-parsing-tutorial/"

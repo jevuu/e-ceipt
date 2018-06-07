@@ -39,7 +39,7 @@ import java.nio.charset.MalformedInputException;
 import static android.content.ContentValues.TAG;
 
 
-//Last modification: Alistair
+//Last modification: Alistair 6/7/2018
 //Firebase Support Added
 
 public class MainActivity extends AppCompatActivity {
@@ -108,24 +108,24 @@ public class MainActivity extends AppCompatActivity {
         // Check if user is signed in
         FirebaseAuth.getInstance().signOut();
 
-            Toast.makeText(this, "User Already Logged in? Invalid Exit.",
-                    Toast.LENGTH_SHORT).show();
-         FirebaseAuth.getInstance().signOut();
+        Toast.makeText(this, "User Already Logged in? Invalid Exit.",
+                Toast.LENGTH_SHORT).show();
+        FirebaseAuth.getInstance().signOut();
 
-         aUser.mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                 new OnCompleteListener<Void>() {
-                     @Override
-                     public void onComplete(@NonNull Task<Void> task) {
-                         Toast.makeText(MainActivity.this, "User Already Logged in? Invalid Exit.",
-                                 Toast.LENGTH_SHORT).show();
-                     }
-                 });
+        aUser.mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(MainActivity.this, "User Already Logged in? Invalid Exit.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 
     @Override
     public void onDestroy(){
-    super.onDestroy();
+        super.onDestroy();
         FirebaseAuth.getInstance().signOut();
 
     }
@@ -181,8 +181,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Opens the Registration Activity
     public void onRegister(View view){
-    Intent goToReg = new Intent(this, RegisterActivity.class);
-    startActivity(goToReg);
+        Intent goToReg = new Intent(this, RegisterActivity.class);
+        startActivity(goToReg);
 
     }
     //Opens the Home Activity
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         Intent goToReg = new Intent(this, HomeActivity.class);
         startActivity(goToReg);
 
-   }
+    }
     //Opens the Password Reset  Activity
     public void onPassW(View view){
         Intent goToPws = new Intent(this, PassActivity.class);
@@ -294,13 +294,13 @@ public class MainActivity extends AppCompatActivity {
                                 });
 
                     }else {
-                          Toast.makeText(MainActivity.this, "Username/Password Incorrect",
-                                  Toast.LENGTH_SHORT).show();
-                          btnSign.setText(getString(R.string.main_login));
-                          btnSign.setClickable(true);
-                      }
+                        Toast.makeText(MainActivity.this, "Username/Password Incorrect",
+                                Toast.LENGTH_SHORT).show();
+                        btnSign.setText(getString(R.string.main_login));
+                        btnSign.setClickable(true);
                     }
-                 //===================================//
+                }
+                //===================================//
 
             });
 
