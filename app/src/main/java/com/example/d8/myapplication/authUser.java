@@ -56,49 +56,49 @@ class authUser extends User{
 
     //Creates a User Object
     //This also updates a firebase profile with matching data for the display name
-  void createUser() {
-      MUser();
+    void createUser() {
+        MUser();
 
-      if (mUser != null) {
-          String name = mUser.getEmail();
-          String[] n = name.split("@");
+        if (mUser != null) {
+            String name = mUser.getEmail();
+            String[] n = name.split("@");
 
-          setNickName(name = n[0]);
-          setUserId(getNickName());
-          setEmail(mUser.getEmail());
-          photoUrl = mUser.getPhotoUrl();
-
-
-          UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                  .setDisplayName(name)
-                  .build();
-          mUser.updateProfile(profileUpdates)
-                  .addOnCompleteListener(new OnCompleteListener<Void>() {
-                      @Override
-                      public void onComplete(@NonNull Task<Void> task) {
-                          if (task.isSuccessful()) {
-                              System.out.println("Profile Updated!");
-                          }
-                      }
-                  });
-          mUser.sendEmailVerification()
-                  .addOnCompleteListener(new OnCompleteListener<Void>() {
-                      @Override
-                      public void onComplete(@NonNull Task<Void> task) {
-                          if (task.isSuccessful()) {
-                              Log.d(TAG, "Email sent!");
-                          } else {
-
-                              Log.d(TAG, "Failed Email Verification!");
-                          }
-                      }
-                  });
+            setNickName(name = n[0]);
+            setUserId(getNickName());
+            setEmail(mUser.getEmail());
+            photoUrl = mUser.getPhotoUrl();
 
 
-          System.out.println("Account is as follows:" + getNickName() + " " + getEmail() + " " + photoUrl);
-      }
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(name)
+                    .build();
+            mUser.updateProfile(profileUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                System.out.println("Profile Updated!");
+                            }
+                        }
+                    });
+            mUser.sendEmailVerification()
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "Email sent!");
+                            } else {
 
-  }
+                                Log.d(TAG, "Failed Email Verification!");
+                            }
+                        }
+                    });
+
+
+            System.out.println("Account is as follows:" + getNickName() + " " + getEmail() + " " + photoUrl);
+        }
+
+    }
 
 
 
