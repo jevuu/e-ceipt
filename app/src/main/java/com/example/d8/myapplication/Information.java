@@ -10,5 +10,5 @@ public class Information {
     public static List<Receipt> receipts = new ArrayList<Receipt>();
     public static authUser authUser;
 
-    public static User user = new User();
+    //public static User user = new User();
 }

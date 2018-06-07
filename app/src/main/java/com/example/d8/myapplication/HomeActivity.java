@@ -44,8 +44,9 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     ListView listView;
-    String username = Information.user.getName();
-    String userFirebaseUID = Information.user.getFirebaseUID();
+    String username = Information.authUser.mAuth.getCurrentUser().getDisplayName();
+    String userFirebaseUID = Information.authUser.mAuth.getCurrentUser().getUid().toString();
+    String email = Information.authUser.mAuth.getCurrentUser().getEmail();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Log.i("SignInByUser: ", username);
         Log.i("UserFirebaseUID: ", userFirebaseUID);
+        Log.i("UserEmail: ", email);
 
         listView = (ListView)findViewById(R.id.receipts_list_view);
 

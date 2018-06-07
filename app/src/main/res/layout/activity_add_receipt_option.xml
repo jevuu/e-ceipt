@@ -17,9 +17,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/btn_roundcorner"
-        android:text="Add receipt form"
+        android:text="@string/add_receipt_option_add_form"
         android:textColor="@color/colorEceiptWhite"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <Button
@@ -30,9 +30,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/btn_roundcorner"
-        android:text="Add receipt by QR code"
+        android:text="@string/add_receipt_option_scan_qr"
         android:textColor="@color/colorEceiptWhite"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <Button
@@ -43,9 +43,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/btn_roundcorner"
-        android:text="Scan real receipt"
+        android:text="@string/add_receipt_option_scan_real_receipt"
         android:textColor="@color/colorEceiptWhite"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
 </LinearLayout>

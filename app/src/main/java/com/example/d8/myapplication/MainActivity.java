@@ -55,23 +55,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String readUserLocalJson = readJsonFile();
-        Log.d("UserLocalJson", readUserLocalJson);
-        String isLogin = "false";
-        try{
-            JSONObject userJsonObj = new JSONObject(readUserLocalJson);
-            isLogin = userJsonObj.getString("isLogin");
-            Log.d("ISLOGIN", isLogin);
-
-            if(Boolean.parseBoolean(isLogin)){
-                Information.user.setName(userJsonObj.getString("name"));
-                Information.user.setFirebaseUID(userJsonObj.getString("firebaseUID"));
-                Intent homeIntent = new Intent(this, HomeActivity.class);
-                startActivity(homeIntent);
-            }
-        }catch (Exception e){
-            Log.e("USERJSONOBJERRPR", e.toString());
-        }
+//        String readUserLocalJson = readJsonFile();
+//        Log.d("UserLocalJson", readUserLocalJson);
+//        String isLogin = "false";
+//        try{
+//            JSONObject userJsonObj = new JSONObject(readUserLocalJson);
+//            isLogin = userJsonObj.getString("isLogin");
+//            Log.d("ISLOGIN", isLogin);
+//
+//            if(Boolean.parseBoolean(isLogin)){
+//                Information.user.setName(userJsonObj.getString("name"));
+//                Information.user.setFirebaseUID(userJsonObj.getString("firebaseUID"));
+//                Intent homeIntent = new Intent(this, HomeActivity.class);
+//                startActivity(homeIntent);
+//            }
+//        }catch (Exception e){
+//            Log.e("USERJSONOBJERRPR", e.toString());
+//        }
 
 
 
@@ -246,30 +246,30 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                        //Store user info in Information.user object
-                        if(aUser.isLoggedIn()){
-                            String firebaseUserId = aUser.mAuth.getCurrentUser().getUid().toString();
-                            String userEmail = aUser.mAuth.getCurrentUser().getEmail();
-                            String displayName = aUser.mAuth.getCurrentUser().getDisplayName();
-
-                            Log.d("CURRENTUSEREMAILzzzz", userEmail);
-                            Log.d("CURRENTUSERIDzzzz", firebaseUserId);
-                            Log.d("DISPLAYNAME", displayName);
-                            Log.d("USEREMAIL", userEmail);
-
-                            Information.user.setFirebaseUID(firebaseUserId);
-                            Information.user.setName(displayName);
-                            Information.user.setEmail(userEmail);
-                            Information.user.setLogin(true);
-                            try{
-                                storeUserInfoToLocal(Information.user);
-                            }catch (Exception e){
-
-                            }
-
-                            Toast.makeText(MainActivity.this, "Authentication Passed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+//                        //Store user info in Information.user object
+//                        if(aUser.isLoggedIn()){
+//                            String firebaseUserId = aUser.mAuth.getCurrentUser().getUid().toString();
+//                            String userEmail = aUser.mAuth.getCurrentUser().getEmail();
+//                            String displayName = aUser.mAuth.getCurrentUser().getDisplayName();
+//
+//                            Log.d("CURRENTUSEREMAILzzzz", userEmail);
+//                            Log.d("CURRENTUSERIDzzzz", firebaseUserId);
+//                            Log.d("DISPLAYNAME", displayName);
+//                            Log.d("USEREMAIL", userEmail);
+//
+//                            Information.user.setFirebaseUID(firebaseUserId);
+//                            Information.user.setName(displayName);
+//                            Information.user.setEmail(userEmail);
+//                            Information.user.setLogin(true);
+//                            try{
+//                                storeUserInfoToLocal(Information.user);
+//                            }catch (Exception e){
+//
+//                            }
+//
+//                            Toast.makeText(MainActivity.this, "Authentication Passed",
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
                         onReady(this, type);
 
                     } else if(task.isSuccessful() && aUser.mUser.isEmailVerified() == false) {
@@ -311,46 +311,46 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void storeUserInfoToLocal(User user) throws JSONException {
-        //String username = Information.user.getUserName();
-        String filename = "_user"+".txt";
-
-        try {
-            //generate user in json format
-            JSONObject userJson = new JSONObject();
-
-            userJson.put("name",user.getName());
-            userJson.put("firebaseUID",user.getFirebaseUID());
-            userJson.put("email", user.getEmail());
-            userJson.put("isLogin",user.isLogin());
-
-            Log.d("USERJSON", userJson.toString());
-            FileOutputStream outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-            outputStream.write(userJson.toString().getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("STOREERROR:", e.toString());
-        }
-    }
-
-    private String readJsonFile(){
-        //String username = Information.user.getUserName();
-        String filename = "_user"+".txt";
-        String json = "";
-        try{
-            FileInputStream inputStream = openFileInput(filename);
-            int size = inputStream.available();
-            byte[] buffer = new byte[size];
-            inputStream.read(buffer);
-            inputStream.close();
-            json = new String(buffer);
-            //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
-            return json;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return "null";
-    }
+//    private void storeUserInfoToLocal(User user) throws JSONException {
+//        //String username = Information.user.getUserName();
+//        String filename = "_user"+".txt";
+//
+//        try {
+//            //generate user in json format
+//            JSONObject userJson = new JSONObject();
+//
+//            userJson.put("name",user.getName());
+//            userJson.put("firebaseUID",user.getFirebaseUID());
+//            userJson.put("email", user.getEmail());
+//            userJson.put("isLogin",user.isLogin());
+//
+//            Log.d("USERJSON", userJson.toString());
+//            FileOutputStream outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+//            outputStream.write(userJson.toString().getBytes());
+//            outputStream.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            Log.e("STOREERROR:", e.toString());
+//        }
+//    }
+//
+//    private String readJsonFile(){
+//        //String username = Information.user.getUserName();
+//        String filename = "_user"+".txt";
+//        String json = "";
+//        try{
+//            FileInputStream inputStream = openFileInput(filename);
+//            int size = inputStream.available();
+//            byte[] buffer = new byte[size];
+//            inputStream.read(buffer);
+//            inputStream.close();
+//            json = new String(buffer);
+//            //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
+//            return json;
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return "null";
+//    }
 
 }
