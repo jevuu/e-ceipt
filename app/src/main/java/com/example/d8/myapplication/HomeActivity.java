@@ -44,14 +44,16 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     ListView listView;
-    String username = "johnDoe";
+    String username = Information.user.getName();
+    String userFirebaseUID = Information.user.getFirebaseUID();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //Log.i("SignInByUser: ", Information.user.getUserName());
+        Log.i("SignInByUser: ", username);
+        Log.i("UserFirebaseUID: ", userFirebaseUID);
 
         listView = (ListView)findViewById(R.id.receipts_list_view);
 
@@ -61,11 +63,8 @@ public class HomeActivity extends AppCompatActivity {
 
         try{
             String json = readJsonFile();
-            Log.i("JSONINMAIN:", json);
             if(Information.receipts.isEmpty()){
-                Log.i("RECEIPTSEMPTY","Empty");
                 loadReceiptsObj(json);
-                Log.i("RECEIPTSEMPTY2","Empty");
             }
             //loadIntoListView(json);
             loadReceiptObjToListView();

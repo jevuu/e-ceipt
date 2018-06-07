@@ -1,6 +1,8 @@
 package com.example.d8.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.icu.text.IDNA;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -26,6 +28,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.nio.charset.MalformedInputException;
 
 import static android.content.ContentValues.TAG;
@@ -46,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String readUserLocalJson = readJsonFile();
+        Log.d("UserLocalJson", readUserLocalJson);
+
+
         //Firebase
         aUser = new authUser();
 
@@ -66,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         aUser.mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
+
     }
 
 
@@ -206,18 +222,37 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful() && aUser.mUser.isEmailVerified()) {
                         // Sign in success, update UI with the signed-in user's information
 
-                        //get part before @ sign in email address
-                        int indexOfAtSign = userString.indexOf("@");
-                        String userNameInEmail="";
-                        if(indexOfAtSign!=-1){
-                            userNameInEmail = userString.substring(0,indexOfAtSign);
-                        }
 
-                        Toast.makeText(MainActivity.this, "Authentication Passed"+userNameInEmail,
-                                Toast.LENGTH_SHORT).show();
 
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
+
+
+
+                        //Store user info in Information.user object
+                        if(aUser.isLoggedIn()){
+                            String firebaseUserId = aUser.mAuth.getCurrentUser().getUid().toString();
+                            String userEmail = aUser.mAuth.getCurrentUser().getEmail();
+                            String displayName = aUser.mAuth.getCurrentUser().getDisplayName();
+
+                            Log.d("CURRENTUSEREMAILzzzz", userEmail);
+                            Log.d("CURRENTUSERIDzzzz", firebaseUserId);
+                            Log.d("DISPLAYNAME", displayName);
+                            Log.d("USEREMAIL", userEmail);
+
+                            Information.user.setFirebaseUID(firebaseUserId);
+                            Information.user.setName(displayName);
+                            Information.user.setEmail(userEmail);
+                            Information.user.setLogin(true);
+                            try{
+                                storeUserInfoToLocal(Information.user);
+                            }catch (Exception e){
+
+                            }
+
+                            Toast.makeText(MainActivity.this, "Authentication Passed",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                         onReady(this, type);
 
                     } else if(task.isSuccessful() && aUser.mUser.isEmailVerified() == false) {
@@ -257,6 +292,48 @@ public class MainActivity extends AppCompatActivity {
         }
         //===================================//
 
+    }
+
+    private void storeUserInfoToLocal(User user) throws JSONException {
+        //String username = Information.user.getUserName();
+        String filename = "_user"+".txt";
+
+        try {
+            //generate user in json format
+            JSONObject userJson = new JSONObject();
+
+            userJson.put("name",user.getName());
+            userJson.put("firebaseUID",user.getFirebaseUID());
+            userJson.put("email", user.getEmail());
+            userJson.put("isLogin",user.isLogin());
+
+            Log.d("USERJSON", userJson.toString());
+            FileOutputStream outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            //outputStream.write(json.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("STOREERROR:", e.toString());
+        }
+    }
+
+    private String readJsonFile(){
+        //String username = Information.user.getUserName();
+        String filename = "_user"+".txt";
+        String json = "";
+        try{
+            FileInputStream inputStream = openFileInput(filename);
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
+            inputStream.read(buffer);
+            inputStream.close();
+            json = new String(buffer);
+            //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
+            return json;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
