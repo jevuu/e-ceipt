@@ -9,7 +9,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/receiptsnap_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -27,18 +27,32 @@
             android:value="barcode" /> -->
 
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".HomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".HomeActivity"></activity>
+         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".WelcomeActivity" />
-        <activity android:name=".ReceiptDetailActivity"></activity>
-        <activity android:name=".PassActivity"></activity>
+        <activity android:name=".ReceiptDetailActivity" />
+        <activity android:name=".PassActivity" />
+        <activity android:name=".AddReceiptOptionActivity" />
+        <activity android:name=".AddReceiptFormActivity">
+
+        </activity>
+<!--<<<<<<< HEAD-->
+<!--=======-->
+        <!--<activity android:name=".HomeActivity"></activity>-->
+        <!--<activity android:name=".RegisterActivity" />-->
+        <!--<activity android:name=".WelcomeActivity" />-->
+        <!--<activity android:name=".ReceiptDetailActivity"></activity>-->
+        <!--<activity android:name=".PassActivity"></activity>-->
         <activity android:name=".OCRActivity" />
+<!--&gt;>>>>>> 27b86939b0ce596a35bde3aeb26765fa8ab23cfd-->
     </application>
 
 </manifest>
