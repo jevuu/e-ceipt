@@ -57,6 +57,22 @@ public class MainActivity extends AppCompatActivity {
 
         String readUserLocalJson = readJsonFile();
         Log.d("UserLocalJson", readUserLocalJson);
+        String isLogin = "false";
+        try{
+            JSONObject userJsonObj = new JSONObject(readUserLocalJson);
+            isLogin = userJsonObj.getString("isLogin");
+            Log.d("ISLOGIN", isLogin);
+
+            if(Boolean.parseBoolean(isLogin)){
+                Information.user.setName(userJsonObj.getString("name"));
+                Information.user.setFirebaseUID(userJsonObj.getString("firebaseUID"));
+                Intent homeIntent = new Intent(this, HomeActivity.class);
+                startActivity(homeIntent);
+            }
+        }catch (Exception e){
+            Log.e("USERJSONOBJERRPR", e.toString());
+        }
+
 
 
         //Firebase
@@ -310,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d("USERJSON", userJson.toString());
             FileOutputStream outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-            //outputStream.write(json.getBytes());
+            outputStream.write(userJson.toString().getBytes());
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -334,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return "null";
     }
 
 }
