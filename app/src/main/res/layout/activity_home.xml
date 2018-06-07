@@ -228,9 +228,9 @@
             android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
-            android:onClick="onOCR"
+            android:onClick="onAddOption"
             android:background="@drawable/btn_roundcorner"
-            android:text="Scan"
+            android:text="Add"
             android:textColor="@color/colorEceiptWhite"
             android:textSize="18sp"
             android:textStyle="bold" />

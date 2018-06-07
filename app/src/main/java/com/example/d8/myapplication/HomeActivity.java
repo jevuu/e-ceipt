@@ -175,9 +175,9 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void onOCR(View view){
-        Intent goOCR = new Intent(this, OCRActivity.class);
-        startActivity(goOCR);
+    public void onAddOption(View view){
+        Intent goOption = new Intent(this, AddReceiptOptionActivity.class);
+        startActivity(goOption);
 
     }
 
