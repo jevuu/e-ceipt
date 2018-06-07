@@ -55,12 +55,9 @@ public class HomeActivity extends AppCompatActivity {
 
         listView = (ListView)findViewById(R.id.receipts_list_view);
 
-        //getData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         //new SyncronizeData().execute("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         initCustomSpinner();
-        //createEmptyFile();
-
 
         try{
             String json = readJsonFile();
@@ -75,9 +72,6 @@ public class HomeActivity extends AppCompatActivity {
         }catch(JSONException e){
             Log.e("JSONERROR", e.toString());
         }
-
-        //Log.d("RECEIPTOBJ:",Information.receipts.size().);
-        Log.d("RECEIPTOBJ3:",Information.receipts.get(1).getReceipId());
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -105,7 +99,6 @@ public class HomeActivity extends AppCompatActivity {
                 String item = parent.getItemAtPosition(position).toString();
                 //Toast.makeText(parent.getContext(), "Android Custom Spinner Example Output..." + item, Toast.LENGTH_LONG).show();
             }
-
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -181,22 +174,11 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void getData(final String urlWebService) {
-
-
-    }
-
-
     public void onOCR(View view){
         Intent goOCR = new Intent(this, OCRActivity.class);
         startActivity(goOCR);
 
     }
-
-
-
-
-
 
     //code from "https://www.simplifiedcoding.net/android-json-parsing-tutorial/"
     //this method is actually fetching the json string
@@ -227,20 +209,6 @@ public class HomeActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 
-                Log.i("JSONFROMDB", s);
-                try{
-                    //loadIntoListView(s);
-
-                    //storeJsonToLocal(s);
-
-
-                }catch(Exception e){
-                    Log.e("ERRORZZZZ:", e.toString());
-                }
-
-                //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getApplicationContext(), "dhfjshjfs", Toast.LENGTH_SHORT).show();
-                //Log.i("Json:" , s.toString());
             }
 
             @Override
@@ -277,12 +245,11 @@ public class HomeActivity extends AppCompatActivity {
                         sb.append(json + "\n");
                     }
 
-
-
                     String jsonReturn = sb.toString().trim();
 
                     Log.i("JSONRETURN", jsonReturn);
                     storeJsonToLocal(jsonReturn);
+
                     //finally returning the read string
                     return sb.toString().trim();
                 } catch (Exception e) {
@@ -303,9 +270,7 @@ public class HomeActivity extends AppCompatActivity {
 
         }
 
-        Log.i("REEEESULT:", result);
         return result;
-
     }
 
 
@@ -322,20 +287,6 @@ public class HomeActivity extends AppCompatActivity {
             Log.e("STOREERROR:", e.toString());
         }
     }
-
-//    private void createEmptyFile(){
-//        String filename = "_receipts"+".txt";
-//
-//        try {
-//            FileOutputStream outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-//            outputStream.write("[]".getBytes());
-//            outputStream.close();
-//            Log.i("FILECREATE","Done!");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            Log.e("CREATEFILEERROR:", e.toString());
-//        }
-//    }
 
     private String readJsonFile(){
         //String username = Information.user.getUserName();
@@ -361,7 +312,6 @@ public class HomeActivity extends AppCompatActivity {
         String[] receipts = new String[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-            //receipts[i] = obj.getString("receiptID")+"   "+obj.getString("date")+"  "+obj.getString("totalCost");
             receipts[i] = String.format("%-35s%-12s%20s",obj.getString("businessName"), obj.getString("date"), obj.getString("totalCost"));
         }
 
