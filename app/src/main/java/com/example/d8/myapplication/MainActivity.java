@@ -31,7 +31,7 @@ import java.nio.charset.MalformedInputException;
 import static android.content.ContentValues.TAG;
 
 
-//Last modification: Alistair
+//Last modification: Alistair 6/7/2018
 //Firebase Support Added
 
 public class MainActivity extends AppCompatActivity {

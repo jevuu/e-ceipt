@@ -13,6 +13,8 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import static android.content.ContentValues.TAG;
 
 //Represents the authorized user(the active user) within the App.
+//Last Modification: 6/7/2018 Alistair
+
 class authUser extends User{
     //==========Connection Classes=============//
     FirebaseAuth mAuth; //Firebase Connection
