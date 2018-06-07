@@ -34,6 +34,7 @@ class authUser extends User{
         e.execute("register","http://myvmlab.senecacollege.ca:6207/register.php", getUserId(), getNickName(), getEmail());
         System.out.println("D");
 
+
     }
 
     //Returns true when a user's sessions is still active(they can timeout for instance)

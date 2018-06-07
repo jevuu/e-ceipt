@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = aUser.mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Google Auth Passed",
                                     Toast.LENGTH_SHORT).show();
+
                             onReady(this, "a");
 
                         } else {
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         //Excute VM connections
         BackgroundWorker bgWorker = new BackgroundWorker(MainActivity.this);
         bgWorker.execute(execType, aUser.getUserId(), aUser.getNickName());
-
+        Information.authUser = aUser;
 
 
         Intent goToReg = new Intent(this, HomeActivity.class);
