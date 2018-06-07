@@ -370,55 +370,64 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadReceiptsObj(String json) throws JSONException {
-        JSONArray jsonArray = new JSONArray(json);
-        Receipt receipt;
+        try{
+            JSONArray jsonArray = new JSONArray(json);
+            Receipt receipt;
 
-        Log.i("JSONOOOOOO",json);
-        Log.i("JSONLENGHT", Integer.toString(jsonArray.length()));
+            Log.i("JSONOOOOOO",json);
+            Log.i("JSONLENGHT", Integer.toString(jsonArray.length()));
 
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject obj = jsonArray.getJSONObject(i);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = jsonArray.getJSONObject(i);
 
-            receipt =  new Receipt();
-            Log.d("RECEIPTname:", obj.getString("name"));
-            receipt.setName(obj.getString("name"));
-            Log.d("RECEIPTid:", obj.getString("receiptID"));
-            receipt.setReceipId(obj.getString("receiptID"));
-            Log.d("RECEIPTdate:", obj.getString("date"));
-            receipt.setDate(obj.getString("date"));
-            Log.d("RECEIPTtotalcost:", obj.getString("totalCost"));
-            receipt.setTotalCost(Double.parseDouble(obj.getString("totalCost")));
-            Log.d("RECEIPTtax:", obj.getString("tax"));
-            receipt.setTax(Double.parseDouble(obj.getString("tax")));
-            Log.d("RECEIPTtax:", obj.getString("businessName"));
-            receipt.setBusinessName(obj.getString("businessName"));
+                receipt =  new Receipt();
+                Log.d("RECEIPTname:", obj.getString("name"));
+                receipt.setName(obj.getString("name"));
+                Log.d("RECEIPTid:", obj.getString("receiptID"));
+                receipt.setReceipId(obj.getString("receiptID"));
+                Log.d("RECEIPTdate:", obj.getString("date"));
+                receipt.setDate(obj.getString("date"));
+                Log.d("RECEIPTtotalcost:", obj.getString("totalCost"));
+                receipt.setTotalCost(Double.parseDouble(obj.getString("totalCost")));
+                Log.d("RECEIPTtax:", obj.getString("tax"));
+                receipt.setTax(Double.parseDouble(obj.getString("tax")));
+                Log.d("RECEIPTbusiness:", obj.getString("businessName"));
+                receipt.setBusinessName(obj.getString("businessName"));
 
-            Log.d("RECEIPTOBJ", "name:"+receipt.getName()+
-                    "id:"+receipt.getReceipId()+
-                    "date:"+receipt.getDate()+
-                    "totalCost:"+receipt.getTotalCost()+receipt.getTax());
+                Log.d("RECEIPTOBJ", "name:"+receipt.getName()+
+                        "id:"+receipt.getReceipId()+
+                        "date:"+receipt.getDate()+
+                        "totalCost:"+receipt.getTotalCost()+receipt.getTax());
 
+                JSONArray itemarray = obj.getJSONArray("items");
 
-            JSONArray itemarray = obj.getJSONArray("items");
-            //List<Receipt.Item> itemList = new ArrayList<Receipt.Item>();
-            //Receipt.Item item = new Receipt().new Item();
+                Log.d("ITEMARRAYL:",itemarray.toString());
 
-//            for(int j=0; j<itemarray.length();j++){
-//                JSONObject itemObj = itemarray.getJSONObject(i);
-//                receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")));
-//            }
+                for(int j=0; j<itemarray.length();j++){
+                    JSONObject itemObj = itemarray.getJSONObject(j);
 
-            Information.receipts.add(receipt);
+                    Log.d("ITEMNAME22222", itemObj.getString("itemName"));
+                    Log.d("ITEMDECS", itemObj.getString("itemDesc"));
+                    Log.d("ITEMPRICE", itemObj.getString("itemPrice"));
 
+                    receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")));
+                }
+
+                Information.receipts.add(receipt);
+
+            }
+        }catch(Exception e){
+            Log.e("ERRRRR:",e.toString());
         }
+
         if(!Information.receipts.get(0).getItems().isEmpty()){
-            Log.d("RECEIPTOBJ2:",Information.receipts.get(0).getItems().get(0).getItemName());
+            Log.d("RECEIPTOBJ2:",Information.receipts.get(0).getItems().get(1).getItemName());
 
         }
     }
 
     void loadReceiptObjToListView(){
-        //if(!Information.receipts.isEmpty()){
+        if(!Information.receipts.isEmpty()){
             String[] receipts = new String[Information.receipts.size()];
             Log.i("RECEIPTSSIZE", Integer.toString(Information.receipts.size()));
 
@@ -429,6 +438,6 @@ public class HomeActivity extends AppCompatActivity {
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, receipts);
             listView.setAdapter(arrayAdapter);
-        //}
+        }
     }
 }
