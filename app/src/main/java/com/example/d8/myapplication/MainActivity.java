@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = aUser.mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Google Auth Passed",
                                     Toast.LENGTH_SHORT).show();
+
                             onReady(this, "a");
 
                         } else {
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         //Excute VM connections
         BackgroundWorker bgWorker = new BackgroundWorker(MainActivity.this);
         bgWorker.execute(execType, aUser.getUserId(), aUser.getNickName());
-
+        Information.authUser = aUser;
 
 
         Intent goToReg = new Intent(this, HomeActivity.class);
@@ -205,8 +206,17 @@ public class MainActivity extends AppCompatActivity {
 
                     if (task.isSuccessful() && aUser.mUser.isEmailVerified()) {
                         // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(MainActivity.this, "Authentication Passed",
+
+                        //get part before @ sign in email address
+                        int indexOfAtSign = userString.indexOf("@");
+                        String userNameInEmail="";
+                        if(indexOfAtSign!=-1){
+                            userNameInEmail = userString.substring(0,indexOfAtSign);
+                        }
+
+                        Toast.makeText(MainActivity.this, "Authentication Passed"+userNameInEmail,
                                 Toast.LENGTH_SHORT).show();
+
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
                         onReady(this, type);

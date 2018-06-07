@@ -1,199 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/gradient_splash"
-    tools:context="com.example.d8.myapplication.HomeActivity">
-
-    <LinearLayout
-        android:id="@+id/spinner_layout"
+    android:fillViewport="true">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/gradient_splash"
+        tools:context="com.example.d8.myapplication.HomeActivity">
 
         <LinearLayout
+            android:id="@+id/spinner_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".50"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/spinner_daysnum_select"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight=".50"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinner_daysnum_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".40"
+                    android:spinnerMode="dropdown" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight=".50"
+                    android:background="@android:color/holo_blue_dark" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight=".40"
-                android:spinnerMode="dropdown" />
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="16dp"
-                android:layout_weight=".50"
-                android:background="@android:color/holo_blue_dark" />
+                <Spinner
+                    android:id="@+id/spinner_category_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".50" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight=".50"
+                    android:background="@android:color/holo_blue_dark" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".40"
-            android:orientation="vertical">
-
-            <Spinner
-                android:id="@+id/spinner_category_select"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".50" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="16dp"
-                android:layout_weight=".50"
-                android:background="@android:color/holo_blue_dark" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/item_detail_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight=".50"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="4dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:background="@android:color/holo_blue_dark" />
 
         <LinearLayout
+            android:id="@+id/item_detail_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight=".50"
-            android:background="@color/colorEceiptWhite"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:background="@android:color/holo_blue_dark" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".30"
-                    android:text="Company"
-                    android:textColor="@color/colorEceiptDarkGrey"
-                    android:textSize="22dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".20"
-                    android:text="Date"
-                    android:textColor="@color/colorEceiptDarkGrey"
-                    android:textSize="22dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="33dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".25"
-                    android:gravity="right"
-                    android:text="Cost($)"
-                    android:textColor="@color/colorEceiptDarkGrey"
-                    android:textSize="22dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="350dp"
-                android:layout_height="1dp"
-                android:layout_gravity="center"
-                android:background="@android:color/holo_blue_dark" />
-
-            <ListView
-                android:id="@+id/receipts_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="282dp"
-                android:layout_weight=".40" />
-
-            <View
-                android:layout_width="350dp"
-                android:layout_height="1dp"
-                android:layout_gravity="center"
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
                 android:background="@android:color/holo_blue_dark" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_weight=".50"
+                android:background="@color/colorEceiptWhite"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@android:color/holo_blue_dark" />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Total cost："
-                    android:paddingLeft="20dp"
-                    android:paddingTop="5dp"
+                    android:orientation="horizontal"
                     android:paddingBottom="5dp"
-                    android:textColor="@color/colorEceiptDarkGrey"
-                    android:textSize="22dp"
-                    android:textStyle="bold" />
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="5dp">
 
-                <TextView
-                    android:id="@+id/total_cost"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="18dp"
-                    android:text="$ 100.00"
-                    android:textColor="@color/colorEceiptDarkGrey"
-                    android:textSize="22dp"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".30"
+                        android:text="Company"
+                        android:textColor="@color/colorEceiptDarkGrey"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".20"
+                        android:text="Date"
+                        android:textColor="@color/colorEceiptDarkGrey"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".25"
+                        android:gravity="right"
+                        android:text="Cost($)"
+                        android:textColor="@color/colorEceiptDarkGrey"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/holo_blue_dark" />
+
+                <ListView
+                    android:id="@+id/receipts_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".40" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/holo_blue_dark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total cost："
+                        android:paddingLeft="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="@color/colorEceiptDarkGrey"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/total_cost"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="18dp"
+                        android:text="$ 100.00"
+                        android:textColor="@color/colorEceiptDarkGrey"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@android:color/holo_blue_dark" />
 
 
             </LinearLayout>
 
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_marginBottom="0dp"
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="16dp"
                 android:background="@android:color/holo_blue_dark" />
-
 
         </LinearLayout>
-
-
-        <View
-            android:layout_width="4dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="16dp"
-            android:background="@android:color/holo_blue_dark" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -201,15 +206,16 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:layout_marginTop="16dp"
+        android:weightSum="4"
         >
-
         <Button
             android:id="@+id/analyze_btn"
-            android:layout_width="115dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginBottom="16dp"
+            android:layout_gravity="center"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="3"
             android:background="@drawable/btn_roundcorner"
             android:text="Analyze"
             android:textColor="@color/colorEceiptWhite"
@@ -218,11 +224,12 @@
 
         <Button
             android:id="@+id/scan_btn"
-            android:layout_width="115dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="center"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"
+            android:layout_weight="1"
             android:onClick="onOCR"
             android:background="@drawable/btn_roundcorner"
             android:text="Scan Receipt"
@@ -232,7 +239,7 @@
 
         <Button
             android:id="@+id/scan_btn"
-            android:layout_width="115dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginBottom="16dp"
@@ -245,6 +252,7 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+      
 
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

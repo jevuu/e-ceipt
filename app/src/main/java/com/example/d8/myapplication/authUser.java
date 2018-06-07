@@ -34,18 +34,32 @@ class authUser extends User{
         e.execute("register","http://myvmlab.senecacollege.ca:6207/register.php", getUserId(), getNickName(), getEmail());
         System.out.println("D");
 
+
     }
+
+    //Returns true when a user's sessions is still active(they can timeout for instance)
+    //Possible security risk?
+    boolean isLoggedIn() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //Information.user.setUserName(currentUser.getUid());
+        loggedIn = (currentUser != null);
+        return loggedIn;
+
+    }
+
+
     void MUser(){
         this.mUser = FirebaseAuth.getInstance().getCurrentUser();
     }
+
     //Creates a User Object
     //This also updates a firebase profile with matching data for the display name
   void createUser() {
-        MUser();
+      MUser();
 
-      if(mUser != null) {
+      if (mUser != null) {
           String name = mUser.getEmail();
-          String  [] n = name.split("@");
+          String[] n = name.split("@");
 
           setNickName(name = n[0]);
           setUserId(getNickName());
@@ -71,7 +85,7 @@ class authUser extends User{
                       public void onComplete(@NonNull Task<Void> task) {
                           if (task.isSuccessful()) {
                               Log.d(TAG, "Email sent!");
-                          }else{
+                          } else {
 
                               Log.d(TAG, "Failed Email Verification!");
                           }
@@ -82,8 +96,7 @@ class authUser extends User{
           System.out.println("Account is as follows:" + getNickName() + " " + getEmail() + " " + photoUrl);
       }
 
-
-    }
+  }
 
 
 
