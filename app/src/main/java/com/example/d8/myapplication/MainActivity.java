@@ -1,7 +1,6 @@
 package com.example.d8.myapplication;
 
 import android.content.Intent;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +25,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import java.nio.charset.MalformedInputException;
+
+
 
 import static android.content.ContentValues.TAG;
 
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //Firebase
         aUser = new authUser();
 
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         aUser.mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
+
     }
 
 
@@ -75,19 +79,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in
         FirebaseAuth.getInstance().signOut();
-
-        Toast.makeText(this, "User Already Logged in? Invalid Exit.",
-                Toast.LENGTH_SHORT).show();
-        FirebaseAuth.getInstance().signOut();
-
-        aUser.mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(MainActivity.this, "User Already Logged in? Invalid Exit.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+        aUser.mGoogleSignInClient.signOut();
 
     }
 
@@ -95,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
     public void onDestroy(){
         super.onDestroy();
         FirebaseAuth.getInstance().signOut();
+        aUser.mGoogleSignInClient.signOut();
 
     }
 
@@ -156,8 +149,7 @@ public class MainActivity extends AppCompatActivity {
     //Opens the Home Activity
     public void onReady(OnCompleteListener<AuthResult> view, String execType){
         //Excute VM connections
-        BackgroundWorker bgWorker = new BackgroundWorker(MainActivity.this);
-        bgWorker.execute(execType, aUser.getUserId(), aUser.getNickName());
+        aUser.contactSql_log(this);
         Information.authUser = aUser;
 
 
@@ -203,22 +195,15 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     aUser.MUser();
+                    aUser.createUser();
 
                     if (task.isSuccessful() && aUser.mUser.isEmailVerified()) {
                         // Sign in success, update UI with the signed-in user's information
-
-                        //get part before @ sign in email address
-                        int indexOfAtSign = userString.indexOf("@");
-                        String userNameInEmail="";
-                        if(indexOfAtSign!=-1){
-                            userNameInEmail = userString.substring(0,indexOfAtSign);
-                        }
-
-                        Toast.makeText(MainActivity.this, "Authentication Passed"+userNameInEmail,
-                                Toast.LENGTH_SHORT).show();
-
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
+                        Toast.makeText(MainActivity.this, "Welcome to ECeipt",
+                                Toast.LENGTH_SHORT).show();
+
                         onReady(this, type);
 
                     } else if(task.isSuccessful() && aUser.mUser.isEmailVerified() == false) {
@@ -259,5 +244,6 @@ public class MainActivity extends AppCompatActivity {
         //===================================//
 
     }
+
 
 }

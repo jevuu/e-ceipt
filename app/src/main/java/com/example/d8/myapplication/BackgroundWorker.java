@@ -91,6 +91,63 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
                 e.printStackTrace();
             }
         }
+        else if(type.equals("login")){
+
+            OutputStream os = null;
+            InputStream is = null;
+            HttpURLConnection conn = null;
+
+            try {
+                //constants
+                URL url = new URL(login_URL);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("userName", params[2]);
+
+
+                String message = jsonObject.toString();
+
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout( 10000 /*milliseconds*/ );
+                conn.setConnectTimeout( 15000 /* milliseconds */ );
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.setFixedLengthStreamingMode(message.getBytes().length);
+
+                //make some HTTP header nicety
+                conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+                conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
+                //open
+                conn.connect();
+                //setup send
+                os = new BufferedOutputStream(conn.getOutputStream());
+                os.write(message.getBytes());
+                //clean up
+                os.flush();
+
+                is = conn.getInputStream();
+                BufferedReader bReader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while((line = bReader.readLine()) != null){
+                    result += line;
+                }
+                bReader.close();
+                is.close();
+                conn.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+
+
+
+        }
         return null;
     }
 
@@ -104,7 +161,7 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String result){
         aDialog.setMessage(result);
-       System.out.println(result);
+        System.out.println(result);
 
     }
 

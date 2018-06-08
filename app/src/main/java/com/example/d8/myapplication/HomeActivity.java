@@ -47,28 +47,28 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     ListView listView;
-    String username = "johnDoe";
+    String username = Information.authUser.getUserId();
+    String userFirebaseUID = Information.authUser.getFirebaseUID();
+    String email = Information.authUser.getEmail();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //Log.i("SignInByUser: ", Information.user.getUserName());
+        Log.i("SignInByUser: ", username);
+        Log.i("UserFirebaseUID: ", userFirebaseUID);
+        Log.i("UserEmail: ", email);
 
         listView = (ListView)findViewById(R.id.receipts_list_view);
 
         getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
-        //new SyncronizeData().execute("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         initCustomSpinner();
 
         try{
             String json = readJsonFile();
-            Log.i("JSONINMAIN:", json);
             if(Information.receipts.isEmpty()){
-                Log.i("RECEIPTSEMPTY","Empty");
                 loadReceiptsObj(json);
-                Log.i("RECEIPTSEMPTY2","Empty");
             }
             //loadIntoListView(json);
             loadReceiptObjToListView();
@@ -177,15 +177,17 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void onOCR(View view){
-        Intent goOCR = new Intent(this, OCRActivity.class);
-        startActivity(goOCR);
+
+    public void onAddOption(View view) {
+        Intent goOption = new Intent(this, AddReceiptOptionActivity.class);
+        startActivity(goOption);
     }
 
     public void onBarcode(View view){
         Intent goBarcode = new Intent(this, BarcodeActivity.class);
         startActivity(goBarcode);
     }
+
     //Called when Barcode scanner picks up a result
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == 0){
