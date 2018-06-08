@@ -47,9 +47,9 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     ListView listView;
-    String username = Information.authUser.mAuth.getCurrentUser().getDisplayName();
-    String userFirebaseUID = Information.authUser.mAuth.getCurrentUser().getUid().toString();
-    String email = Information.authUser.mAuth.getCurrentUser().getEmail();
+    String username = Information.authUser.getUserId();
+    String userFirebaseUID = Information.authUser.getFirebaseUID();
+    String email = Information.authUser.getEmail();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,6 @@ public class HomeActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.receipts_list_view);
 
         getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
-        //new SyncronizeData().execute("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         initCustomSpinner();
 
         try{
@@ -183,17 +182,12 @@ public class HomeActivity extends AppCompatActivity {
         Intent goOption = new Intent(this, AddReceiptOptionActivity.class);
         startActivity(goOption);
     }
-//
-//    public void onOCR(View view){
-//        Intent goOCR = new Intent(this, OCRActivity.class);
-//        startActivity(goOCR);
-//    }
-//>>>>>>> f29c41e8b3cae03b1ba883630dd8afb9ad4bf52e
-//
+
     public void onBarcode(View view){
         Intent goBarcode = new Intent(this, BarcodeActivity.class);
         startActivity(goBarcode);
     }
+
     //Called when Barcode scanner picks up a result
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (requestCode == 0){
