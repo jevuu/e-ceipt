@@ -1,6 +1,8 @@
 package com.example.d8.myapplication;
 
 //A Generic user
+//This user represents a parent generic class for all users
+//Last Modification: 6/7/2018
 
 class User {
     //====Atr====//
