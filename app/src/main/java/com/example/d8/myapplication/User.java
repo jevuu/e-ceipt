@@ -9,6 +9,7 @@ class User {
     String name;
 
 
+
     public String getEmail() {
         return email;
     }
@@ -24,7 +25,6 @@ class User {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
 
     public String getName() {
         return name;
