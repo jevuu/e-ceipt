@@ -1,32 +1,40 @@
 package com.example.d8.myapplication;
 
 //A Generic user
+//This user represents a parent generic class for all users
+//Last Modification: 6/7/2018
 
 class User {
     //====Atr====//
-  private  String userName;
-  private String passWord;
-    //==============//
+    String userId;
+    String email;
+    String name;
 
-    public String getUserName() {
-        return userName;
+
+
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
+    public String getName() {
+        return name;
+    }
 
-
-
+    public void setName(String name) {
+        this.name = name;
+    }
 
 
 }

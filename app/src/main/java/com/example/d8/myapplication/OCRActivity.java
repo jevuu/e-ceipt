@@ -162,14 +162,14 @@ public final class OCRActivity extends AppCompatActivity {
                 .show();
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent e) {
-        boolean b = scaleGestureDetector.onTouchEvent(e);
+   // @Override
+   // public boolean onTouchEvent(MotionEvent e) {
+     //   boolean b = scaleGestureDetector.onTouchEvent(e);
 
-        boolean c = gestureDetector.onTouchEvent(e);
+      //  boolean c = gestureDetector.onTouchEvent(e);
 
-        return b || c || super.onTouchEvent(e);
-    }
+     //   return b || c || super.onTouchEvent(e);
+  //  }
 
     /**
      * Creates and starts the camera.  Note that this uses a higher resolution in comparison

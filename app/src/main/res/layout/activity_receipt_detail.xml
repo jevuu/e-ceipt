@@ -1,142 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_splash"
-    tools:context="com.example.d8.myapplication.ReceiptDetailActivity">
+    android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/business_logo"
-        android:layout_width="220dp"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:scaleType="centerInside"
-        android:layout_centerVertical="true"
-        app:srcCompat="@drawable/walmart_logo"
-        tools:layout_editor_absoluteX="151dp"
-        tools:layout_editor_absoluteY="88dp" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_splash"
+        android:orientation="vertical"
+        tools:context="com.example.d8.myapplication.ReceiptDetailActivity">
 
-    <LinearLayout
-        android:id="@+id/layout_item_list"
-        android:layout_width="360dp"
-        android:layout_height="500dp"
-        android:layout_below="@+id/business_logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorEceiptWhite"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="22dp"
-            android:textStyle="bold"
-            android:paddingLeft="10dp"
-            android:text="Date" />
-        <View
-            android:layout_width="350dp"
-            android:layout_height="1dp"
+        <ImageView
+            android:id="@+id/business_logo"
+            android:layout_width="220dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
-            android:background="@android:color/holo_blue_dark" />
-
-        <ListView
-            android:id="@+id/item_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="420dp" />
-
-        <View
-            android:layout_width="350dp"
-            android:layout_height="1dp"
-            android:layout_gravity="center"
-            android:background="@android:color/holo_blue_dark" />
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="12dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/walmart_logo"
+            tools:layout_editor_absoluteX="151dp"
+            tools:layout_editor_absoluteY="88dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight=".50"
+            android:orientation="horizontal">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total cost："
-                android:paddingLeft="20dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:textColor="@color/colorEceiptDarkGrey"
-                android:textSize="22dp"
-                android:textStyle="bold" />
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:background="@android:color/holo_blue_dark" />
 
-            <TextView
-                android:id="@+id/total_cost"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:paddingTop="5dp"
-                android:paddingBottom="2dp"
-                android:paddingRight="18dp"
-                android:text="$ 100.00"
-                android:textColor="@color/colorEceiptDarkGrey"
-                android:textSize="22dp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/layout_item_list"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".50"
+                android:background="@color/colorEceiptWhite"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@android:color/holo_blue_dark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="20dp"
+                        android:paddingTop="5dp"
+                        android:text="Date: "
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/receipt_detail_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:text="date"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/holo_blue_dark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
 
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="20dp"
+                        android:paddingTop="5dp"
+                        android:text="Name"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:text="Price ($)"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/item_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight=".40" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/holo_blue_dark" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="5dp"
+                        android:text="Total cost："
+                        android:textColor="@color/colorEceiptDarkGrey"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/total_cost"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingBottom="2dp"
+                        android:paddingEnd="18dp"
+                        android:paddingTop="5dp"
+                        android:text="$ 100.00"
+                        android:textColor="@color/colorEceiptDarkGrey"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@android:color/holo_blue_dark" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                android:background="@android:color/holo_blue_dark" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp">
+
+
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/share_logo" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/share_logo" />
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/share_logo" />
+
+            <ImageButton
+                android:id="@+id/imageButton4"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/share_logo" />
         </LinearLayout>
 
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="16dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/layout_item_list"
-        android:orientation="horizontal">
-
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerInside"
-            android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/share_logo" />
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerInside"
-            android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/share_logo" />
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerInside"
-            android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/share_logo" />
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerInside"
-            android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/share_logo" />
-    </LinearLayout>
-
-
-</RelativeLayout>
+</ScrollView>
