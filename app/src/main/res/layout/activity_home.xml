@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,90 +12,74 @@
 
     <LinearLayout
         android:id="@+id/spinner_layout"
-=======
-<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:fillViewport="true">-->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
->>>>>>> master
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/gradient_splash"
-        tools:context="com.example.d8.myapplication.HomeActivity">
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/spinner_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:baselineAligned="false">
+            android:layout_height="match_parent"
+            android:layout_weight=".50"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <Spinner
+                android:id="@+id/spinner_daysnum_select"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_weight=".40"
+                android:spinnerMode="dropdown" />
 
-                <Spinner
-                    android:id="@+id/spinner_daysnum_select"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="16dp"
-                    android:background="@android:color/holo_blue_dark" />
-            </LinearLayout>
-
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <Spinner
-                    android:id="@+id/spinner_category_select"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="16dp"
-                    android:background="@android:color/holo_blue_dark" />
-            </LinearLayout>
-
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_weight=".50"
+                android:background="@android:color/holo_blue_dark" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".40"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/spinner_category_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".50" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_weight=".50"
+                android:background="@android:color/holo_blue_dark" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 
     <LinearLayout
         android:id="@+id/item_detail_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_weight=".50"
         android:orientation="horizontal">
 
         <View
             android:layout_width="4dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:background="@android:color/holo_blue_dark" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight=".50"
             android:background="@color/colorEceiptWhite"
             android:orientation="vertical">
 
@@ -119,34 +102,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight=".30"
-                    android:text="@string/company_name_label_in_listview"
+                    android:text="Company"
                     android:textColor="@color/colorEceiptDarkGrey"
-                    android:textSize="22sp"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight=".20"
-                    android:text="@string/date_label_in_listview"
+                    android:text="Date"
                     android:textColor="@color/colorEceiptDarkGrey"
-                    android:textSize="22sp"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="33dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".25"
-                    android:gravity="end"
-                    android:text="@string/receipt_cost_label_in_listview"
+                    android:gravity="right"
+                    android:text="Cost($)"
                     android:textColor="@color/colorEceiptDarkGrey"
-                    android:textSize="22sp"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="1dp"
                 android:layout_gravity="center"
                 android:background="@android:color/holo_blue_dark" />
@@ -154,11 +137,11 @@
             <ListView
                 android:id="@+id/receipts_list_view"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_height="282dp"
+                android:layout_weight=".40" />
 
             <View
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="1dp"
                 android:layout_gravity="center"
                 android:background="@android:color/holo_blue_dark" />
@@ -171,25 +154,25 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:paddingBottom="5dp"
+                    android:text="Total cost："
+                    android:paddingLeft="20dp"
                     android:paddingTop="5dp"
-                    android:text="@string/total_cost_label"
+                    android:paddingBottom="5dp"
                     android:textColor="@color/colorEceiptDarkGrey"
-                    android:textSize="22sp"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/total_cost"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:paddingBottom="5dp"
+                    android:gravity="left"
                     android:paddingTop="5dp"
-                    android:text="@string/total_cost_input_hint"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="18dp"
+                    android:text="$ 100.00"
                     android:textColor="@color/colorEceiptDarkGrey"
-                    android:textSize="22sp"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
 
@@ -209,7 +192,7 @@
         <View
             android:layout_width="4dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:background="@android:color/holo_blue_dark" />
 
     </LinearLayout>
@@ -220,95 +203,36 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:layout_marginTop="16dp"
-        android:weightSum="4"
         >
+
         <Button
             android:id="@+id/analyze_btn"
-            android:layout_width="0dp"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
+            android:layout_gravity="left"
             android:layout_marginBottom="16dp"
-            android:layout_weight="2"
+            android:layout_marginTop="16dp"
             android:background="@drawable/btn_roundcorner"
-            android:text="@string/analyze_btn"
+            android:text="Analyze"
             android:textColor="@color/colorEceiptWhite"
-            android:textSize="18sp"
+            android:textSize="18dp"
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/add_btn"
-            android:layout_width="0dp"
+            android:id="@+id/scan_btn"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="right"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"
-            android:layout_weight="1"
-            android:onClick="onAddOption"
+            android:onClick="onOCR"
             android:background="@drawable/btn_roundcorner"
-            android:text="Add"
-            android:textColor="@color/colorEceiptWhite"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/barcode_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_weight="1"
-            android:onClick="onBarcode"
-            android:background="@drawable/btn_roundcorner"
-            android:text="Scan"
+            android:text="Scan Barcode"
             android:textColor="@color/colorEceiptWhite"
             android:textSize="18dp"
             android:textStyle="bold" />
 
     </LinearLayout>
-<!--<<<<<<< HEAD-->
-
-    </LinearLayout>
-<!--</ScrollView>-->
-<!--&lt;!&ndash;=======&ndash;&gt;-->
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:paddingLeft="16dp"-->
-        <!--android:paddingRight="16dp"-->
-        <!--android:layout_marginTop="16dp"-->
-        <!--&gt;-->
-
-        <!--<Button-->
-            <!--android:id="@+id/analyze_btn"-->
-            <!--android:layout_width="175dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="left"-->
-            <!--android:layout_marginBottom="16dp"-->
-            <!--android:layout_marginTop="16dp"-->
-            <!--android:background="@drawable/btn_roundcorner"-->
-            <!--android:text="Analyze"-->
-            <!--android:textColor="@color/colorEceiptWhite"-->
-            <!--android:textSize="18dp"-->
-            <!--android:textStyle="bold" />-->
-
-        <!--<Button-->
-            <!--android:id="@+id/scan_btn"-->
-            <!--android:layout_width="175dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="right"-->
-            <!--android:layout_marginBottom="16dp"-->
-            <!--android:layout_marginTop="16dp"-->
-            <!--android:onClick="onOCR"-->
-            <!--android:background="@drawable/btn_roundcorner"-->
-            <!--android:text="Scan Barcode"-->
-            <!--android:textColor="@color/colorEceiptWhite"-->
-            <!--android:textSize="18dp"-->
-            <!--android:textStyle="bold" />-->
-
-    <!--</LinearLayout>-->
 
 
-<!--</LinearLayout>-->
-<!--&gt;>>>>>> 27b86939b0ce596a35bde3aeb26765fa8ab23cfd-->
+</LinearLayout>
