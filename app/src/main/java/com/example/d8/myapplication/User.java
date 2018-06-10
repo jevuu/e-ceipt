@@ -31,5 +31,4 @@ class User {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    
 }
