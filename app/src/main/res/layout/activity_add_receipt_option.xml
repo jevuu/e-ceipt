@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="50dp"
+    android:background="@drawable/gradient_splash"
+    tools:context=".AddReceiptOptionActivity">
+
+    <Button
+        android:id="@+id/add_receipt_btn_form"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/btn_roundcorner"
+        android:text="@string/add_receipt_option_add_form"
+        android:textColor="@color/colorEceiptWhite"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/add_receipt_btn_qrcode"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="onOCR"
+        android:background="@drawable/btn_roundcorner"
+        android:text="@string/add_receipt_option_scan_qr"
+        android:textColor="@color/colorEceiptWhite"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/add_receipt_btn_scan_real_receipt"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/btn_roundcorner"
+        android:text="@string/add_receipt_option_scan_real_receipt"
+        android:textColor="@color/colorEceiptWhite"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
