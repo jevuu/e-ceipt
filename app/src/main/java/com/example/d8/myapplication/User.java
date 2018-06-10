@@ -4,9 +4,11 @@ package com.example.d8.myapplication;
 
 class User {
     //====Atr====//
-    String nickName;
     String userId;
     String email;
+    String name;
+
+
 
     public String getEmail() {
         return email;
@@ -16,14 +18,6 @@ class User {
         this.email = email;
     }
 
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
     public String getUserId() {
         return userId;
     }
@@ -31,4 +25,14 @@ class User {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    
 }

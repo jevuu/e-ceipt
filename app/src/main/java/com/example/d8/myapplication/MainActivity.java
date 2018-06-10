@@ -1,9 +1,6 @@
 package com.example.d8.myapplication;
 
-import android.content.Context;
 import android.content.Intent;
-import android.icu.text.IDNA;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -29,12 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.charset.MalformedInputException;
 
 import static android.content.ContentValues.TAG;
 
@@ -54,26 +46,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        String readUserLocalJson = readJsonFile();
-//        Log.d("UserLocalJson", readUserLocalJson);
-//        String isLogin = "false";
-//        try{
-//            JSONObject userJsonObj = new JSONObject(readUserLocalJson);
-//            isLogin = userJsonObj.getString("isLogin");
-//            Log.d("ISLOGIN", isLogin);
-//
-//            if(Boolean.parseBoolean(isLogin)){
-//                Information.user.setName(userJsonObj.getString("name"));
-//                Information.user.setFirebaseUID(userJsonObj.getString("firebaseUID"));
-//                Intent homeIntent = new Intent(this, HomeActivity.class);
-//                startActivity(homeIntent);
-//            }
-//        }catch (Exception e){
-//            Log.e("USERJSONOBJERRPR", e.toString());
-//        }
-
-
 
         //Firebase
         aUser = new authUser();
@@ -107,19 +79,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in
         FirebaseAuth.getInstance().signOut();
-
-        Toast.makeText(this, "User Already Logged in? Invalid Exit.",
-                Toast.LENGTH_SHORT).show();
-        FirebaseAuth.getInstance().signOut();
-
-        aUser.mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(MainActivity.this, "User Already Logged in? Invalid Exit.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+        aUser.mGoogleSignInClient.signOut();
 
     }
 
@@ -127,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
     public void onDestroy(){
         super.onDestroy();
         FirebaseAuth.getInstance().signOut();
+        aUser.mGoogleSignInClient.signOut();
 
     }
 
@@ -188,8 +149,7 @@ public class MainActivity extends AppCompatActivity {
     //Opens the Home Activity
     public void onReady(OnCompleteListener<AuthResult> view, String execType){
         //Excute VM connections
-        BackgroundWorker bgWorker = new BackgroundWorker(MainActivity.this);
-        bgWorker.execute(execType, aUser.getUserId(), aUser.getNickName());
+        aUser.contactSql_log(this);
         Information.authUser = aUser;
 
 
@@ -235,41 +195,15 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     aUser.MUser();
+                    aUser.createUser();
 
                     if (task.isSuccessful() && aUser.mUser.isEmailVerified()) {
                         // Sign in success, update UI with the signed-in user's information
-
-
-
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
+                        Toast.makeText(MainActivity.this, "Welcome to ECeipt",
+                                Toast.LENGTH_SHORT).show();
 
-
-
-//                        //Store user info in Information.user object
-//                        if(aUser.isLoggedIn()){
-//                            String firebaseUserId = aUser.mAuth.getCurrentUser().getUid().toString();
-//                            String userEmail = aUser.mAuth.getCurrentUser().getEmail();
-//                            String displayName = aUser.mAuth.getCurrentUser().getDisplayName();
-//
-//                            Log.d("CURRENTUSEREMAILzzzz", userEmail);
-//                            Log.d("CURRENTUSERIDzzzz", firebaseUserId);
-//                            Log.d("DISPLAYNAME", displayName);
-//                            Log.d("USEREMAIL", userEmail);
-//
-//                            Information.user.setFirebaseUID(firebaseUserId);
-//                            Information.user.setName(displayName);
-//                            Information.user.setEmail(userEmail);
-//                            Information.user.setLogin(true);
-//                            try{
-//                                storeUserInfoToLocal(Information.user);
-//                            }catch (Exception e){
-//
-//                            }
-//
-//                            Toast.makeText(MainActivity.this, "Authentication Passed",
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
                         onReady(this, type);
 
                     } else if(task.isSuccessful() && aUser.mUser.isEmailVerified() == false) {
@@ -311,46 +245,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    private void storeUserInfoToLocal(User user) throws JSONException {
-//        //String username = Information.user.getUserName();
-//        String filename = "_user"+".txt";
-//
-//        try {
-//            //generate user in json format
-//            JSONObject userJson = new JSONObject();
-//
-//            userJson.put("name",user.getName());
-//            userJson.put("firebaseUID",user.getFirebaseUID());
-//            userJson.put("email", user.getEmail());
-//            userJson.put("isLogin",user.isLogin());
-//
-//            Log.d("USERJSON", userJson.toString());
-//            FileOutputStream outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-//            outputStream.write(userJson.toString().getBytes());
-//            outputStream.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            Log.e("STOREERROR:", e.toString());
-//        }
-//    }
-//
-//    private String readJsonFile(){
-//        //String username = Information.user.getUserName();
-//        String filename = "_user"+".txt";
-//        String json = "";
-//        try{
-//            FileInputStream inputStream = openFileInput(filename);
-//            int size = inputStream.available();
-//            byte[] buffer = new byte[size];
-//            inputStream.read(buffer);
-//            inputStream.close();
-//            json = new String(buffer);
-//            //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
-//            return json;
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return "null";
-//    }
 
 }
