@@ -51,7 +51,6 @@ public class HomeActivity extends AppCompatActivity {
     String userFirebaseUID = Information.authUser.getFirebaseUID();
     String email = Information.authUser.getEmail();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +61,6 @@ public class HomeActivity extends AppCompatActivity {
         Log.i("UserEmail: ", email);
 
         listView = (ListView)findViewById(R.id.receipts_list_view);
-
 
         getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         initCustomSpinner();
@@ -104,7 +102,6 @@ public class HomeActivity extends AppCompatActivity {
                 String item = parent.getItemAtPosition(position).toString();
                 //Toast.makeText(parent.getContext(), "Android Custom Spinner Example Output..." + item, Toast.LENGTH_LONG).show();
             }
-
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -181,20 +178,14 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-
     public void onAddOption(View view) {
         Intent goOption = new Intent(this, AddReceiptOptionActivity.class);
         startActivity(goOption);
     }
 
-
-
-
-
     public void onBarcode(View view){
         Intent goBarcode = new Intent(this, BarcodeActivity.class);
         startActivity(goBarcode);
-
     }
 
     //Called when Barcode scanner picks up a result
@@ -209,17 +200,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         }
-
-
-
-
-
     }
-
-
-
-
-
 
     //code from "https://www.simplifiedcoding.net/android-json-parsing-tutorial/"
     //this method is actually fetching the json string
@@ -256,14 +237,6 @@ public class HomeActivity extends AppCompatActivity {
             protected void onProgressUpdate(Void... values) {
                 super.onProgressUpdate(values);
 
-
-
-
-
-
-
-
-
             }
 
             //in this method we are fetching the json string
@@ -272,9 +245,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 try {
                     //creating a URL
-
                     URL url = new URL(urlWebService);
-
 
                     //Opening the URL using HttpURLConnection
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -286,14 +257,12 @@ public class HomeActivity extends AppCompatActivity {
 
                     //We will use a buffered reader to read the string from service
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-
                     //A simple string to read values from each line
                     String json;
 
                     //reading until we don't find null
                     while ((json = bufferedReader.readLine()) != null) {
                         Log.d("JSONARRAY", json);
-
                         //appending it to string builder
                         sb.append(json + "\n");
                     }
@@ -365,7 +334,6 @@ public class HomeActivity extends AppCompatActivity {
         String[] receipts = new String[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-
             receipts[i] = String.format("%-35s%-12s%20s",obj.getString("businessName"), obj.getString("date"), obj.getString("totalCost"));
         }
 
