@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         Information.authUser = aUser;
 
 
-        Intent goToReg = new Intent(this, HomeActivity.class);
+        Intent goToReg = new Intent(this, MenuActivity.class);
         startActivity(goToReg);
 
     }
