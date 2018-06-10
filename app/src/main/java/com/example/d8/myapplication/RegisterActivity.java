@@ -60,6 +60,12 @@ public class RegisterActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
 
 
+                                    authUser a = new authUser();
+                                    a.createUser();
+                                    a.updateProfile(a.getName());
+                                    a.contactSql_reg(RegisterActivity.this);
+
+
                                     Intent goToMain = new Intent(RegisterActivity.this, MainActivity.class);
                                     startActivity(goToMain);
 
