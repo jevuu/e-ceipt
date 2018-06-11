@@ -147,13 +147,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
     //Opens the Home Activity
+    //Fragment MenuActivity Call
     public void onReady(OnCompleteListener<AuthResult> view, String execType){
         //Excute VM connections
         aUser.contactSql_log(this);
         Information.authUser = aUser;
 
 
-        Intent goToReg = new Intent(this, HomeActivity.class);
+        Intent goToReg = new Intent(this, MenuActivity.class);
         startActivity(goToReg);
 
     }
@@ -214,18 +215,8 @@ public class MainActivity extends AppCompatActivity {
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
                         //Send Validation Email
-                        aUser.mUser.sendEmailVerification()
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Log.d(TAG, "Email sent!");
-                                        }else{
+                        aUser.sendVerification();
 
-                                            Log.d(TAG, "Failed Email Verification!");
-                                        }
-                                    }
-                                });
 
                     }else {
                         Toast.makeText(MainActivity.this, "Username/Password Incorrect",

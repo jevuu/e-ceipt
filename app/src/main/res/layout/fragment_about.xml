@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_splash"
+    tools:context=".AboutFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="false"
+            android:background="@drawable/gradient_auxsplash"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/bg_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/about_aboutTitle"
+                android:textAlignment="center"
+                android:textColor="@color/colorEceiptOrange"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/reg_welcome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/about_TitleDesc"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/colorEceiptWhite"
+                android:textColorHighlight="@color/colorEceiptBlue"
+                android:textSize="16sp"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="20dp"
+            android:cropToPadding="false"
+            android:src="@drawable/logo" android:contentDescription="TODO" />
+
+        <TextView
+            android:id="@+id/textViewBeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:capitalize="words"
+            android:text="@string/AppLevel"
+            android:textAlignment="center"
+            android:textColor="@color/colorEceiptOrange"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewLastCheckLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="12sp"
+                android:paddingLeft="4dp"
+                android:text="@string/about_lastCheck"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorEceiptWhite"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewLastCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="@string/about_lastCheckDate" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

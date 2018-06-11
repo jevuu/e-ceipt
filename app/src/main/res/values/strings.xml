@@ -19,6 +19,15 @@
     <string name="reg_verify">Create Your Account</string>
     <string name="pass_email">Send Reset Link</string>
     <string name="pass_title">Reset Password</string>
+
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
     <!-- Google Vision OCR strings -->
     <string name="ok">OK</string>
     <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
@@ -66,4 +75,13 @@
     <string name="date_label_in_listview">Date</string>
     <string name="analyze_btn">Analyze</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="AppLevel">0.1 - Alpha</string>
+    <string name="about_lastCheck">Last Checked:</string>
+    <string name="about_lastCheckDate">Never</string>
+    <string name="about_aboutTitle">About Us</string>
+    <string name="about_TitleDesc">Just some information about your App</string>
+    <string name="bg_Title">Select Background Colour</string>
+    <string name="bg_colourDesc">Pick Any Colour You Like!</string>
 </resources>
