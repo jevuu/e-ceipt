@@ -3,6 +3,8 @@ package com.example.d8.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener ,ProfileFragment.OnFragmentInteractionListener,
@@ -73,6 +77,11 @@ public class MenuActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
+
     }
 
     @Override
@@ -89,7 +98,25 @@ public class MenuActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
+
+        fetchProfile();
+
         return true;
+    }
+    //Sets the Email, username, and picture of the current user in the nav bar.
+    // 6/10/2018
+    public void fetchProfile(){
+
+        TextView t = (TextView) findViewById(R.id.nav_head_Name);
+        t.setText(Information.authUser.getName());
+
+        ImageView im =  findViewById(R.id.nav_head_image);
+        im.setImageResource(R.drawable.receiptsnap_logo);
+
+        TextView te = (TextView) findViewById(R.id.nav_head_email);
+       te.setText(Information.authUser.getEmail());
+
+
     }
 
     @Override
@@ -98,6 +125,7 @@ public class MenuActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {

@@ -2,8 +2,10 @@ package com.example.d8.myapplication;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 
 import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONException;
@@ -148,8 +150,13 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
 
 
         }
+        else if(type.equals("extern_photo")){
+           //TODO Add Image Collection
+
+        }
         return null;
     }
+
 
     @Override
     protected void onPreExecute() {
