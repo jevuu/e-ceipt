@@ -229,7 +229,6 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1"
             android:background="@drawable/btn_roundcorner"
-            android:onClick="onAddOption"
             android:text="Add"
             android:textColor="@color/colorEceiptWhite"
             android:textSize="18sp"
