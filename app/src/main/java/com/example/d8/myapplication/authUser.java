@@ -41,6 +41,7 @@ class authUser extends User{
     public void setFirebaseUID() {
         firebaseUID = mAuth.getCurrentUser().getUid();
     }
+
     //Contact My.SQL with the register command
     void contactSql_reg(Context ct){
         e = new BackgroundWorker(ct);

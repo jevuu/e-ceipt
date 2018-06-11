@@ -22,14 +22,9 @@
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="ocr" />
-        <!--<meta-data
-            android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="barcode" /> -->
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -40,10 +35,9 @@
         <activity android:name=".PassActivity" />
         <activity android:name=".AddReceiptOptionActivity" />
         <activity android:name=".AddReceiptFormActivity" />
-        <activity
-            android:name=".MenuActivity"
-            android:label="@string/title_activity_menu"
-            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".MenuActivity"
+                  android:label="@string/title_activity_menu"
+                  android:theme="@style/AppTheme"/>
         <activity android:name=".OCRActivity" />
         <activity android:name=".BarcodeActivity" />
     </application>
