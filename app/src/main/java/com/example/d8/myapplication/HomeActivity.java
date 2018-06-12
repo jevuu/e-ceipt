@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -50,6 +51,8 @@ public class HomeActivity extends AppCompatActivity {
     String username = Information.authUser.getUserId();
     String userFirebaseUID = Information.authUser.getFirebaseUID();
     String email = Information.authUser.getEmail();
+    Button btn_add ;
+    String RECEIPTDATAFILE = "_receipts.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +65,17 @@ public class HomeActivity extends AppCompatActivity {
 
         listView = (ListView)findViewById(R.id.receipts_list_view);
 
-        getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
+
+        //getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
+        DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
+
+        //use
+
         initCustomSpinner();
 
         try{
-            String json = readJsonFile();
+            String json = DataController.readJsonFile(RECEIPTDATAFILE, this);
+            //String json = readJsonFile();
             if(Information.receipts.isEmpty()){
                 loadReceiptsObj(json);
             }
@@ -83,6 +92,15 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(),ReceiptDetailActivity.class);
                 intent.putExtra("RECEIPTINDEX", Integer.toString(position));
                 startActivity(intent);
+            }
+        });
+
+        btn_add = (Button)findViewById(R.id.add_btn);
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addOption = new Intent(getBaseContext(),AddReceiptOptionActivity.class);
+                startActivity(addOption);
             }
         });
 
@@ -270,7 +288,8 @@ public class HomeActivity extends AppCompatActivity {
                     String jsonReturn = sb.toString().trim();
 
                     Log.i("JSONRETURN", jsonReturn);
-                    storeJsonToLocal(jsonReturn);
+                    DataController.storeJsonToLocal(jsonReturn, RECEIPTDATAFILE, HomeActivity.this);
+                    //storeJsonToLocal(jsonReturn);
 
                     //finally returning the read string
                     return sb.toString().trim();

@@ -16,7 +16,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class SyncronizeData extends AsyncTask<String, Void, String>{
-    Context context;
 
     //this method will be called before execution
     //you can display a progress bar or something
@@ -32,17 +31,6 @@ public class SyncronizeData extends AsyncTask<String, Void, String>{
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-
-
-        try {
-            //loadIntoListView(s);
-            storeJsonToLocal(s);
-        } catch (Exception e) {
-            Log.e("ERROR:", e.toString());
-        }
-
-        //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-        //Toast.makeText(getApplicationContext(), "dhfjshjfs", Toast.LENGTH_SHORT).show();
     }
 
     //in this method we are fetching the json string
@@ -73,6 +61,14 @@ public class SyncronizeData extends AsyncTask<String, Void, String>{
                 sb.append(json + "\n");
             }
 
+            String jsonReturn = sb.toString().trim();
+            try {
+                //loadIntoListView(s);
+                //DataController.storeJsonToLocal(jsonReturn, );
+            } catch (Exception e) {
+                Log.e("ERROR:", e.toString());
+            }
+
             //finally returning the read string
             return sb.toString().trim();
         } catch (Exception e) {
@@ -81,12 +77,12 @@ public class SyncronizeData extends AsyncTask<String, Void, String>{
 
     }
 
-    private void storeJsonToLocal(String json) throws JSONException {
+    private void storeJsonToLocal(String json, Context ctx) throws JSONException {
         //String username = Information.user.getUserName();
         String filename = "_receipts"+".txt";
 
         try {
-            FileOutputStream outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            FileOutputStream outputStream = ctx.openFileOutput(filename, Context.MODE_PRIVATE);
             outputStream.write(json.getBytes());
             outputStream.close();
         } catch (Exception e) {

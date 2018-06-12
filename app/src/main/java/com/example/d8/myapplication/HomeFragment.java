@@ -119,7 +119,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity().getBaseContext(),""+position, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity().getBaseContext(),""+position, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(),ReceiptDetailActivity.class);
+                intent.putExtra("RECEIPTINDEX", Integer.toString(position));
+                startActivity(intent);
             }
         });
 
