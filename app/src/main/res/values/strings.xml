@@ -44,7 +44,6 @@
     <string name="reg_verifySuper">You must verify your email to continue!</string>
 
 
-
     <!-- Add receipt option layout -->
     <string name="add_receipt_option_add_form">Add receipt form</string>
     <string name="add_receipt_option_scan_qr">Add receipt by QR code</string>

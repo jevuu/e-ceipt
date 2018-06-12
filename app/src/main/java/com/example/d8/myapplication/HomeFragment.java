@@ -1,6 +1,7 @@
 package com.example.d8.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -32,15 +34,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class HomeFragment extends Fragment {
+//The Home activity is implemented by the Home fragment, though to be honest this seems like redundant code.
+//To implement buttons: go to OnClick overide function
+public class HomeFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -51,6 +47,8 @@ public class HomeFragment extends Fragment {
     private String mParam2;
 
     View fragmentView=null;
+    Button btn_add;
+    Button btn_rec;
     ListView listView=null;
 
     private OnFragmentInteractionListener mListener;
@@ -59,14 +57,23 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
+    //This function handles click events for every button in the fragment, implement your intents here guys!!!
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.add_btn:
+                Intent goToAdd = new Intent(getActivity(), AddReceiptOptionActivity.class);
+                startActivity(goToAdd);
+                break;
+            case R.id.analyze_btn:
+                Intent goToRec = new Intent(getActivity(), AddReceiptFormActivity.class);
+                startActivity(goToRec);
+            default:
+                break;
+        }
+
+    }
+
     // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
@@ -79,6 +86,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
 
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -98,6 +106,12 @@ public class HomeFragment extends Fragment {
 
         listView = (ListView)v.findViewById(R.id.receipts_list_view);
 
+        //Adds OnClick Listeners to the lower buttons
+        btn_add = (Button) v.findViewById(R.id.add_btn);
+        btn_add.setOnClickListener(this);
+        btn_rec = (Button) v.findViewById(R.id.analyze_btn);
+        btn_rec.setOnClickListener(this);
+
         //getData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         initCustomSpinner();
@@ -108,6 +122,7 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity().getBaseContext(),""+position, Toast.LENGTH_LONG).show();
             }
         });
+
 
 
         return v;
