@@ -152,10 +152,9 @@ public class MainActivity extends AppCompatActivity {
         //Excute VM connections
         aUser.contactSql_log(this);
         Information.authUser = aUser;
-
-
-        Intent goToReg = new Intent(this, HomeActivity.class);
         DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
+
+        Intent goToReg = new Intent(this, MenuActivity.class);
 
         startActivity(goToReg);
 
