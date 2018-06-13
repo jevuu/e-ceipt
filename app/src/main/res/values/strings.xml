@@ -83,4 +83,9 @@
     <string name="about_TitleDesc">Just some information about your App</string>
     <string name="bg_Title">Select Background Colour</string>
     <string name="bg_colourDesc">Pick Any Colour You Like!</string>
+
+
+    <!-- null value -->
+    <string name="string_null">null</string>
+    <string name="num_null">0.00</string>
 </resources>

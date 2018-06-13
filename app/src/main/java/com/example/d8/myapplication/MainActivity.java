@@ -155,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         Intent goToReg = new Intent(this, HomeActivity.class);
+        DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
+
         startActivity(goToReg);
 
     }

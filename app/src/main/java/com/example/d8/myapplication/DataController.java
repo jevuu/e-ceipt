@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -13,9 +15,48 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
+//this class handles some of the actions which may reuse many time
 public class DataController {
-    static Context context;
-    static void addReceiptToLocal(Receipt receipt){
+    //add new receipt data to local json file
+    static void addReceiptToLocal(Receipt receipt, Context ctx)throws JSONException{
+        String receiptsJSON = DataController.readJsonFile(Information.RECEIPTSLOCALFILENAME, ctx);
+
+        JSONArray receiptsJsonArray = new JSONArray(receiptsJSON);
+        JSONObject jsonObject = new JSONObject();
+        JSONArray itemsJsonArray = new JSONArray();
+        JSONObject itemJsonObject = new JSONObject();
+        //itemsJsonArray.put(itemJsonObject);
+
+        String company = receipt.getBusinessName();
+        String date = receipt.getDate();
+        String username = Information.authUser.getName();
+        String userId = Information.authUser.getUserId();
+        String tCost = Double.toString(receipt.getTotalCost());
+        String tax = "14";
+
+        jsonObject.put("name", username);
+        jsonObject.put("receiptID", "-1");
+        jsonObject.put("date", date);
+        jsonObject.put("totalCost", tCost);
+        jsonObject.put("tax", tax);
+        jsonObject.put("businessName", company);
+        jsonObject.put("items",itemsJsonArray);
+
+        String jsonString = jsonObject.toString();
+
+        Log.i("JSONINAddReceiptForm:", jsonString);
+
+        receiptsJsonArray.put(jsonObject);
+
+        String jArrayString = receiptsJsonArray.toString();
+        Log.i("JArrAddReceiptForm:", jArrayString);
+
+        DataController.storeJsonToLocal(jArrayString, Information.RECEIPTSLOCALFILENAME, ctx);
+    }
+
+    //add new receipt data to remote databse
+    static void addReceiptToDB(Receipt receipt){
 
     }
 
@@ -54,8 +95,8 @@ public class DataController {
         return null;
     }
 
-    //code from "https://www.simplifiedcoding.net/android-json-parsing-tutorial/"
-    //this method is actually fetching the json string
+    //code tutorial from "https://www.simplifiedcoding.net/android-json-parsing-tutorial/"
+    //this method is to syncronize remote DB data to mobile local storage.
     public static String SyncronizeData(final String urlWebService, Context ctx) {
         /*
          * As fetching the json string is a network operation
@@ -135,10 +176,8 @@ public class DataController {
                     Log.i("FAIL222",e.toString());
                     return null;
                 }
-
             }
         }
-
 
         //creating asynctask object and executing it
         GetJSON getJSON = new GetJSON();
@@ -150,6 +189,98 @@ public class DataController {
         }
 
         return result;
+    }
+
+    //this method is to load json format receipts data to "Information.receipts" object
+    public static void loadReceiptsObj(String json) throws JSONException {
+        try{
+            JSONArray jsonArray = new JSONArray(json);
+            Receipt receipt;
+
+            Log.i("JSONOOOOOO",json);
+            Log.i("JSONLENGHT", Integer.toString(jsonArray.length()));
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = jsonArray.getJSONObject(i);
+
+                receipt =  new Receipt();
+                Log.d("RECEIPTname:", obj.getString("name"));
+                receipt.setName(obj.getString("name"));
+                Log.d("RECEIPTid:", obj.getString("receiptID"));
+                receipt.setReceipId(obj.getString("receiptID"));
+                Log.d("RECEIPTdate:", obj.getString("date"));
+                receipt.setDate(obj.getString("date"));
+                Log.d("RECEIPTtotalcost:", obj.getString("totalCost"));
+                receipt.setTotalCost(Double.parseDouble(obj.getString("totalCost")));
+                Log.d("RECEIPTtax:", obj.getString("tax"));
+                receipt.setTax(Double.parseDouble(obj.getString("tax")));
+                Log.d("RECEIPTbusiness:", obj.getString("businessName"));
+                receipt.setBusinessName(obj.getString("businessName"));
+
+                Log.d("RECEIPTOBJ", "name:"+receipt.getName()+
+                        "id:"+receipt.getReceipId()+
+                        "date:"+receipt.getDate()+
+                        "totalCost:"+receipt.getTotalCost()+receipt.getTax());
+
+                JSONArray itemarray = obj.getJSONArray("items");
+
+                Log.d("ITEMARRAYL:",itemarray.toString());
+
+                for(int j=0; j<itemarray.length();j++){
+                    JSONObject itemObj = itemarray.getJSONObject(j);
+
+                    Log.d("ITEMNAME22222", itemObj.getString("itemName"));
+                    Log.d("ITEMDECS", itemObj.getString("itemDesc"));
+                    Log.d("ITEMPRICE", itemObj.getString("itemPrice"));
+
+                    receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")));
+                }
+
+                Information.receipts.add(receipt);
+
+            }
+        }catch(Exception e){
+            Log.e("ERRRRR:",e.toString());
+        }
+
+        if(!Information.receipts.get(0).getItems().isEmpty()){
+            Log.d("RECEIPTOBJ2:",Information.receipts.get(0).getItems().get(1).getItemName());
+
+        }
+    }
+
+    //This method is to parse json format string to an Receipt object and return Receipt object
+    public static Receipt parseJsonToReceiptOBJ(String json)throws JSONException{
+        JSONObject obj = new JSONObject(json);
+        Receipt receipt =  new Receipt();
+        Log.d("RECEIPTname:", obj.getString("name"));
+        receipt.setName(obj.getString("name"));
+        Log.d("RECEIPTid:", obj.getString("receiptID"));
+        receipt.setReceipId(obj.getString("receiptID"));
+        Log.d("RECEIPTdate:", obj.getString("date"));
+        receipt.setDate(obj.getString("date"));
+        Log.d("RECEIPTtotalcost:", obj.getString("totalCost"));
+        receipt.setTotalCost(Double.parseDouble(obj.getString("totalCost")));
+        Log.d("RECEIPTtax:", obj.getString("tax"));
+        receipt.setTax(Double.parseDouble(obj.getString("tax")));
+        Log.d("RECEIPTbusiness:", obj.getString("businessName"));
+        receipt.setBusinessName(obj.getString("businessName"));
+
+        Log.d("RECEIPTOBJ", "name:"+receipt.getName()+
+                "id:"+receipt.getReceipId()+
+                "date:"+receipt.getDate()+
+                "totalCost:"+receipt.getTotalCost()+receipt.getTax());
+
+        JSONArray itemarray = obj.getJSONArray("items");
+
+        Log.d("ITEMARRAYL:",itemarray.toString());
+
+        for(int j=0; j<itemarray.length();j++){
+            JSONObject itemObj = itemarray.getJSONObject(j);
+
+            receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")));
+        }
+        return receipt;
     }
 
 }
