@@ -1,11 +1,16 @@
 package com.example.d8.myapplication;
 
 //A Generic user
+//This user represents a parent generic class for all users
+//Last Modification: 6/7/2018
 
 class User {
     //====Atr====//
-    String nickName;
     String userId;
+    String email;
+    String name;
+
+
 
     public String getEmail() {
         return email;
@@ -13,16 +18,6 @@ class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    String email;
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
     }
 
     public String getUserId() {
@@ -33,7 +28,13 @@ class User {
         this.userId = userId;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
 
 }

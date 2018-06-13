@@ -19,6 +19,15 @@
     <string name="reg_verify">Create Your Account</string>
     <string name="pass_email">Send Reset Link</string>
     <string name="pass_title">Reset Password</string>
+
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
     <!-- Google Vision OCR strings -->
     <string name="ok">OK</string>
     <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
@@ -34,4 +43,44 @@
     <string name="ocr_error">"Error reading text: %1$s"</string>
     <string name="reg_verifySuper">You must verify your email to continue!</string>
 
+
+    <!-- Add receipt option layout -->
+    <string name="add_receipt_option_add_form">Add receipt form</string>
+    <string name="add_receipt_option_scan_qr">Add receipt by QR code</string>
+    <string name="add_receipt_option_scan_real_receipt">Scan real receipt</string>
+
+    <!-- Add receipt form layout -->
+    <string name="company_name">Company:</string>
+    <string name="receipt_date">Receipt date:</string>
+    <string name="receipt_category">Category:</string>
+    <string name="item_list_label">Item list</string>
+    <string name="item_name_label">Item name</string>
+    <string name="item_cost_label">Item cost ($)</string>
+    <string name="total_cost_label">Total cost($):</string>
+
+    <string name="add_item_btn">Add</string>
+    <string name="total_cost_input_hint">100.00</string>
+    <string name="item_price_input_hint">Item price</string>
+    <string name="item_name_input_hint">Item name</string>
+    <string name="receipt_date_input_hint">Enter receipt creation date</string>
+    <string name="business_name_input_hint">Please enter receipt's business name</string>
+
+
+    <!-- home layout -->
+    <string name="company_name_label_in_listview">Company</string>
+
+
+    <string name="receipt_cost_label_in_listview">Cost($)</string>
+    <string name="date_label_in_listview">Date</string>
+    <string name="analyze_btn">Analyze</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="AppLevel">0.1 - Alpha</string>
+    <string name="about_lastCheck">Last Checked:</string>
+    <string name="about_lastCheckDate">Never</string>
+    <string name="about_aboutTitle">About Us</string>
+    <string name="about_TitleDesc">Just some information about your App</string>
+    <string name="bg_Title">Select Background Colour</string>
+    <string name="bg_colourDesc">Pick Any Colour You Like!</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.example.d8.myapplication;
 
 import android.content.Intent;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,12 +25,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import java.nio.charset.MalformedInputException;
+
+
 
 import static android.content.ContentValues.TAG;
 
 
-//Last modification: Alistair
+//Last modification: Alistair 6/7/2018
 //Firebase Support Added
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //Firebase
         aUser = new authUser();
 
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         aUser.mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
+
     }
 
 
@@ -75,26 +79,15 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in
         FirebaseAuth.getInstance().signOut();
-
-            Toast.makeText(this, "User Already Logged in? Invalid Exit.",
-                    Toast.LENGTH_SHORT).show();
-         FirebaseAuth.getInstance().signOut();
-
-         aUser.mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                 new OnCompleteListener<Void>() {
-                     @Override
-                     public void onComplete(@NonNull Task<Void> task) {
-                         Toast.makeText(MainActivity.this, "User Already Logged in? Invalid Exit.",
-                                 Toast.LENGTH_SHORT).show();
-                     }
-                 });
+        aUser.mGoogleSignInClient.signOut();
 
     }
 
     @Override
     public void onDestroy(){
-    super.onDestroy();
+        super.onDestroy();
         FirebaseAuth.getInstance().signOut();
+        aUser.mGoogleSignInClient.signOut();
 
     }
 
@@ -134,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = aUser.mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Google Auth Passed",
                                     Toast.LENGTH_SHORT).show();
+
                             onReady(this, "a");
 
                         } else {
@@ -148,22 +142,22 @@ public class MainActivity extends AppCompatActivity {
 
     //Opens the Registration Activity
     public void onRegister(View view){
-    Intent goToReg = new Intent(this, RegisterActivity.class);
-    startActivity(goToReg);
+        Intent goToReg = new Intent(this, RegisterActivity.class);
+        startActivity(goToReg);
 
     }
     //Opens the Home Activity
+    //Fragment MenuActivity Call
     public void onReady(OnCompleteListener<AuthResult> view, String execType){
         //Excute VM connections
-        BackgroundWorker bgWorker = new BackgroundWorker(MainActivity.this);
-        bgWorker.execute(execType, aUser.getUserId(), aUser.getNickName());
+        aUser.contactSql_log(this);
+        Information.authUser = aUser;
 
 
-
-        Intent goToReg = new Intent(this, HomeActivity.class);
+        Intent goToReg = new Intent(this, MenuActivity.class);
         startActivity(goToReg);
 
-   }
+    }
     //Opens the Password Reset  Activity
     public void onPassW(View view){
         Intent goToPws = new Intent(this, PassActivity.class);
@@ -202,13 +196,15 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     aUser.MUser();
+                    aUser.createUser();
 
                     if (task.isSuccessful() && aUser.mUser.isEmailVerified()) {
                         // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(MainActivity.this, "Authentication Passed",
-                                Toast.LENGTH_SHORT).show();
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
+                        Toast.makeText(MainActivity.this, "Welcome to ECeipt",
+                                Toast.LENGTH_SHORT).show();
+
                         onReady(this, type);
 
                     } else if(task.isSuccessful() && aUser.mUser.isEmailVerified() == false) {
@@ -219,27 +215,17 @@ public class MainActivity extends AppCompatActivity {
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
                         //Send Validation Email
-                        aUser.mUser.sendEmailVerification()
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Log.d(TAG, "Email sent!");
-                                        }else{
+                        aUser.sendVerification();
 
-                                            Log.d(TAG, "Failed Email Verification!");
-                                        }
-                                    }
-                                });
 
                     }else {
-                          Toast.makeText(MainActivity.this, "Username/Password Incorrect",
-                                  Toast.LENGTH_SHORT).show();
-                          btnSign.setText(getString(R.string.main_login));
-                          btnSign.setClickable(true);
-                      }
+                        Toast.makeText(MainActivity.this, "Username/Password Incorrect",
+                                Toast.LENGTH_SHORT).show();
+                        btnSign.setText(getString(R.string.main_login));
+                        btnSign.setClickable(true);
                     }
-                 //===================================//
+                }
+                //===================================//
 
             });
 
@@ -249,5 +235,6 @@ public class MainActivity extends AppCompatActivity {
         //===================================//
 
     }
+
 
 }
