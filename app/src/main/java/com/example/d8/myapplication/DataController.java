@@ -72,9 +72,135 @@ public class DataController {
     }
 
     //add new receipt data to remote databse
-    static void addReceiptToDB(Receipt receipt){
+    public static String addReceiptToDB(Receipt receipt, final String urlWebService, Context ctx){
 
-    }
+        class AddReceiptToDB extends AsyncTask<Void, Void, String> {
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    ////////////////////////////////////////////////////////////////////////////
+                    //Post version
+                    //creating a URL
+                    URL url = new URL(urlWebService);
+                    HttpURLConnection conn = null;
+
+                    String username = Information.authUser.getName();
+                    String userId = Information.authUser.getUserId();
+//                    String userId = "2";
+//                    String username = "Freddy";
+
+
+                    //open connection
+                    conn = (HttpURLConnection) url.openConnection();
+
+                    //set the request method to post
+                    conn.setReadTimeout(10000);
+                    conn.setConnectTimeout(15000);
+                    conn.setRequestMethod("POST");
+                    conn.setDoInput(true);
+                    conn.setDoOutput(true);
+
+                    //parse data from receipt obj
+                    String date = receipt.getDate();
+                    String totalCost = Double.toString(receipt.getTotalCost());
+                    String tax = Double.toString(receipt.getTax());
+                    String businessName = receipt.getBusinessName();
+
+
+
+                    //Data in Json object
+                    //JSONArray receiptsJsonArray = new JSONArray();
+                    JSONObject jsonObject = new JSONObject();
+                    JSONArray itemsJsonArray = new JSONArray();
+                    JSONObject itemJsonObject = new JSONObject();
+                    //itemsJsonArray.put(itemJsonObject);
+
+
+                    jsonObject.put("name", username);
+                    jsonObject.put("receiptID", "-1");
+                    jsonObject.put("date", date);
+                    jsonObject.put("totalCost", totalCost);
+                    jsonObject.put("tax", tax);
+                    jsonObject.put("businessName", businessName);
+                    jsonObject.put("items",itemsJsonArray);
+
+                    //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
+                    String message = jsonObject.toString();
+
+                    Log.i("NEWRECEIPTPOST",message);
+
+                    //Output the stream to the server
+                    OutputStream os = conn.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(
+                            new OutputStreamWriter(os, "UTF-8"));
+                    writer.write(message);
+                    writer.flush();
+                    writer.close();
+                    os.close();
+
+                    conn.connect();
+
+                    //StringBuilder object to read the string from the service
+                    StringBuilder sb = new StringBuilder();
+
+                    //We will use a buffered reader to read the string from service
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    //A simple string to read values from each line
+                    String json;
+
+                    //reading until we don't find null
+                    while ((json = bufferedReader.readLine()) != null) {
+                        Log.d("JSONARRAY", json);
+                        //appending it to string builder
+                        sb.append(json + "\n");
+                    }
+
+                    String jsonReturn = sb.toString().trim();
+
+                    Log.i("JSONRETURN", jsonReturn);
+                    //storeJsonToLocal(jsonReturn, RECEIPTDATAFILE, ctx);
+                    //storeJsonToLocal(jsonReturn);
+
+                    //finally returning the read string
+                    return sb.toString().trim();
+
+
+                    ////////////////////////////////////////////////////////////////////////////
+
+                } catch (Exception e) {
+                    Log.i("FAIL222",e.toString());
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+        }
+        //creating asynctask object and executing it
+        AddReceiptToDB addReceiptToDB = new AddReceiptToDB();
+        String result="";
+        try{
+            result = addReceiptToDB.execute().get();
+        }catch (Exception e){
+
+        }
+
+        return result;
+
+        }
 
     //Store json string to mobile local file
     public static void storeJsonToLocal(String json, String filename, Context ctx) throws JSONException {
@@ -157,47 +283,15 @@ public class DataController {
             protected String doInBackground(Void... voids) {
 
                 try {
-//                    //creating a URL
-//                    URL url = new URL(urlWebService);
-//
-//                    //Opening the URL using HttpURLConnection
-//                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-//
-//                    con.setRequestMethod("GET");
-//                    con.connect();
-//                    //StringBuilder object to read the string from the service
-//                    StringBuilder sb = new StringBuilder();
-//
-//                    //We will use a buffered reader to read the string from service
-//                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-//                    //A simple string to read values from each line
-//                    String json;
-//
-//                    //reading until we don't find null
-//                    while ((json = bufferedReader.readLine()) != null) {
-//                        Log.d("JSONARRAY", json);
-//                        //appending it to string builder
-//                        sb.append(json + "\n");
-//                    }
-//
-//                    String jsonReturn = sb.toString().trim();
-//
-//                    Log.i("JSONRETURN", jsonReturn);
-//                    storeJsonToLocal(jsonReturn, RECEIPTDATAFILE, ctx);
-//                    //storeJsonToLocal(jsonReturn);
-//
-//                    //finally returning the read string
-//                    return sb.toString().trim();
-
-
                     //Post version
                     //creating a URL
                     URL url = new URL(urlWebService);
                     HttpURLConnection conn = null;
 
-                    //String username = Information.authUser.getName();
-                    String username = "John Doe";
-                    Log.i("USERNAME3333", username);
+                    String username = Information.authUser.getName();
+                    String userId = Information.authUser.getUserId();
+//                    String userId = "2";
+//                    String username = "Freddy";
 
 
                     //open connection
@@ -218,7 +312,8 @@ public class DataController {
 //                  params.add(new BasicNameValuePair("secondParam", paramValue2));
 //                  params.add(new BasicNameValuePair("thirdParam", paramValue3));
                     JSONObject newJson = new JSONObject();
-                    newJson.put("name", username);
+                    newJson.put("userName", username);
+                    newJson.put("userID", userId);
 
                     String message = newJson.toString();
 
@@ -342,10 +437,10 @@ public class DataController {
             Log.e("ERRRRR:",e.toString());
         }
 
-        if(!Information.receipts.get(0).getItems().isEmpty()){
-            Log.d("RECEIPTOBJ2:",Information.receipts.get(0).getItems().get(1).getItemName());
-
-        }
+//        if(!Information.receipts.get(0).getItems().isEmpty()){
+//            Log.d("RECEIPTOBJ2:",Information.receipts.get(0).getItems().get(1).getItemName());
+//
+//        }
     }
 
     //This method is to parse json format string to an Receipt object and return Receipt object

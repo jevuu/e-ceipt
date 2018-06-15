@@ -329,104 +329,104 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     //code from "https://www.simplifiedcoding.net/android-json-parsing-tutorial/"
     //this method is actually fetching the json string
-    private void getJSON(final String urlWebService) {
-        /*
-         * As fetching the json string is a network operation
-         * And we cannot perform a network operation in main thread
-         * so we need an AsyncTask
-         * The constrains defined here are
-         * Void -> We are not passing anything
-         * Void -> Nothing at progress update as well
-         * String -> After completion it should return a string and it will be the json string
-         * */
-        class GetJSON extends AsyncTask<Void, Void, String> {
+//    private void getJSON(final String urlWebService) {
+//        /*
+//         * As fetching the json string is a network operation
+//         * And we cannot perform a network operation in main thread
+//         * so we need an AsyncTask
+//         * The constrains defined here are
+//         * Void -> We are not passing anything
+//         * Void -> Nothing at progress update as well
+//         * String -> After completion it should return a string and it will be the json string
+//         * */
+//        class GetJSON extends AsyncTask<Void, Void, String> {
+//
+//            //this method will be called before execution
+//            //you can display a progress bar or something
+//            //so that user can understand that he should wait
+//            //as network operation may take some time
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//            }
+//
+//            //this method will be called after execution
+//            //so here we are displaying a toast with the json string
+//            @Override
+//            protected void onPostExecute(String s) {
+//                super.onPostExecute(s);
+//
+//
+//                try{
+//                    loadIntoListView(s);
+//                }catch(Exception e){
+//
+//                }
+//
+//                //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+//                //Toast.makeText(getApplicationContext(), "dhfjshjfs", Toast.LENGTH_SHORT).show();
+//                //Log.i("Json:" , s.toString());
+//            }
+//
+//            //in this method we are fetching the json string
+//            @Override
+//            protected String doInBackground(Void... voids) {
+//
+//                try {
+//                    //creating a URL
+//                    Log.i("HHHHHHHH","wwwww");
+//                    URL url = new URL(urlWebService);
+//
+//
+//                    //Opening the URL using HttpURLConnection
+//                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+//
+//                    con.setRequestMethod("GET");
+//                    con.connect();
+//                    //StringBuilder object to read the string from the service
+//                    StringBuilder sb = new StringBuilder();
+//
+//                    //We will use a buffered reader to read the string from service
+//                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+//                    Log.i("HHHHHHHH","aaa");
+//                    //A simple string to read values from each line
+//                    String json;
+//
+//                    //reading until we don't find null
+//                    while ((json = bufferedReader.readLine()) != null) {
+//                        Log.d("HHHHHHHH", json);
+//                        //appending it to string builder
+//                        sb.append(json + "\n");
+//                    }
+//
+//                    //finally returning the read string
+//                    return sb.toString().trim();
+//                } catch (Exception e) {
+//                    Log.i("FAIL222",e.toString());
+//                    return null;
+//                }
+//
+//            }
+//        }
+//
+//
+//        //creating asynctask object and executing it
+//        GetJSON getJSON = new GetJSON();
+//        getJSON.execute();
+//    }
 
-            //this method will be called before execution
-            //you can display a progress bar or something
-            //so that user can understand that he should wait
-            //as network operation may take some time
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
 
-            //this method will be called after execution
-            //so here we are displaying a toast with the json string
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
-
-                try{
-                    loadIntoListView(s);
-                }catch(Exception e){
-
-                }
-
-                //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getApplicationContext(), "dhfjshjfs", Toast.LENGTH_SHORT).show();
-                //Log.i("Json:" , s.toString());
-            }
-
-            //in this method we are fetching the json string
-            @Override
-            protected String doInBackground(Void... voids) {
-
-                try {
-                    //creating a URL
-                    Log.i("HHHHHHHH","wwwww");
-                    URL url = new URL(urlWebService);
-
-
-                    //Opening the URL using HttpURLConnection
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
-                    con.setRequestMethod("GET");
-                    con.connect();
-                    //StringBuilder object to read the string from the service
-                    StringBuilder sb = new StringBuilder();
-
-                    //We will use a buffered reader to read the string from service
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    Log.i("HHHHHHHH","aaa");
-                    //A simple string to read values from each line
-                    String json;
-
-                    //reading until we don't find null
-                    while ((json = bufferedReader.readLine()) != null) {
-                        Log.d("HHHHHHHH", json);
-                        //appending it to string builder
-                        sb.append(json + "\n");
-                    }
-
-                    //finally returning the read string
-                    return sb.toString().trim();
-                } catch (Exception e) {
-                    Log.i("FAIL222",e.toString());
-                    return null;
-                }
-
-            }
-        }
-
-
-        //creating asynctask object and executing it
-        GetJSON getJSON = new GetJSON();
-        getJSON.execute();
-    }
-
-
-    private void loadIntoListView(String json) throws JSONException {
-        JSONArray jsonArray = new JSONArray(json);
-        String[] receipts = new String[jsonArray.length()];
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject obj = jsonArray.getJSONObject(i);
-            //receipts[i] = obj.getString("receiptID")+"   "+obj.getString("date")+"  "+obj.getString("totalCost");
-            receipts[i] = String.format("%-35s%-12s%20s",obj.getString("receiptID"), obj.getString("date"), obj.getString("totalCost"));
-        }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, receipts);
-        listView.setAdapter(arrayAdapter);
-    }
+//    private void loadIntoListView(String json) throws JSONException {
+//        JSONArray jsonArray = new JSONArray(json);
+//        String[] receipts = new String[jsonArray.length()];
+//        for (int i = 0; i < jsonArray.length(); i++) {
+//            JSONObject obj = jsonArray.getJSONObject(i);
+//            //receipts[i] = obj.getString("receiptID")+"   "+obj.getString("date")+"  "+obj.getString("totalCost");
+//            receipts[i] = String.format("%-35s%-12s%20s",obj.getString("receiptID"), obj.getString("date"), obj.getString("totalCost"));
+//        }
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, receipts);
+//        listView.setAdapter(arrayAdapter);
+//    }
 
     //Load the receipts data to listview(from object to listview)
     void loadReceiptObjToListView(ArrayList<Receipt> _receipts){
