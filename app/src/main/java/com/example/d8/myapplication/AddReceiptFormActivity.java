@@ -137,7 +137,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 //
 
                         //sendToDB(jsonString, "http://myvmlab.senecacollege.ca:6207/addReceipt.php");
-                        Intent homeIntent = new Intent(AddReceiptFormActivity.this, HomeActivity.class);
+                        Intent homeIntent = new Intent(AddReceiptFormActivity.this, MenuActivity.class);
                         startActivity(homeIntent);
 
                     }catch(JSONException e){
@@ -244,7 +244,6 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
     String getCurrentDate(){
         //get current date and time
-        Date currentDate = new Date();
         Calendar calender = Calendar.getInstance();
         int cDay = calender.get(Calendar.DAY_OF_MONTH);
         int cMonth = calender.get(Calendar.MONTH) + 1;

@@ -8,12 +8,28 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeParseException;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 
 //this class handles some of the actions which may reuse many time
@@ -141,19 +157,87 @@ public class DataController {
             protected String doInBackground(Void... voids) {
 
                 try {
+//                    //creating a URL
+//                    URL url = new URL(urlWebService);
+//
+//                    //Opening the URL using HttpURLConnection
+//                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+//
+//                    con.setRequestMethod("GET");
+//                    con.connect();
+//                    //StringBuilder object to read the string from the service
+//                    StringBuilder sb = new StringBuilder();
+//
+//                    //We will use a buffered reader to read the string from service
+//                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+//                    //A simple string to read values from each line
+//                    String json;
+//
+//                    //reading until we don't find null
+//                    while ((json = bufferedReader.readLine()) != null) {
+//                        Log.d("JSONARRAY", json);
+//                        //appending it to string builder
+//                        sb.append(json + "\n");
+//                    }
+//
+//                    String jsonReturn = sb.toString().trim();
+//
+//                    Log.i("JSONRETURN", jsonReturn);
+//                    storeJsonToLocal(jsonReturn, RECEIPTDATAFILE, ctx);
+//                    //storeJsonToLocal(jsonReturn);
+//
+//                    //finally returning the read string
+//                    return sb.toString().trim();
+
+
+                    //Post version
                     //creating a URL
                     URL url = new URL(urlWebService);
+                    HttpURLConnection conn = null;
 
-                    //Opening the URL using HttpURLConnection
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    //String username = Information.authUser.getName();
+                    String username = "John Doe";
+                    Log.i("USERNAME3333", username);
 
-                    con.setRequestMethod("GET");
-                    con.connect();
+
+                    //open connection
+                    conn = (HttpURLConnection) url.openConnection();
+
+                    //set the request method to post
+                    conn.setReadTimeout(10000);
+                    conn.setConnectTimeout(15000);
+                    conn.setRequestMethod("POST");
+                    conn.setDoInput(true);
+                    conn.setDoOutput(true);
+
+                    //prepare data to post
+                    //List<NameValuePair> params = new ArrayList<NameValuePair>();
+                    List<AbstractMap.SimpleEntry> params = new ArrayList<AbstractMap.SimpleEntry>();
+
+//                  params.add(new BasicNameValuePair("firstParam", paramValue1));
+//                  params.add(new BasicNameValuePair("secondParam", paramValue2));
+//                  params.add(new BasicNameValuePair("thirdParam", paramValue3));
+                    JSONObject newJson = new JSONObject();
+                    newJson.put("name", username);
+
+                    String message = newJson.toString();
+
+                    //Output the stream to the server
+                    OutputStream os = conn.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(
+                            new OutputStreamWriter(os, "UTF-8"));
+                    writer.write(message);
+                    writer.flush();
+                    writer.close();
+                    os.close();
+
+                    conn.connect();
+
                     //StringBuilder object to read the string from the service
                     StringBuilder sb = new StringBuilder();
 
                     //We will use a buffered reader to read the string from service
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     //A simple string to read values from each line
                     String json;
 
@@ -172,6 +256,21 @@ public class DataController {
 
                     //finally returning the read string
                     return sb.toString().trim();
+
+//                    }catch(MalformedURLException error) {
+//                        //Handles an incorrectly entered URL
+//                    }
+//                    catch(SocketTimeoutException error) {
+//                        //Handles URL access timeout.
+//                    }
+//                    catch (IOException error) {
+//                        //Handles input and output errors
+//                    }finally {
+//                        if(conn != null) // Make sure the connection is not null.
+//                            conn.disconnect();
+//                    }
+
+
                 } catch (Exception e) {
                     Log.i("FAIL222",e.toString());
                     return null;
@@ -282,5 +381,88 @@ public class DataController {
         }
         return receipt;
     }
+
+    //this metod is to get receipts in specific days, like 3 days, 7 days...
+    public static ArrayList<Receipt> getReceiptsInDays(Integer days){
+        ArrayList<Receipt> receipts = new ArrayList<Receipt>();
+        try{
+            Date currentDate = DataController.getCurrentDate();
+
+            try{
+
+                for(int i=0; i<Information.receipts.size(); i++){
+                    Integer days_ = DataController.dateDiff(DataController.parseStringToDate(Information.receipts.get(i).getDate()),currentDate);
+                    if(days_<=days){
+                        Log.i("RECEIPT["+i+"]",Information.receipts.get(i).toString());
+                        receipts.add(Information.receipts.get(i));
+                    }
+                }
+            }catch(Exception e){
+                Log.i("DAYSFAIL", e.toString());
+            }
+
+        }catch(Exception e){
+
+        }
+
+        return receipts;
+    }
+
+    //method to get current date
+    public static Date getCurrentDate()throws Exception{
+
+        //get current date and time
+        Calendar calender = Calendar.getInstance();
+        int cDay = calender.get(Calendar.DAY_OF_MONTH);
+        int cMonth = calender.get(Calendar.MONTH) + 1;
+        int cYear = calender.get(Calendar.YEAR);
+        int cHour = calender.get(Calendar.HOUR);
+        int cMinute = calender.get(Calendar.MINUTE);
+        int cSecond = calender.get(Calendar.SECOND);
+
+        //String cDateTime = ""+cDay+"/"+cMonth+"/"+cYear+" "+cHour+":"+cMinute+":"+cSecond;
+        //String cDateInString = ""+cYear+"-"+cMonth+"-"+cDay;
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CANADA);
+        String cDateInString = sdf.format(calender.getTime()).toString();
+        Date currentDate = sdf.parse(cDateInString);
+
+        return currentDate;
+    }
+
+    //this method is to get two date difference
+    public static Integer dateDiff(Date startDate, Date endDate){
+        long different = endDate.getTime() - startDate.getTime();
+
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long elapsedDays = different / daysInMilli;
+        different = different % daysInMilli;
+
+        long elapsedHours = different / hoursInMilli;
+        different = different % hoursInMilli;
+
+        long elapsedMinutes = different / minutesInMilli;
+        different = different % minutesInMilli;
+
+        long elapsedSeconds = different / secondsInMilli;
+
+        String resultString = ""+elapsedDays;
+
+        Integer result = Integer.parseInt(resultString);
+        return result;
+    }
+
+    public static Date parseStringToDate(String dateInString)throws Exception{
+
+
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CANADA);
+        //String cDateInString = sdf.format(dateInString).toString();
+        Date currentDate = sdf.parse(dateInString);
+        return currentDate;
+    }
+
 
 }

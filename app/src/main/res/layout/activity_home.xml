@@ -248,7 +248,7 @@
             android:textColor="@color/colorEceiptWhite"
             android:textSize="18dp"
             android:textStyle="bold" />
-
+        
     </LinearLayout>
 <!--<<<<<<< HEAD-->
 

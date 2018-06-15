@@ -32,6 +32,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 
 //The Home activity is implemented by the Home fragment, though to be honest this seems like redundant code.
@@ -147,7 +148,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Information.receipts.clear();
             }
             DataController.loadReceiptsObj(json);
-            loadReceiptObjToListView();
+            //loadReceiptObjToListView(Information.receipts);
+
+            //Test
+            //DataController.getReceiptsInDays(17);
 
         }catch(JSONException e){
             Log.e("JSONERROR", e.toString());
@@ -219,7 +223,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
-                //Toast.makeText(parent.getContext(), "Android Custom Spinner Example Output..." + item, Toast.LENGTH_LONG).show();
+                Log.i("ITEMSAaaaaa", item);
+                if(item.equals("All receipts")){
+                    loadReceiptObjToListView(Information.receipts);
+                }else{
+                    String daysNumString = item.replaceAll("\\D+","");
+                    Integer daysNum = Integer.parseInt(daysNumString);
+
+                    //Toast.makeText(parent.getContext(), "Android Custom Spinner Example Output..." + daysNumString, Toast.LENGTH_LONG).show();
+                    ArrayList<Receipt> receipts = DataController.getReceiptsInDays(daysNum);
+                    loadReceiptObjToListView(receipts);
+                }
+
+
+
+
+
             }
 
 
@@ -410,18 +429,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     //Load the receipts data to listview(from object to listview)
-    void loadReceiptObjToListView(){
-        if(!Information.receipts.isEmpty()){
-            String[] receipts = new String[Information.receipts.size()];
-            Log.i("RECEIPTSSIZE", Integer.toString(Information.receipts.size()));
+    void loadReceiptObjToListView(ArrayList<Receipt> _receipts){
+        if(!_receipts.isEmpty()){
+            String[] receipts = new String[_receipts.size()];
+            Log.i("RECEIPTSSIZE", Integer.toString(_receipts.size()));
 
-            for(int i=0; i<Information.receipts.size(); i++){
-                receipts[i] = String.format("%-35s%-12s%20s",Information.receipts.get(i).getBusinessName(), Information.receipts.get(i).getDate(), Information.receipts.get(i).getTotalCost());
+            for(int i=0; i<_receipts.size(); i++){
+                receipts[i] = String.format("%-35s%-12s%20s",_receipts.get(i).getBusinessName(), _receipts.get(i).getDate(), _receipts.get(i).getTotalCost());
             }
             Log.i("RECEIPTSLOADING:", receipts.toString());
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, receipts);
             listView.setAdapter(arrayAdapter);
+        }else{
+            String[] emptyString = {};
+            ArrayAdapter<String> arrayAdapterEmpty = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, emptyString);
+            listView.setAdapter(arrayAdapterEmpty);
+            Log.i("NORECEIPT!","true");
         }
     }
 }

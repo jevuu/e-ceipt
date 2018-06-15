@@ -10,7 +10,7 @@ public class Information {
     public static String RECEIPTSLOCALFILENAME = "_receipts.txt";
 
 
-    public static List<Receipt> receipts = new ArrayList<Receipt>();
+    public static ArrayList<Receipt> receipts = new ArrayList<Receipt>();
     public static authUser authUser;
     public static Receipt receipt = new Receipt();
 
