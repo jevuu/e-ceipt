@@ -16,27 +16,19 @@
             android:layout_height="200dp"
             android:src="@mipmap/ic_launcher" />
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
-            android:textAlignment="center" />
-
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/textViewEmailLabel"
-                android:layout_width="80dp"
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Email:" />
+                android:text="@string/main_hint_uid" />
 
             <EditText
                 android:id="@+id/textViewEmail"
@@ -49,21 +41,45 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/profile_userName" />
+
             <EditText
-                android:id="@+id/textViewCreateDateLabel"
-                android:layout_width="140dp"
+                android:id="@+id/textViewEmail"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Create Date:" />
+                android:text="" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textViewCreateDateLabel"
+                android:layout_width="141dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/profile_name" />
 
             <EditText
-                android:id="@+id/textViewCreateDate"
-                android:layout_width="wrap_content"
+                android:id="@+id/txt_dispName"
+                android:layout_width="219dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
