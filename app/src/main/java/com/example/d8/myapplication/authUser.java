@@ -1,9 +1,13 @@
 package com.example.d8.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -11,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import static android.content.ContentValues.TAG;
+import static java.security.AccessController.getContext;
 
 //Represents the authorized user(the active user) within the App.
 //Last Modification: 6/7/2018 Alistair
@@ -20,7 +25,7 @@ class authUser extends User{
     FirebaseAuth mAuth; //Firebase Connection
     FirebaseUser mUser; //The active user
     GoogleSignInClient mGoogleSignInClient; //Google connection
-
+    String authError = "";
 
     String firebaseUID = "NOT SET"; //Should be checked for
 
@@ -70,7 +75,7 @@ class authUser extends User{
             //Set Attributes
             setUserId(n[0]);
             setEmail(name);
-            setName(getUserId());
+            setName(mUser.getDisplayName());
             setFirebaseUID();
 
             photoUrl = mUser.getPhotoUrl();
@@ -79,23 +84,48 @@ class authUser extends User{
         }
 
     }
-    void updateProfile(String name){
+    void updateProfile(@Nullable String name, @Nullable String email){
 
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(name)
-                .build();
-        mUser.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            System.out.println("Profile Updated!");
+        if(name != null) {
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(name)
+                    .build();
+            mUser.updateProfile(profileUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                System.out.println("Profile Updated!");
+                                Information.authUser.setName(name);
+                            }else{
+                                System.out.println("PAIN IN PROFILE!");
+                                Information.authUser.authError = task.getException().getMessage();
+                            }
                         }
-                    }
-                });
+                    });
+
+        }
+        if( (email != null && !email.isEmpty()) && !email.equals(getEmail())){
+            mUser.updateEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "Email Updated!");
+                            }else{
+                                System.out.println("PAIN IN EMAIL! " + task.getException());
+                                Information.authUser.authError = task.getException().getLocalizedMessage();
+
+
+                            }
+                        }
+                    });
+
+
+        }
 
     }
-    //Sends a verifcation email
+    //Sends a verification email
     void sendVerification(){
         mUser.sendEmailVerification()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -74,7 +74,7 @@
     <string name="date_label_in_listview">Date</string>
     <string name="analyze_btn">Analyze</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="AppLevel">0.1 - Alpha</string>
     <string name="about_lastCheck">Last Checked:</string>
@@ -83,4 +83,9 @@
     <string name="about_TitleDesc">Just some information about your App</string>
     <string name="bg_Title">Select Background Colour</string>
     <string name="bg_colourDesc">Pick Any Colour You Like!</string>
+    <string name="profile_name">Display Name</string>
+    <string name="profile_userName">Username </string>
+    <string name="profile_Unlc">Edit Your Information</string>
+    <string name="profile_unkCancel">Cancel</string>
+    <string name="profile_conf">Confirm Changes</string>
 </resources>
