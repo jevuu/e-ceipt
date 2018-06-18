@@ -84,7 +84,7 @@ class authUser extends User{
         }
 
     }
-    void  updateProfile(@Nullable String name, @Nullable String email){
+    void updateProfile(@Nullable String name, @Nullable String email){
 
         if(name != null) {
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
@@ -97,11 +97,9 @@ class authUser extends User{
                             if (task.isSuccessful()) {
                                 System.out.println("Profile Updated!");
                                 Information.authUser.setName(name);
-
                             }else{
                                 System.out.println("PAIN IN PROFILE!");
-                                Information.authUser.authError = task.getException().getLocalizedMessage();
-
+                                Information.authUser.authError = task.getException().getMessage();
                             }
                         }
                     });

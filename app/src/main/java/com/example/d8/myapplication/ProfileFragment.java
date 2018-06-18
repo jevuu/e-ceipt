@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -129,8 +138,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
                 String a = username.getText().toString();
                 String b = email.getText().toString();
-                //Updates the profile
-                Information.authUser.updateProfile(a, b);
+
+                //Updates the profile, this disgusts me
+                updateProfile(a, b);
 
 
 
@@ -151,6 +161,49 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
         }
 
+    }
+    void updateProfile(@Nullable String name, @Nullable String email) {
+        if (name != null) {
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(name)
+                    .build();
+            Information.authUser.mUser.updateProfile(profileUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                System.out.println("Profile Updated!");
+                                Information.authUser.setName(name);
+                            } else {
+                                System.out.println("PAIN IN PROFILE!");
+                                Toast.makeText(getContext(), "Your Display Name was Updated!",
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    });
+
+
+
+        }
+        if( (email != null && !email.isEmpty()) && !email.equals(Information.authUser.getEmail())){
+           Information.authUser.mUser.updateEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "Email Updated!");
+                            }else{
+                                System.out.println("PAIN IN EMAIL! " + task.getException());
+                                Toast.makeText(getContext(), "Your Email could not be updated!",
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    });
+
+
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
