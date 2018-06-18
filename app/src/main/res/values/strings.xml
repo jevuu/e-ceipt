@@ -83,4 +83,5 @@
     <string name="about_TitleDesc">Just some information about your App</string>
     <string name="bg_Title">Select Background Colour</string>
     <string name="bg_colourDesc">Pick Any Colour You Like!</string>
+    <string name="title_activity_qrgen">QRGenActivity</string>
 </resources>

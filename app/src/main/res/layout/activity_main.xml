@@ -47,7 +47,7 @@
                 android:drawableStart="@drawable/ic_main_username"
                 android:ems="10"
                 android:hint="@string/main_hint_uid"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:singleLine="false"
                 android:textColor="@color/colorEceiptWhite"
                 android:textColorHint="@color/colorEceiptWhite"

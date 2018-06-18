@@ -49,6 +49,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     View fragmentView=null;
     Button btn_add;
     Button btn_rec;
+    Button btn_qrgen;
     ListView listView=null;
 
     private OnFragmentInteractionListener mListener;
@@ -68,6 +69,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.analyze_btn:
                 Intent goToRec = new Intent(getActivity(), AddReceiptFormActivity.class);
                 startActivity(goToRec);
+                break;
+            case R.id.barcode_btn:
+                Intent goToQRGen = new Intent(getActivity(), QRGenActivity.class);
+                startActivity(goToQRGen);
+                break;
             default:
                 break;
         }
@@ -111,6 +117,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         btn_add.setOnClickListener(this);
         btn_rec = (Button) v.findViewById(R.id.analyze_btn);
         btn_rec.setOnClickListener(this);
+        btn_qrgen = (Button) v.findViewById(R.id.barcode_btn);
+        btn_qrgen.setOnClickListener(this);
 
         //getData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
