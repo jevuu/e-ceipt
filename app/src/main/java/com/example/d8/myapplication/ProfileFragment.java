@@ -193,6 +193,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Email Updated!");
+                                Toast.makeText(getContext(), "Your Email was updated and changes will be reflected in the next login!",
+                                        Toast.LENGTH_SHORT).show();
+
+
                             }else{
                                 System.out.println("PAIN IN EMAIL! " + task.getException());
                                 Toast.makeText(getContext(), "Your Email could not be updated!",
