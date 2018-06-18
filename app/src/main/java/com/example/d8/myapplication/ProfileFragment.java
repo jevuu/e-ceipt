@@ -45,7 +45,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
     Button confBtn;
 
     TextView username;
-    TextView email;
+    TextView Cemail;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -95,7 +95,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
       //Fetch the XML objects for usage
         username = (EditText)v.findViewById(R.id.profile_username);
-        email = (EditText)v.findViewById(R.id.profile_email);
+        Cemail = (EditText)v.findViewById(R.id.profile_email);
 
         editBtn = (Button)v.findViewById(R.id.profile_unlockBtn);
         editBtn.setOnClickListener(this);
@@ -109,10 +109,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         confBtn.setVisibility(View.INVISIBLE);
 
         username.setEnabled(false);
-        email.setEnabled(false);
+        Cemail.setEnabled(false);
 
         username.setText(Information.authUser.getName());
-        email.setText(Information.authUser.getEmail());
+        Cemail.setText(Information.authUser.getEmail());
 
         return v;
     }
@@ -122,7 +122,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         switch (v.getId()) {
             case R.id.profile_unlockBtn:
                 username.setEnabled(true);
-                email.setEnabled(true);
+                Cemail.setEnabled(true);
 
                 cancBtn.setVisibility(View.VISIBLE);
                 confBtn.setVisibility(View.VISIBLE);
@@ -130,14 +130,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                 break;
             case R.id.profile_confirm:
                 username.setEnabled(false);
-                email.setEnabled(false);
+                Cemail.setEnabled(false);
 
                 cancBtn.setVisibility(View.INVISIBLE);
                 confBtn.setVisibility(View.INVISIBLE);
                 editBtn.setVisibility(View.VISIBLE);
 
                 String a = username.getText().toString();
-                String b = email.getText().toString();
+                String b = Cemail.getText().toString();
 
                 //Updates the profile, this disgusts me
                 updateProfile(a, b);
@@ -148,7 +148,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                 break;
             case R.id.profile_cancel:
                 username.setEnabled(false);
-                email.setEnabled(false);
+                Cemail.setEnabled(false);
 
                 cancBtn.setVisibility(View.INVISIBLE);
                 confBtn.setVisibility(View.INVISIBLE);
@@ -174,16 +174,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                             if (task.isSuccessful()) {
                                 System.out.println("Profile Updated!");
                                 Information.authUser.setName(name);
+
                             } else {
                                 System.out.println("PAIN IN PROFILE!");
-                                Toast.makeText(getContext(), "Your Display Name was Updated!",
+                                Toast.makeText(getContext(), "Your Display Name was NOT Updated!",
                                         Toast.LENGTH_SHORT).show();
+                                username.setText(Information.authUser.getName());
 
                             }
                         }
                     });
-
-
 
         }
         if( (email != null && !email.isEmpty()) && !email.equals(Information.authUser.getEmail())){
@@ -194,13 +194,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Email Updated!");
                                 Toast.makeText(getContext(), "Your Email was updated and changes will be reflected in the next login!",
-                                        Toast.LENGTH_SHORT).show();
+                                        Toast.LENGTH_LONG).show();
+
+                                Intent myIntent = new Intent(getContext(), MainActivity.class);
+                                myIntent.putExtra("finish", true);
+                                myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(myIntent);
+
 
 
                             }else{
                                 System.out.println("PAIN IN EMAIL! " + task.getException());
                                 Toast.makeText(getContext(), "Your Email could not be updated!",
                                         Toast.LENGTH_SHORT).show();
+                                Cemail.setText(Information.authUser.getName());
+
 
                             }
                         }
