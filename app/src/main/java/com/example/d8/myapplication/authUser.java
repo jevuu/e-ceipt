@@ -3,6 +3,7 @@ package com.example.d8.myapplication;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -79,23 +80,43 @@ class authUser extends User{
         }
 
     }
-    void updateProfile(String name){
+    void updateProfile(@Nullable String name, @Nullable String email){
 
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(name)
-                .build();
-        mUser.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            System.out.println("Profile Updated!");
+        if(name != null) {
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(name)
+                    .build();
+            mUser.updateProfile(profileUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                System.out.println("Profile Updated!");
+                            }else{
+                                System.out.println("PAIN IN PROFILE!");
+                            }
                         }
-                    }
-                });
+                    });
+
+        }
+        if(email != null || !email.equals(getEmail())){
+            mUser.updateEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "Email Updated!");
+                            }else{
+                                System.out.println("PAIN IN EMAIL!");
+                            }
+                        }
+                    });
+
+        }
+
 
     }
-    //Sends a verifcation email
+    //Sends a verification email
     void sendVerification(){
         mUser.sendEmailVerification()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
