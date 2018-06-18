@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -101,6 +102,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         username.setEnabled(false);
         email.setEnabled(false);
 
+        username.setText(Information.authUser.getName());
+        email.setText(Information.authUser.getEmail());
+
         return v;
     }
     //This function handles click events for every button in the fragment.
@@ -127,6 +131,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                 String b = email.getText().toString();
                 //Updates the profile
                 Information.authUser.updateProfile(a, b);
+
+
+
 
                 break;
             case R.id.profile_cancel:
