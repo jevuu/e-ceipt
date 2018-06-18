@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:orientation="vertical">
 
         <ImageView
@@ -38,8 +39,10 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_main_username"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="" />
+                android:enabled="false"
+                android:inputType="textEmailAddress"
+                android:textStyle="bold"
+                tools:hint="@string/main_hint_uid" />
 
         </LinearLayout>
 
@@ -54,21 +57,22 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="textPersonName"
-                android:text="@string/profile_userName"
+                android:text="@string/profile_name"
                 android:textColor="@color/colorEceiptWhite" />
 
             <EditText
                 android:id="@+id/profile_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_main_password"
+                android:drawableLeft="@drawable/ic_main_username"
                 android:ems="10"
                 android:enabled="false"
+                android:hint="@string/profile_name"
                 android:inputType="textPersonName"
-                android:text="" />
+                android:text=""
+                android:textStyle="bold" />
 
         </LinearLayout>
-
 
 
         <Button

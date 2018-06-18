@@ -1,12 +1,15 @@
 package com.example.d8.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -18,11 +21,21 @@ import android.widget.TextView;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+
+
+
+    Button editBtn;
+    Button cancBtn;
+    Button confBtn;
+
+    TextView username;
+    TextView email;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -60,6 +73,7 @@ public class ProfileFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         getActivity().setTitle("Profile");
+
     }
 
     @Override
@@ -67,9 +81,62 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_profile, container, false);
-        TextView textViewEmail=v.findViewById(R.id.textViewEmail);
-        textViewEmail.setText(authUser.class.getName());
+
+
+      //Fetch the XML objects for usage
+        username = (EditText)v.findViewById(R.id.profile_username);
+        email = (EditText)v.findViewById(R.id.profile_email);
+
+        editBtn = (Button)v.findViewById(R.id.profile_unlockBtn);
+        editBtn.setOnClickListener(this);
+        confBtn = (Button)v.findViewById(R.id.profile_confirm);
+        confBtn.setOnClickListener(this);
+
+        cancBtn = (Button)v.findViewById(R.id.profile_cancel);
+        cancBtn.setOnClickListener(this);
+
+        cancBtn.setVisibility(View.INVISIBLE);
+        confBtn.setVisibility(View.INVISIBLE);
+
+        username.setEnabled(false);
+        email.setEnabled(false);
+        
         return v;
+    }
+    //This function handles click events for every button in the fragment.
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.profile_unlockBtn:
+                username.setEnabled(true);
+                email.setEnabled(true);
+
+                cancBtn.setVisibility(View.VISIBLE);
+                confBtn.setVisibility(View.VISIBLE);
+                editBtn.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.profile_confirm:
+                username.setEnabled(false);
+                email.setEnabled(false);
+
+                cancBtn.setVisibility(View.INVISIBLE);
+                confBtn.setVisibility(View.INVISIBLE);
+                editBtn.setVisibility(View.VISIBLE);
+                break;
+            case R.id.profile_cancel:
+                username.setEnabled(false);
+                email.setEnabled(false);
+
+                cancBtn.setVisibility(View.INVISIBLE);
+                confBtn.setVisibility(View.INVISIBLE);
+                editBtn.setVisibility(View.VISIBLE);
+
+                break;
+            default:
+                break;
+
+
+        }
 
     }
 
