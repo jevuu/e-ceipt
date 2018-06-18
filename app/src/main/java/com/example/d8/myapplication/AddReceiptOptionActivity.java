@@ -27,7 +27,13 @@ public class AddReceiptOptionActivity extends AppCompatActivity {
         });
 
         realReceiptOption = (Button)findViewById(R.id.add_receipt_btn_scan_real_receipt);
-
+        realReceiptOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addRecpt = new Intent(getBaseContext(), OCRTextActivity.class);
+                startActivity(addRecpt);
+            }
+        });
 
         addFormOption = (Button)findViewById(R.id.add_receipt_btn_form);
         addFormOption.setOnClickListener(new View.OnClickListener() {
