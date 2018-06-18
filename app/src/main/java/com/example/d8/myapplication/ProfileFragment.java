@@ -211,6 +211,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                                         Toast.LENGTH_SHORT).show();
                                 Cemail.setText(Information.authUser.getName());
 
+                                Cemail.setTextColor(getResources().getColor(R.color.colorAccent));
+
 
                             }
                         }
