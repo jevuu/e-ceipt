@@ -232,9 +232,10 @@ public class DataController {
             //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
             return json;
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e("FILEREADFAIL", e.toString());
+            return "null";
         }
-        return null;
+        //return null;
     }
 
     //code tutorial from "https://www.simplifiedcoding.net/android-json-parsing-tutorial/"

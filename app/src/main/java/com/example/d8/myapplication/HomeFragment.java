@@ -137,6 +137,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         try{
             String json = DataController.readJsonFile(Information.RECEIPTSLOCALFILENAME, v.getContext());
+            if(json.equals("null")){
+                DataController.storeJsonToLocal("[]",Information.RECEIPTSLOCALFILENAME,getActivity());
+            }
             Log.i("JSONHOME", json);
 //            if(Information.receipts.isEmpty()){
 //                DataController.loadReceiptsObj(json);
