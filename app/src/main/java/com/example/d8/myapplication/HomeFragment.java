@@ -47,6 +47,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
 
+    String USERID = Information.authUser.getUserId();
+    String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
+
     View fragmentView=null;
     Button btn_add;
     Button btn_rec;
@@ -136,9 +139,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         initCustomSpinner();
 
         try{
-            String json = DataController.readJsonFile(Information.RECEIPTSLOCALFILENAME, v.getContext());
+            String json = DataController.readJsonFile(USERRECEIPTFILENAME, v.getContext());
             if(json.equals("null")){
-                DataController.storeJsonToLocal("[]",Information.RECEIPTSLOCALFILENAME,getActivity());
+                DataController.storeJsonToLocal("[]",USERRECEIPTFILENAME,getActivity());
             }
             Log.i("JSONHOME", json);
 //            if(Information.receipts.isEmpty()){

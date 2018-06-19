@@ -36,6 +36,9 @@ public class AddReceiptFormActivity extends AppCompatActivity {
     EditText totalCost;
     Button receiptSubmitButton;
 
+    String USERID = Information.authUser.getUserId();
+    String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
+
     int mYear;
     int mMonth;
     int mDay;
@@ -101,7 +104,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Please enter receipt's total cost!",Toast.LENGTH_LONG).show();
                 }else{
                     //all input are validated!
-                    String receiptsJSON = DataController.readJsonFile(Information.RECEIPTSLOCALFILENAME, AddReceiptFormActivity.this);
+                    String receiptsJSON = DataController.readJsonFile(USERRECEIPTFILENAME, AddReceiptFormActivity.this);
                     try{
                         JSONArray receiptsJsonArray = new JSONArray(receiptsJSON);
                         JSONObject jsonObject = new JSONObject();
@@ -124,7 +127,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                         //test addReceiptToLocal and parseJsonToReceiptOBJ in Information class:
 
                         Receipt receipt = DataController.parseJsonToReceiptOBJ(jsonString);
-                        DataController.addReceiptToLocal(receipt,AddReceiptFormActivity.this);
+                        DataController.addReceiptToLocal(USERID, receipt,AddReceiptFormActivity.this);
                         DataController.addReceiptToDB(receipt,"http://myvmlab.senecacollege.ca:6207/addReceipt.php",AddReceiptFormActivity.this);
 //                        Log.i("JSONINAddReceiptForm:", jsonString);
 //

@@ -35,8 +35,9 @@ import java.util.Locale;
 //this class handles some of the actions which may reuse many time
 public class DataController {
     //add new receipt data to local json file
-    static void addReceiptToLocal(Receipt receipt, Context ctx)throws JSONException{
-        String receiptsJSON = DataController.readJsonFile(Information.RECEIPTSLOCALFILENAME, ctx);
+    static void addReceiptToLocal(String USERID, Receipt receipt, Context ctx)throws JSONException{
+        String userReceiptFileName = USERID+Information.RECEIPTSLOCALFILENAME;
+        String receiptsJSON = DataController.readJsonFile(userReceiptFileName, ctx);
 
         JSONArray receiptsJsonArray = new JSONArray(receiptsJSON);
         JSONObject jsonObject = new JSONObject();
@@ -68,7 +69,7 @@ public class DataController {
         String jArrayString = receiptsJsonArray.toString();
         Log.i("JArrAddReceiptForm:", jArrayString);
 
-        DataController.storeJsonToLocal(jArrayString, Information.RECEIPTSLOCALFILENAME, ctx);
+        DataController.storeJsonToLocal(jArrayString, userReceiptFileName, ctx);
     }
 
     //add new receipt data to remote databse
