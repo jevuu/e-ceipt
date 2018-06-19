@@ -47,7 +47,7 @@ public class BackgroundWorker extends AsyncTask<String, String, String> {
                     //constants
                     URL url = new URL(login_URL);
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("userName", params[2]);
+                    jsonObject.put("userID", params[2]);
                     jsonObject.put("name", params[3]);
                     jsonObject.put("email", params[4]);
 
