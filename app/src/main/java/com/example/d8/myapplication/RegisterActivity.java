@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     authUser a = new authUser();
                                     a.createUser();
-                                    a.updateProfile(a.getName());
+                                    a.updateProfile(a.getName(), null);
                                     a.contactSql_reg(RegisterActivity.this);
 
 
