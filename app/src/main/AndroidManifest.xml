@@ -47,7 +47,7 @@
         <activity android:name=".OCRTextActivity" />
         <activity
             android:name=".QRGenActivity"
-            android:label="@string/title_activity_qrgen"
+            android:label="@string/QR_gen_title"
             android:theme="@style/AppTheme"></activity>
     </application>
 
