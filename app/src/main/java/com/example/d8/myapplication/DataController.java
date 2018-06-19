@@ -253,7 +253,8 @@ public class DataController {
          * */
 
         //The local file which store receipts data
-        String RECEIPTDATAFILE = "_receipts.txt";
+        String USERID = Information.authUser.getUserId();
+        String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
 
         class GetJSON extends AsyncTask<Void, Void, String> {
 
@@ -348,7 +349,7 @@ public class DataController {
                     String jsonReturn = sb.toString().trim();
 
                     Log.i("JSONRETURN", jsonReturn);
-                    storeJsonToLocal(jsonReturn, RECEIPTDATAFILE, ctx);
+                    storeJsonToLocal(jsonReturn, USERRECEIPTFILENAME, ctx);
                     //storeJsonToLocal(jsonReturn);
 
                     //finally returning the read string
