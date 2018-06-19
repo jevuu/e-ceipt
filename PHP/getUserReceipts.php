@@ -5,11 +5,11 @@ require "conn.php";
 //Get userName from JSON
 $json = file_get_contents('php://input');
 $obj = json_decode($json);
-$userName = $obj->{'userName'};
+$userID = $obj->{'userID'};
 
 //If userName doesn't exist, use grab from John Doe. ONLY FOR TESTING PURPOSES. REMOVE IN FINAL
-if($userName == ""){
-	$userName = "johnDoe";
+if($userID == ""){
+	$userID = "1";
 }
 
 //Array of receipts to pass back
@@ -19,7 +19,7 @@ $receipts = array();
 $qString = "SELECT u.name, r.receiptID, r.creationDate, r.totalCost, r.tax, r.businessID 
 FROM users u 
 INNER JOIN receipts r ON r.userID = u.userID 
-WHERE u.userName= '$userName'" ;
+WHERE u.userID= '$userID'" ;
 $qReceipt= mysqli_query($conn, $qString);
 while($receipt= mysqli_fetch_row($qReceipt)){
 	
