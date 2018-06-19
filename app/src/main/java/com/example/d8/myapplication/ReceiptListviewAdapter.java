@@ -42,7 +42,8 @@ public class ReceiptListviewAdapter extends BaseAdapter {
         View v = inflater.inflate( R.layout.listview_receipt, parent, false );
         final String companyName = getItem(position).getBusinessName();
         final String receiptDate = getItem(position).getDate();
-        final String totalCost = Double.toString(getItem(position).getTotalCost());
+        final String totalCost = String.format("%.2f",getItem(position).getTotalCost());
+
 
         TextView company_name = (TextView)v.findViewById(R.id.business_name);
         TextView receipt_date = (TextView)v.findViewById(R.id.receipt_date);

@@ -45,9 +45,9 @@ public class DataController {
         JSONObject itemJsonObject = new JSONObject();
         //itemsJsonArray.put(itemJsonObject);
 
+        String username = receipt.getName();
         String company = receipt.getBusinessName();
         String date = receipt.getDate();
-        String username = Information.authUser.getName();
         String userId = Information.authUser.getUserId();
         String tCost = Double.toString(receipt.getTotalCost());
         String tax = "14";

@@ -2,6 +2,7 @@ package com.example.d8.myapplication;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.icu.text.IDNA;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -92,8 +93,8 @@ public class AddReceiptFormActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String company = companyName.getText().toString();
                 String date = receiptDate.getText().toString();
-                String username = Information.authUser.getName();
-                String userId = Information.authUser.getUserId();
+                String username = Information.authUser.getUserId();
+                String UID = Information.authUser.getFirebaseUID();
                 String tCost = totalCost.getText().toString();
                 String tax = "14";
 
@@ -124,11 +125,19 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                         //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
                         String jsonString = jsonObject.toString();
 
+                        Log.i("JAAAAASON", jsonString);
+                        Log.e("USERNAME", username);
+
                         //test addReceiptToLocal and parseJsonToReceiptOBJ in Information class:
 
                         Receipt receipt = DataController.parseJsonToReceiptOBJ(jsonString);
+
+                        Log.i("RECEIPTUSERNAME", receipt.getName());
+
+
                         DataController.addReceiptToLocal(USERID, receipt,AddReceiptFormActivity.this);
-                        DataController.addReceiptToDB(receipt,"http://myvmlab.senecacollege.ca:6207/addReceipt.php",AddReceiptFormActivity.this);
+
+                        //DataController.addReceiptToDB(receipt,"http://myvmlab.senecacollege.ca:6207/addReceipt.php",AddReceiptFormActivity.this);
 //                        Log.i("JSONINAddReceiptForm:", jsonString);
 //
 //                        receiptsJsonArray.put(jsonObject);
