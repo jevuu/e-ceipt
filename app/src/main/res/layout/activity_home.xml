@@ -246,7 +246,7 @@
             android:background="@drawable/btn_roundcorner"
             android:text="Scan"
             android:textColor="@color/colorEceiptWhite"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </LinearLayout>

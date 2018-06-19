@@ -446,7 +446,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             Log.i("RECEIPTSLOADING:", receipts.toString());
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, receipts);
-            listView.setAdapter(arrayAdapter);
+            ReceiptListviewAdapter adapter = new ReceiptListviewAdapter(getActivity(),_receipts);
+            listView.setAdapter(adapter);
         }else{
             String[] emptyString = {};
             ArrayAdapter<String> arrayAdapterEmpty = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, emptyString);
