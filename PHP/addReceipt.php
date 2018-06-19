@@ -5,7 +5,7 @@ require "conn.php";
 
 $json 			= file_get_contents('php://input');
 $obj 			= json_decode($json);
-$userName 		= $obj->{'userName'};
+$userID			= $obj->{'userID'};
 $receiptDate 	= $obj->{'date'};		//This must be a date object
 $totalCost 		= $obj->{'totalCost'};
 $tax 			= $obj->{'tax'};
@@ -13,7 +13,7 @@ $businessName 	= $obj->{'businessName'};
 $items 			= $obj->{'items'};
 
 //
-$uID = 0;
+$uID = $userID;
 $rID = 0;
 $iID = array();
 
@@ -35,13 +35,13 @@ foreach($items as $key=>$itm){
 }
 */
 
-//	GET USER ID
+/*//	GET USER ID
 $qUsersString = "SELECT userID FROM users WHERE userName = '$userName'";
 $result = mysqli_query($conn, $qUsersString);
 $row = mysqli_fetch_row($result);
 $uID = $row[0];
 //echo "User ID found: " . $uID;	
-
+*/
 // INSERT RECEIPT
 $qReceiptString = "INSERT INTO receipts (`userID`, `creationDate`, `totalCost`, `tax`) 
 	VALUES(" . $uID . ", '$receiptDate', " . $totalCost . ", " . $tax . ")";
