@@ -50,7 +50,7 @@ class authUser extends User{
     //Contact My.SQL with the register command
     void contactSql_reg(Context ct){
         e = new BackgroundWorker(ct);
-        e.execute("register","http://myvmlab.senecacollege.ca:6207/register.php", getUserId(), getUserId(), getEmail());
+        e.execute("register","http://myvmlab.senecacollege.ca:6207/register.php", getFirebaseUID(), getName(), getEmail());
 
     }
     //Contact My.SQL with the register command
