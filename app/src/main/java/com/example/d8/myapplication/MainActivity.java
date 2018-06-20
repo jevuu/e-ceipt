@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if(task.isSuccessful() && aUser.mUser.isEmailVerified() == false) {
                         //============Fail States for Sign In=================
 
-                        Toast.makeText(MainActivity.this, "Please verify your email to continue, an email has been resent",
+                        Toast.makeText(MainActivity.this, "Please verify your email to continue, an email has been sent",
                                 Toast.LENGTH_SHORT).show();
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);

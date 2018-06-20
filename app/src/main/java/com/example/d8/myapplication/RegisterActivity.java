@@ -56,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(RegisterActivity.this, "Registered, please check your email to verify",
+                                    Toast.makeText(RegisterActivity.this, "Registered, have fun!",
                                             Toast.LENGTH_SHORT).show();
 
 
