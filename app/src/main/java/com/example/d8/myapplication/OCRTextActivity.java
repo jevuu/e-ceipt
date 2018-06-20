@@ -25,6 +25,7 @@ import java.util.List;
 public class OCRTextActivity extends AppCompatActivity {
     TextView txt_add;
     ImageView img_preview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +98,7 @@ public class OCRTextActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
             img_preview.setImageBitmap(imageBitmap);
+
         }
     }
 

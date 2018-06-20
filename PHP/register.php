@@ -5,12 +5,13 @@ require "conn.php";
 //Get from JSON object the username, nam, and email
 $json = file_get_contents('php://input');
 $obj = json_decode($json);
-$userName = $obj->{'userName'};
-$name = $obj->{'name'}
+$userID = $obj->{'userID'};
+$name = $obj->{'name'};
+$email = $obj->{'email'};
 
 //If they don't exist, just enter dummy data. THIS IS ONLY FOR TESTING PURPOSES. REMOVE IN FINAL
-if($userName == ""){
-	$userName = "regTest";
+if($userID == ""){
+	$userID = "regTest";
 }
 if($name == ""){
 	$name = "registration test";
@@ -20,20 +21,20 @@ if($email == ""){
 }
 
 //Create user, return info
-$qString = "INSERT INTO users (`userName`,`name`,`creationDate`,`email`) VALUES ('" . $userName . "','" . $name . "', CURRENT_DATE,'" . $email . "')";
+$qString = "INSERT INTO users (`userID`,`name`,`creationDate`,`email`) VALUES ('" . $userID . "','" . $name . "', CURRENT_DATE,'" . $email . "')";
 mysqli_query($conn, $qString);
-
-$qString = "SELECT userID, userName, name, creationDate FROM users WHERE name='" . $userName. "'";
+/*
+$qString = "SELECT userID, name, creationDate, email FROM users WHERE userID='" . $userID. "'";
 $result = mysqli_query($conn, $qString);
 if(mysqli_num_rows($result) == 1){
 	$row = mysqli_fetch_row($result);
 	$uID = $row[0];
-	$uName = $row[1]
-	$gname = $row[2]
-	$date = $row[3]
-	echo "User created! <br />User ID: " . $uID . " <br />Username: " . $uName . "<br />Real name: " . $gname . "<br />Created on: " . $date . "<br /><br />";
+	$gName = $row[1]
+	$date = $row[2]
+	$email = $row[3]
+	echo "User created! <br />User ID: " . $uID . " <br />Name: " . $gName . "<br />Created on: " . $date . "<br /> Email: " . $email . "<br /><br />";
 }else{
-	echo "Failed to create user or multiple users.<br /><br />";
+	echo "Failed to create user or multiple users.<br /><br />" . $userID . $name . $email;
 }
-
+*/
 ?>
