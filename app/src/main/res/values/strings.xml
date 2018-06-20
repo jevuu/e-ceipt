@@ -83,9 +83,17 @@
     <string name="about_TitleDesc">Just some information about your App</string>
     <string name="bg_Title">Select Background Colour</string>
     <string name="bg_colourDesc">Pick Any Colour You Like!</string>
+
+
+
+    <!-- null value -->
+    <string name="string_null">null</string>
+    <string name="num_null">0.00</string>
+
     <string name="profile_name">Display Name</string>
     <string name="profile_userName">Username </string>
     <string name="profile_Unlc">Edit Your Information</string>
     <string name="profile_unkCancel">Cancel</string>
     <string name="profile_conf">Confirm Changes</string>
+
 </resources>

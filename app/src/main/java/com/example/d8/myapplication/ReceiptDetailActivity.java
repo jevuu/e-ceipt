@@ -3,6 +3,7 @@ package com.example.d8.myapplication;
 import android.icu.text.IDNA;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,7 +18,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_receipt_detail);
 
         String index = getIntent().getStringExtra("RECEIPTINDEX");
-
+        Log.i("INDEX", index);
         listView = (ListView)findViewById(R.id.item_list_view);
         date = (TextView)findViewById(R.id.receipt_detail_date) ;
         date.setText(Information.receipts.get(Integer.parseInt(index)).getDate());
