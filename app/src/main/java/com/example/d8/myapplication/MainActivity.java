@@ -127,7 +127,10 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = aUser.mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Google Auth Passed",
                                     Toast.LENGTH_SHORT).show();
+                            aUser.createUser();
+                            aUser.contactSql_log(getBaseContext());
 
+                            Information.authUser = aUser;
                             onReady(this, "a");
 
                         } else {
