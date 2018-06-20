@@ -127,7 +127,10 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = aUser.mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Google Auth Passed",
                                     Toast.LENGTH_SHORT).show();
+                            aUser.createUser();
+                            aUser.contactSql_log(getBaseContext());
 
+                            Information.authUser = aUser;
                             onReady(this, "a");
 
                         } else {
@@ -152,9 +155,10 @@ public class MainActivity extends AppCompatActivity {
         //Excute VM connections
         aUser.contactSql_log(this);
         Information.authUser = aUser;
-
+        //DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
 
         Intent goToReg = new Intent(this, MenuActivity.class);
+
         startActivity(goToReg);
 
     }
@@ -210,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if(task.isSuccessful() && aUser.mUser.isEmailVerified() == false) {
                         //============Fail States for Sign In=================
 
-                        Toast.makeText(MainActivity.this, "Please verify your email to continue, an email has been resent",
+                        Toast.makeText(MainActivity.this, "Please verify your email to continue, an email has been sent",
                                 Toast.LENGTH_SHORT).show();
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);

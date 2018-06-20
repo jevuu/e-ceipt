@@ -114,7 +114,7 @@ public class MenuActivity extends AppCompatActivity
         im.setImageResource(R.drawable.receiptsnap_logo);
 
         TextView te = (TextView) findViewById(R.id.nav_head_email);
-       te.setText(Information.authUser.getEmail());
+        te.setText(Information.authUser.getEmail());
 
 
     }
@@ -131,7 +131,6 @@ public class MenuActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -143,6 +142,7 @@ public class MenuActivity extends AppCompatActivity
 
         Fragment fragment=null;
         Class fragmentClass = null;
+        fetchProfile();
 
         if (id == R.id.nav_home) {
             // Handle the camera action
@@ -155,8 +155,15 @@ public class MenuActivity extends AppCompatActivity
             fragmentClass = AboutFragment.class;
         } else if (id == R.id.nav_logout) {
 
+            //When signing out, this prevents the user 'backing' into the app.
+            //finish() destroys the home activity as well.
             Intent myIntent = new Intent(this, MainActivity.class);
+            myIntent.putExtra("finish", true);
+            myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(myIntent);
+            finish();
             return true;
 
         }
