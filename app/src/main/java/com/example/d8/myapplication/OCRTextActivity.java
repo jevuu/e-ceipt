@@ -13,6 +13,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,11 +24,15 @@ import java.util.List;
 //Last Modifcation: 6/11/2018
 public class OCRTextActivity extends AppCompatActivity {
     TextView txt_add;
+    ImageView img_preview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocrtext);
         txt_add = (TextView) findViewById(R.id.edtErr);
+        img_preview= (ImageView) findViewById(R.id.ocrtext_imgprev);
+
         takePhoto();
     }
 
@@ -91,6 +96,9 @@ public class OCRTextActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            img_preview.setImageBitmap(imageBitmap);
+
         }
     }
 
