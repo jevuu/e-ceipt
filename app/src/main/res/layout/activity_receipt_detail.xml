@@ -194,13 +194,14 @@
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/share_logo" />
 
-            <ImageButton
-                android:id="@+id/imageButton2"
+            <Button
+                android:id="@+id/buttonDelete"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
+                android:text="Delete"
                 app:srcCompat="@drawable/share_logo" />
 
             <ImageButton

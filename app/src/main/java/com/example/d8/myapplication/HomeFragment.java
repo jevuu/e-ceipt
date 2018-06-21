@@ -87,7 +87,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -104,7 +103,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View v=inflater.inflate(R.layout.fragment_home, container, false);
         fragmentView=v;
 
-        listView = (ListView)v.findViewById(R.id.receipts_list_view);
+//        listView = (ListView)v.findViewById(R.id.receipts_list_view);
 
         //Adds OnClick Listeners to the lower buttons
         btn_add = (Button) v.findViewById(R.id.add_btn);
@@ -113,15 +112,57 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         btn_rec.setOnClickListener(this);
 
         //getData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
-        getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
+        //getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
+        //DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
+
         initCustomSpinner();
+
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //Toast.makeText(getActivity().getBaseContext(),""+position, Toast.LENGTH_LONG).show();
+//                Intent intent = new Intent(getActivity(),ReceiptDetailActivity.class);
+//                intent.putExtra("RECEIPTINDEX", Integer.toString(position));
+//                startActivity(intent);
+//            }
+//        });
+
+
+        listView = (ListView)v.findViewById(R.id.receipts_list_view);
+
+        //DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
+
+        initCustomSpinner();
+
+        try{
+            String json = DataController.readJsonFile(Information.RECEIPTSLOCALFILENAME, v.getContext());
+            Log.i("JSONHOME", json);
+//            if(Information.receipts.isEmpty()){
+//                DataController.loadReceiptsObj(json);
+//                loadReceiptObjToListView();
+//            }else{
+//
+//            }
+            if(!Information.receipts.isEmpty()){
+                Information.receipts.clear();
+            }
+            DataController.loadReceiptsObj(json);
+            loadReceiptObjToListView();
+
+        }catch(JSONException e){
+            Log.e("JSONERROR", e.toString());
+        }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity().getBaseContext(),""+position, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(),""+position, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(v.getContext(),ReceiptDetailActivity.class);
+                intent.putExtra("RECEIPTINDEX", Integer.toString(position));
+                startActivity(intent);
             }
         });
+
 
 
 
@@ -366,5 +407,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, receipts);
         listView.setAdapter(arrayAdapter);
+    }
+
+    //Load the receipts data to listview(from object to listview)
+    void loadReceiptObjToListView(){
+        if(!Information.receipts.isEmpty()){
+            String[] receipts = new String[Information.receipts.size()];
+            Log.i("RECEIPTSSIZE", Integer.toString(Information.receipts.size()));
+
+            for(int i=0; i<Information.receipts.size(); i++){
+                receipts[i] = String.format("%-35s%-12s%20s",Information.receipts.get(i).getBusinessName(), Information.receipts.get(i).getDate(), Information.receipts.get(i).getTotalCost());
+            }
+            Log.i("RECEIPTSLOADING:", receipts.toString());
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, receipts);
+            listView.setAdapter(arrayAdapter);
+        }
     }
 }
