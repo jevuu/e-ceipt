@@ -31,6 +31,7 @@ import java.util.List;
 //Last Modifcation: 6/11/2018
 public class OCRTextActivity extends AppCompatActivity {
     TextView txt_add;
+
     ImageView imgrecv;
     String imagePath = "";
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -40,6 +41,7 @@ public class OCRTextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocrtext);
         txt_add = (TextView) findViewById(R.id.edtErr);
+
         imgrecv = (ImageView) findViewById(R.id.ocr_pic);
         takePhoto();
     }
@@ -118,6 +120,7 @@ public class OCRTextActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
             File imgFile = new  File(imagePath);
 
             if(imgFile.exists()){
@@ -125,7 +128,6 @@ public class OCRTextActivity extends AppCompatActivity {
                 imgrecv.setImageBitmap(rcptImg);
 
             }
-
 
 
         }
