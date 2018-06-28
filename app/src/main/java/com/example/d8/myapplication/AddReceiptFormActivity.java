@@ -1,6 +1,8 @@
 package com.example.d8.myapplication;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.icu.text.IDNA;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,7 +34,11 @@ import java.util.Locale;
 public class AddReceiptFormActivity extends AppCompatActivity {
     EditText companyName;
     EditText receiptDate;
+    EditText totalCost;
     Button receiptSubmitButton;
+
+    String USERID = Information.authUser.getUserId();
+    String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
 
     int mYear;
     int mMonth;
@@ -45,6 +51,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
         companyName = (EditText)findViewById(R.id.company_name);
         receiptDate = (EditText)findViewById(R.id.receipt_date);
+        totalCost = (EditText)findViewById(R.id.add_receipt_total_cost);
 
         String cDateInString = getCurrentDate();
 
@@ -86,39 +93,69 @@ public class AddReceiptFormActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String company = companyName.getText().toString();
                 String date = receiptDate.getText().toString();
-                String username = "freddy";
-                String userId = "007";
-                String totalCost = "100";
+                String username = Information.authUser.getUserId();
+                String UID = Information.authUser.getFirebaseUID();
+                String tCost = totalCost.getText().toString();
                 String tax = "14";
 
+                //validate text input empty
+                if(company.equals("")){
+                    Toast.makeText(getApplicationContext(),"Please enter your name!",Toast.LENGTH_LONG).show();
+                }else if(tCost.equals("")){
+                    Toast.makeText(getApplicationContext(),"Please enter receipt's total cost!",Toast.LENGTH_LONG).show();
+                }else{
+                    //all input are validated!
+                    String receiptsJSON = DataController.readJsonFile(USERRECEIPTFILENAME, AddReceiptFormActivity.this);
+                    try{
+                        JSONArray receiptsJsonArray = new JSONArray(receiptsJSON);
+                        JSONObject jsonObject = new JSONObject();
+                        JSONArray itemsJsonArray = new JSONArray();
+                        JSONObject itemJsonObject = new JSONObject();
+                        //itemsJsonArray.put(itemJsonObject);
 
 
-                try{
-                    JSONArray jsonArray = new JSONArray();
-                    JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("name", username);
+                        jsonObject.put("receiptID", "-1");
+                        jsonObject.put("date", date);
+                        jsonObject.put("totalCost", tCost);
+                        jsonObject.put("tax", tax);
+                        jsonObject.put("businessName", company);
+                        jsonObject.put("items",itemsJsonArray);
 
-                    jsonObject.put("name", username);
-                    //jsonObject.put("receiptID", "232");
-                    jsonObject.put("date", date);
-                    //jsonObject.put("totalCost", totalCost);
-                    jsonObject.put("tax", tax);
-                    jsonObject.put("businessName", company);
+                        //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
+                        String jsonString = jsonObject.toString();
+
+                        Log.i("JAAAAASON", jsonString);
+                        Log.e("USERNAME", username);
+
+                        //test addReceiptToLocal and parseJsonToReceiptOBJ in Information class:
+
+                        Receipt receipt = DataController.parseJsonToReceiptOBJ(jsonString);
+
+                        Log.i("RECEIPTUSERNAME", receipt.getName());
 
 
+                        DataController.addReceiptToLocal(USERID, receipt,AddReceiptFormActivity.this);
 
-                    //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
-                    String jsonString = jsonObject.toString();
+                        //DataController.addReceiptToDB(receipt,"http://myvmlab.senecacollege.ca:6207/addReceipt.php",AddReceiptFormActivity.this);
+//                        Log.i("JSONINAddReceiptForm:", jsonString);
+//
+//                        receiptsJsonArray.put(jsonObject);
+//
+//                        String jArrayString = receiptsJsonArray.toString();
+//                        Log.i("JArrAddReceiptForm:", jArrayString);
+//
+//                        DataController.storeJsonToLocal(jArrayString, Information.RECEIPTSLOCALFILENAME, AddReceiptFormActivity.this);
+//
 
-                    Log.i("JSONINAddReceiptForm:", jsonString);
+                        //sendToDB(jsonString, "http://myvmlab.senecacollege.ca:6207/addReceipt.php");
+                        Intent homeIntent = new Intent(AddReceiptFormActivity.this, MenuActivity.class);
+                        startActivity(homeIntent);
 
-                    sendToDB(jsonString, "http://myvmlab.senecacollege.ca:6207/addReceipt.php");
-
-                }catch(JSONException e){
-                    Log.e("EXCEPTION1:", e.toString());
+                    }catch(JSONException e){
+                        Log.e("EXCEPTION1:", e.toString());
+                    }
                 }
-
-
-
             }
         });
 
@@ -219,7 +256,6 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
     String getCurrentDate(){
         //get current date and time
-        Date currentDate = new Date();
         Calendar calender = Calendar.getInstance();
         int cDay = calender.get(Calendar.DAY_OF_MONTH);
         int cMonth = calender.get(Calendar.MONTH) + 1;
