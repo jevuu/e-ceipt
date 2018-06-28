@@ -7,15 +7,23 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 //Initial Class for Textual Activity Reading
@@ -23,41 +31,62 @@ import java.util.List;
 //Last Modifcation: 6/11/2018
 public class OCRTextActivity extends AppCompatActivity {
     TextView txt_add;
+    ImageView imgrecv;
+    String imagePath = "";
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocrtext);
         txt_add = (TextView) findViewById(R.id.edtErr);
+        imgrecv = (ImageView) findViewById(R.id.ocr_pic);
         takePhoto();
     }
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-
     //==================== Get User Photo/Camera =======================//
-
 //This function executes a valid bitmap intent from the camera.
 
     private void takePhoto() {
         try {
+            //Checks for permissions of Camera and External Write
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                    != PackageManager.PERMISSION_GRANTED){
+                    != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED ){
 
+                //Request Permissions
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA},
+                    requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             100);
                 }
 
             }else {
 
+                //Attempt to take a photo, make a file for the photo
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                 //Generate File
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    String imageFileName = "eceipt_" + timeStamp + ".jpg";
+
+                    File storageDir = Environment.getExternalStoragePublicDirectory(
+                            Environment.DIRECTORY_PICTURES);
+                    imagePath = storageDir.getAbsolutePath() + "/" + imageFileName;
+
+                    File file = new File(imagePath);
+                    //Uri outputFileUri = Uri.fromFile(file);
+                    Uri outputFileUri = FileProvider.getUriForFile(OCRTextActivity.this, OCRTextActivity.this.getApplicationContext().getPackageName(), file);
+                   //Request Intent to return full size uri
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+
+                    //Take the photo
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 }
             }
 
         }catch(Exception e){
-            Toast.makeText(this, "No Default App Available! " + e.getMessage(),
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Something is wrong:  " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
             txt_add.setText(e.getMessage());
 
 
@@ -67,10 +96,10 @@ public class OCRTextActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
-        if(grantResults.length >= 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if(grantResults.length >= 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
             takePhoto();
         }else{
-            Toast.makeText(this, "You Cannot take a photo without the camera!",
+            Toast.makeText(this, "You Cannot take a photo by denying the permissions!!",
                     Toast.LENGTH_SHORT).show();
         }
 
@@ -89,8 +118,16 @@ public class OCRTextActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            File imgFile = new  File(imagePath);
+
+            if(imgFile.exists()){
+                Bitmap rcptImg = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                imgrecv.setImageBitmap(rcptImg);
+
+            }
+
+
+
         }
     }
 
