@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.text.TextRecognizer;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,7 +33,7 @@ import java.util.List;
 //Last Modifcation: 6/11/2018
 public class OCRTextActivity extends AppCompatActivity {
     TextView txt_add;
-
+    Bitmap ocrAble;
     ImageView imgrecv;
     String imagePath = "";
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -124,13 +126,21 @@ public class OCRTextActivity extends AppCompatActivity {
             File imgFile = new  File(imagePath);
 
             if(imgFile.exists()){
-                Bitmap rcptImg = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                imgrecv.setImageBitmap(rcptImg);
+                 ocrAble = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                imgrecv.setImageBitmap(ocrAble);
+                scanOCR();
 
             }
 
 
         }
+    }
+
+    public void scanOCR(){
+        TextRecognizer textRecognizer = new TextRecognizer.Builder(this).build();
+
+
+
     }
 
     //=========================================================//
