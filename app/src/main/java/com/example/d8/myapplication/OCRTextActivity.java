@@ -138,6 +138,7 @@ public class OCRTextActivity extends AppCompatActivity {
                 matrix.postRotate(90);
                 ocrAble = ocrAble.createBitmap(ocrAble,0,0, ocrAble.getWidth(), ocrAble.getHeight(),matrix, true);
                 imgrecv.setImageBitmap(ocrAble);
+                imgrecv.setScaleType(ImageView.ScaleType.FIT_XY);
                 scanOCR();
 
             }

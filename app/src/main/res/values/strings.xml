@@ -95,5 +95,6 @@
     <string name="profile_Unlc">Edit Your Information</string>
     <string name="profile_unkCancel">Cancel</string>
     <string name="profile_conf">Confirm Changes</string>
+    <string name="main_phoneLogin">Sign In with Phone</string>
 
 </resources>
