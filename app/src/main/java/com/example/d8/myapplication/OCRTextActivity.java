@@ -4,10 +4,12 @@ import android.*;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -17,10 +19,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseArray;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.File;
@@ -36,6 +42,7 @@ public class OCRTextActivity extends AppCompatActivity {
     Bitmap ocrAble;
     ImageView imgrecv;
     String imagePath = "";
+    TextView txt_ocr;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
@@ -43,7 +50,7 @@ public class OCRTextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocrtext);
         txt_add = (TextView) findViewById(R.id.edtErr);
-
+        txt_ocr = (TextView) findViewById(R.id.ocr_recvText);
         imgrecv = (ImageView) findViewById(R.id.ocr_pic);
         takePhoto();
     }
@@ -127,6 +134,9 @@ public class OCRTextActivity extends AppCompatActivity {
 
             if(imgFile.exists()){
                  ocrAble = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                Matrix matrix = new Matrix();
+                matrix.postRotate(90);
+                ocrAble = ocrAble.createBitmap(ocrAble,0,0, ocrAble.getWidth(), ocrAble.getHeight(),matrix, true);
                 imgrecv.setImageBitmap(ocrAble);
                 scanOCR();
 
@@ -138,8 +148,26 @@ public class OCRTextActivity extends AppCompatActivity {
 
     public void scanOCR(){
         TextRecognizer textRecognizer = new TextRecognizer.Builder(this).build();
+        if(!textRecognizer.isOperational()) {
+            IntentFilter lowstorageFilter = new IntentFilter(Intent.ACTION_DEVICE_STORAGE_LOW);
+            boolean hasLowStorage = registerReceiver(null, lowstorageFilter) != null;
 
+            if (hasLowStorage) {
+                Toast.makeText(this,"Low Storage", Toast.LENGTH_LONG).show();
+            }
+        }
+        Frame imageFrame = new Frame.Builder()
+                .setBitmap(ocrAble)
+                .build();
+        SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < textBlocks.size(); i++) {
+            TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
 
+            stringBuilder.append(textBlock.getValue());
+            stringBuilder.append("\n");
+        }
+        txt_ocr.setText(stringBuilder);
 
     }
 
