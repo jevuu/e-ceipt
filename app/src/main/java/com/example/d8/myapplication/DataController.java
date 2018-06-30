@@ -91,7 +91,6 @@ public class DataController {
 //                    String userId = "2";
 //                    String username = "Freddy";
 
-
                     //open connection
                     conn = (HttpURLConnection) url.openConnection();
 
@@ -108,8 +107,6 @@ public class DataController {
                     String tax = Double.toString(receipt.getTax());
                     String businessName = receipt.getBusinessName();
 
-
-
                     //Data in Json object
                     //JSONArray receiptsJsonArray = new JSONArray();
                     JSONObject jsonObject = new JSONObject();
@@ -117,9 +114,10 @@ public class DataController {
                     JSONObject itemJsonObject = new JSONObject();
                     //itemsJsonArray.put(itemJsonObject);
 
-
-                    jsonObject.put("name", username);
-                    jsonObject.put("receiptID", "-1");
+                    String userID = Information.authUser.getFirebaseUID();
+                    //jsonObject.put("name", username);
+                    jsonObject.put("userID", userID);
+                    //jsonObject.put("receiptID", "-1");
                     jsonObject.put("date", date);
                     jsonObject.put("totalCost", totalCost);
                     jsonObject.put("tax", tax);
@@ -166,7 +164,6 @@ public class DataController {
                     //finally returning the read string
                     return sb.toString().trim();
 
-
                     ////////////////////////////////////////////////////////////////////////////
 
                 } catch (Exception e) {
@@ -195,6 +192,7 @@ public class DataController {
         String result="";
         try{
             result = addReceiptToDB.execute().get();
+            Log.i("RESULTDBBB", result);
         }catch (Exception e){
 
         }
@@ -292,7 +290,7 @@ public class DataController {
                     HttpURLConnection conn = null;
 
                     String username = Information.authUser.getName();
-                    String userId = Information.authUser.getUserId();
+                    String userFirebaseUId = Information.authUser.getFirebaseUID();
 //                    String userId = "2";
 //                    String username = "Freddy";
 
@@ -311,12 +309,9 @@ public class DataController {
                     //List<NameValuePair> params = new ArrayList<NameValuePair>();
                     List<AbstractMap.SimpleEntry> params = new ArrayList<AbstractMap.SimpleEntry>();
 
-//                  params.add(new BasicNameValuePair("firstParam", paramValue1));
-//                  params.add(new BasicNameValuePair("secondParam", paramValue2));
-//                  params.add(new BasicNameValuePair("thirdParam", paramValue3));
                     JSONObject newJson = new JSONObject();
                     newJson.put("userName", username);
-                    newJson.put("userID", userId);
+                    newJson.put("userID", userFirebaseUId);
 
                     String message = newJson.toString();
 
@@ -370,7 +365,7 @@ public class DataController {
 
 
                 } catch (Exception e) {
-                    Log.i("FAIL222",e.toString());
+                    Log.i("SYNCHRONIZEFAIL",e.toString());
                     return null;
                 }
             }
@@ -381,6 +376,7 @@ public class DataController {
         String result="";
         try{
             result = getJSON.execute().get();
+            Log.i("SYNCHRONIZERESULT",result);
         }catch (Exception e){
 
         }

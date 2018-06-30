@@ -137,7 +137,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
                         DataController.addReceiptToLocal(USERID, receipt,AddReceiptFormActivity.this);
 
-                        //DataController.addReceiptToDB(receipt,"http://myvmlab.senecacollege.ca:6207/addReceipt.php",AddReceiptFormActivity.this);
+                        DataController.addReceiptToDB(receipt,"http://myvmlab.senecacollege.ca:6207/addReceipt.php",AddReceiptFormActivity.this);
 //                        Log.i("JSONINAddReceiptForm:", jsonString);
 //
 //                        receiptsJsonArray.put(jsonObject);
