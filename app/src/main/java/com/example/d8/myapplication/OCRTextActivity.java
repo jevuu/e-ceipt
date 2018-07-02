@@ -10,6 +10,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -26,11 +27,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.Line;
+import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -160,16 +164,50 @@ public class OCRTextActivity extends AppCompatActivity {
         Frame imageFrame = new Frame.Builder()
                 .setBitmap(ocrAble)
                 .build();
+
         SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < textBlocks.size(); i++) {
-            TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
+        String blocks = "";
+        for (int index = 0; index < textBlocks.size(); index++) {
+            //extract scanned text blocks here
+            TextBlock tBlock = textBlocks.valueAt(index);
+            Rect inspector = tBlock.getBoundingBox();
 
-            stringBuilder.append(textBlock.getValue());
-            stringBuilder.append("\n");
+            //Break TextBlock into Lines
+            List<? extends Text> breakable = new ArrayList<>();
+            breakable = tBlock.getComponents();
+            for(int i = 0; i < breakable.size(); i++){
+                System.out.println(breakable.get(i).getValue() + "<--Line");
+            }
+            System.out.println("=============");
+       
+
         }
-        txt_ocr.setText(stringBuilder);
 
+
+       // txt_ocr.setText("Blocks \n" + blocks + "\n =======\n");
+       // txt_ocr.setText(txt_ocr.getText() + "\n Lines \n" + lines + "\n =======\n");
+
+        System.out.print("\n\nDone!\n\n");
+
+        //  StringBuilder stringBuilder = new StringBuilder();
+
+       // for (int i = 0; i < textBlocks.size(); i++) {
+     //       TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
+
+     //       stringBuilder.append(textBlock.getValue());
+     //       stringBuilder.append("\n");
+      //  }
+
+       // txt_ocr.setText(stringBuilder);
+
+    }
+
+    //Determines if the textblocks are relatively the same line
+    public boolean checkLineItemTolerance(TextBlock a, TextBlock b){
+        int yTolerance = a.getBoundingBox().centerY() - b.getBoundingBox().centerY();
+        if(yTolerance <= 200 && yTolerance >= -200)
+             System.out.println(yTolerance + "<---->" + a.getValue() + "<--->" + b.getValue());
+        return false;
     }
 
     //=========================================================//
