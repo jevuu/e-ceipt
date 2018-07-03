@@ -195,11 +195,49 @@ public class OCRTextActivity extends AppCompatActivity {
         for(String t: itemsRaw){
             System.out.println(t);
         }
+
+        sweepItems();
         System.out.print("\n\nDone!\n\n");
 
 
     }
 
+    //This function enforces text rules upon the raw items
+    //Rule 1: Items must not be duplicated where the number and word are the same. Both must also be present to not be tossed
+    //Ex: a  1
+    //    1  a
+    //Are considered the same and will be tossed
+    //Rule 2: $x.00 are considered values that will be added as an item(or totals)
+    //Rule 3: Total,SubTotal,HST are considered KEY items and must have a number attached to them if possible
+    private void sweepItems() {
+        System.out.println("==Original List==");
+        for(String t : itemsRaw){
+            System.out.println(t);
+        }
+        for(int i = 0; i <itemsRaw.size(); i++){
+            if(itemsRaw.get(i).matches("^[0-9].*")){
+                System.out.println("Protected (Has Starting Digit): " + itemsRaw.get(i));
+
+            }else if(itemsRaw.get(i).matches("^.*([0-9])+.*$")){
+                System.out.println("Protected (Contains Number): " + itemsRaw.get(i));
+
+            }else{
+                System.out.println("Killed: " + itemsRaw.get(i));
+                itemsRaw.remove(i);
+            }
+        }
+        System.out.println("==New List==");
+        for(String t : itemsRaw){
+            System.out.println(t);
+        }
+
+
+    }
+
+    //This function analyses line by line of textblocks for valid data.
+    //The closest y axis match is considered to be the same line.
+    //When it finds a valid line, it adds it to the rawItems list for text enforcement
+    //Bug: Items are duplicated between each textblock
     private void checkLineTolerance(List<? extends Text> inspected, List<? extends Text> target) {
         System.out.println("Checking Line Tolerance");
         String item = "";
