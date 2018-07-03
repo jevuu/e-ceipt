@@ -47,6 +47,9 @@ public class OCRTextActivity extends AppCompatActivity {
     ImageView imgrecv;
     String imagePath = "";
     TextView txt_ocr;
+
+
+    ArrayList<String> itemsRaw;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
@@ -56,6 +59,7 @@ public class OCRTextActivity extends AppCompatActivity {
         txt_add = (TextView) findViewById(R.id.edtErr);
         txt_ocr = (TextView) findViewById(R.id.ocr_recvText);
         imgrecv = (ImageView) findViewById(R.id.ocr_pic);
+        itemsRaw = new ArrayList<>();
         takePhoto();
     }
 
@@ -118,7 +122,6 @@ public class OCRTextActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
 
-
     }
 
     public static boolean isIntentAvailable(Context context, String action) {
@@ -170,44 +173,85 @@ public class OCRTextActivity extends AppCompatActivity {
         for (int index = 0; index < textBlocks.size(); index++) {
             //extract scanned text blocks here
             TextBlock tBlock = textBlocks.valueAt(index);
-            Rect inspector = tBlock.getBoundingBox();
 
-            //Break TextBlock into Lines
-            List<? extends Text> breakable = new ArrayList<>();
-            breakable = tBlock.getComponents();
-            for(int i = 0; i < breakable.size(); i++){
-                System.out.println(breakable.get(i).getValue() + "<--Line");
+            //Check against every other text block
+            for(int i = 0; i < textBlocks.size(); i++){
+                //Dont self check
+                if(i != index) {
+                    //Pass the target block and the inspector block if they are similar on the y-axis
+                    TextBlock tBlocks = textBlocks.valueAt(i);
+                  if(checkBlockTolerance(tBlock, tBlocks)){
+                      System.out.println("These Blocks Matched!--->" + tBlock.getValue() + "\n<--- || --->\n" + tBlocks.getValue() + "\n====END======");
+                      //Pass the Lines to be matched where possible
+                      checkLineTolerance(toLines(tBlock),toLines(tBlocks));
+                  }
+
+                }
+
             }
-            System.out.println("=============");
-       
 
         }
 
-
-       // txt_ocr.setText("Blocks \n" + blocks + "\n =======\n");
-       // txt_ocr.setText(txt_ocr.getText() + "\n Lines \n" + lines + "\n =======\n");
-
+        for(String t: itemsRaw){
+            System.out.println(t);
+        }
         System.out.print("\n\nDone!\n\n");
 
-        //  StringBuilder stringBuilder = new StringBuilder();
-
-       // for (int i = 0; i < textBlocks.size(); i++) {
-     //       TextBlock textBlock = textBlocks.get(textBlocks.keyAt(i));
-
-     //       stringBuilder.append(textBlock.getValue());
-     //       stringBuilder.append("\n");
-      //  }
-
-       // txt_ocr.setText(stringBuilder);
 
     }
 
+    private void checkLineTolerance(List<? extends Text> inspected, List<? extends Text> target) {
+        System.out.println("Checking Line Tolerance");
+        String item = "";
+        int yTolerance = 3000;
+        if(inspected.size() == 1 && target.size() == 1){
+            item = inspected.get(0).getValue() + " " + target.get(0).getValue();
+            System.out.println("This is a raw item: " + item);
+            itemsRaw.add(item);
+        }else{
+            //For each item in inspected...
+            for(int i = 0; i < inspected.size(); i++){
+                int inspY = inspected.get(i).getBoundingBox().centerY();
+                yTolerance = 3000;
+                //Check against each item in target...
+                for(int j = 0; j < target.size(); j++){
+                  int targY = target.get(j).getBoundingBox().centerY();
+                  int dif = Math.abs(inspY - targY);
+                  if(yTolerance > dif){
+                      yTolerance = dif;
+                      System.out.println(yTolerance + " is now closest");
+                      item = inspected.get(i).getValue() + " " + target.get(j).getValue();
+                  }
+                    System.out.println(yTolerance + "< J Lines -->"+ inspected.get(i).getValue() + " <--||--> " + target.get(j).getValue());
+
+                }
+
+                System.out.println("***Closest Item was " + item + "****");
+                itemsRaw.add(item);
+            }
+
+        }
+
+        System.out.println("\n***Finished Line Tolerance!***\n");
+    }
+
     //Determines if the textblocks are relatively the same line
-    public boolean checkLineItemTolerance(TextBlock a, TextBlock b){
+    public boolean checkBlockTolerance(TextBlock a, TextBlock b){
         int yTolerance = a.getBoundingBox().centerY() - b.getBoundingBox().centerY();
-        if(yTolerance <= 200 && yTolerance >= -200)
-             System.out.println(yTolerance + "<---->" + a.getValue() + "<--->" + b.getValue());
-        return false;
+        if(yTolerance <= 100 && yTolerance >= -100) {
+           // System.out.println(yTolerance + "-->" + a.getValue() + "<--Good-->" + b.getValue());
+
+            return true;
+        }else{
+            System.out.println("Block Match Failed!");
+            return false;
+        }
+
+    }
+
+    //Returns the Lines of a given textblock
+    public List<? extends Text> toLines(TextBlock e){
+        return e.getComponents();
     }
 
     //=========================================================//
