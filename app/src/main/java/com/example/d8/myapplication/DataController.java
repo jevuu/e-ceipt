@@ -41,9 +41,7 @@ public class DataController {
 
         JSONArray receiptsJsonArray = new JSONArray(receiptsJSON);
         JSONObject jsonObject = new JSONObject();
-        JSONArray itemsJsonArray = new JSONArray();
-        JSONObject itemJsonObject = new JSONObject();
-        //itemsJsonArray.put(itemJsonObject);
+
 
         String username = receipt.getName();
         String company = receipt.getBusinessName();
@@ -58,6 +56,24 @@ public class DataController {
         jsonObject.put("totalCost", tCost);
         jsonObject.put("tax", tax);
         jsonObject.put("businessName", company);
+
+        JSONArray itemsJsonArray = new JSONArray();
+        if(!receipt.getItems().isEmpty()){
+            //itemsJsonArray.put(itemJsonObject);
+            for(int i=0; i<receipt.getItems().size();i++){
+                JSONObject itemJsonObject = new JSONObject();
+                itemJsonObject.put("itemName", receipt.getItems().get(i).getItemName());
+                itemJsonObject.put("itemDesc","");
+                itemJsonObject.put("itemPrice", Double.toString(receipt.getItems().get(i).getItemPrice()));
+                itemsJsonArray.put(itemJsonObject);
+            }
+        }
+
+        Log.i("itemsJsonArray", itemsJsonArray.toString());
+
+        //jsonObject.put("items",itemsJsonArray);
+
+
         jsonObject.put("items",itemsJsonArray);
 
         String jsonString = jsonObject.toString();
@@ -110,9 +126,6 @@ public class DataController {
                     //Data in Json object
                     //JSONArray receiptsJsonArray = new JSONArray();
                     JSONObject jsonObject = new JSONObject();
-                    JSONArray itemsJsonArray = new JSONArray();
-                    JSONObject itemJsonObject = new JSONObject();
-                    //itemsJsonArray.put(itemJsonObject);
 
                     String userID = Information.authUser.getFirebaseUID();
                     //jsonObject.put("name", username);
@@ -122,6 +135,20 @@ public class DataController {
                     jsonObject.put("totalCost", totalCost);
                     jsonObject.put("tax", tax);
                     jsonObject.put("businessName", businessName);
+                    //jsonObject.put("items",itemsJsonArray);
+
+                    JSONArray itemsJsonArray = new JSONArray();
+                    if(!receipt.getItems().isEmpty()){
+                        //itemsJsonArray.put(itemJsonObject);
+                        for(int i=0; i<receipt.getItems().size();i++){
+                            JSONObject itemJsonObject = new JSONObject();
+                            itemJsonObject.put("itemName", receipt.getItems().get(i).getItemName());
+                            itemJsonObject.put("itemDesc","");
+                            itemJsonObject.put("itemPrice", Double.toString(receipt.getItems().get(i).getItemPrice()));
+                            itemsJsonArray.put(itemJsonObject);
+                        }
+                    }
+
                     jsonObject.put("items",itemsJsonArray);
 
                     //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
@@ -200,6 +227,45 @@ public class DataController {
         return result;
 
         }
+
+
+    static JSONObject toJsonObject(Receipt receipt, Context ctx)throws JSONException{
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("name", receipt.getName());
+        jsonObject.put("receiptID", receipt.getReceipId());
+        jsonObject.put("date", receipt.getDate());
+        jsonObject.put("totalCost", receipt.getTotalCost());
+        jsonObject.put("tax", receipt.getTax());
+        jsonObject.put("businessName", receipt.getBusinessName());
+        //jsonObject.put("items",itemsJsonArray);
+
+        JSONArray itemsJsonArray = new JSONArray();
+        if(!receipt.getItems().isEmpty()){
+            //itemsJsonArray.put(itemJsonObject);
+            for(int i=0; i<receipt.getItems().size();i++){
+                JSONObject itemJsonObject = new JSONObject();
+                itemJsonObject.put("itemName", receipt.getItems().get(i).getItemName());
+                itemJsonObject.put("itemDesc","");
+                itemJsonObject.put("itemPrice", Double.toString(receipt.getItems().get(i).getItemPrice()));
+                itemsJsonArray.put(itemJsonObject);
+            }
+        }
+
+        Log.i("itemsJsonArray", itemsJsonArray.toString());
+
+        //jsonObject.put("items",itemsJsonArray);
+
+
+        jsonObject.put("items",itemsJsonArray);
+        //String jsonString = jsonObject.toString();
+
+        Log.i("JSONINAddReceiptForm:", jsonObject.toString());
+
+
+        return jsonObject;
+    }
 
     //Store json string to mobile local file
     public static void storeJsonToLocal(String json, String filename, Context ctx) throws JSONException {
@@ -464,6 +530,8 @@ public class DataController {
                 "date:"+receipt.getDate()+
                 "totalCost:"+receipt.getTotalCost()+receipt.getTax());
 
+        Log.d("jjjjj",json.toString());
+
         JSONArray itemarray = obj.getJSONArray("items");
 
         Log.d("ITEMARRAYL:",itemarray.toString());
@@ -473,6 +541,8 @@ public class DataController {
 
             receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")));
         }
+
+        //Log.i("ITEMSssss",receipt.getItems().get(0).getItemName());
         return receipt;
     }
 

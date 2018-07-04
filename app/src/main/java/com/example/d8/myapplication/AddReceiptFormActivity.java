@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -27,6 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -36,6 +39,11 @@ public class AddReceiptFormActivity extends AppCompatActivity {
     EditText receiptDate;
     EditText totalCost;
     Button receiptSubmitButton;
+    Button addItemBtn;
+    EditText itemName;
+    EditText itemPrice;
+    ArrayList<Receipt.Item>newItems = new ArrayList<Receipt.Item>();
+    ListView listView;
 
     String USERID = Information.authUser.getUserId();
     String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
@@ -52,6 +60,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
         companyName = (EditText)findViewById(R.id.company_name);
         receiptDate = (EditText)findViewById(R.id.receipt_date);
         totalCost = (EditText)findViewById(R.id.add_receipt_total_cost);
+        listView = (ListView)findViewById(R.id.add_item_listview);
 
         String cDateInString = getCurrentDate();
 
@@ -87,6 +96,32 @@ public class AddReceiptFormActivity extends AppCompatActivity {
             }
         });
 
+        addItemBtn = (Button)findViewById(R.id.add_receipt_add_item_btn);
+
+        addItemBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                itemName = (EditText)findViewById(R.id.add_receipt_item_name);
+                String itemname = itemName.getText().toString();
+
+                itemPrice = (EditText)findViewById(R.id.add_receipt_item_price);
+                double itemprice = Double.parseDouble(itemPrice.getText().toString());
+                String itemdesc = "";
+
+                Receipt.Item item = new Receipt().new Item(itemname,itemdesc,itemprice);
+                newItems.add(item);
+                loadItemObjToListview(newItems);
+
+                double totalCostInDouble = 0.0;
+                for(int i=0; i<newItems.size(); i++){
+                    totalCostInDouble+=newItems.get(i).getItemPrice();
+                }
+                totalCost.setText(Double.toString(totalCostInDouble));
+                itemName.setText("");
+                itemPrice.setText("");
+            }
+        });
+
         receiptSubmitButton = (Button)findViewById(R.id.receipt_submit_btn);
 
         receiptSubmitButton.setOnClickListener(new View.OnClickListener(){
@@ -109,10 +144,6 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                     try{
                         JSONArray receiptsJsonArray = new JSONArray(receiptsJSON);
                         JSONObject jsonObject = new JSONObject();
-                        JSONArray itemsJsonArray = new JSONArray();
-                        JSONObject itemJsonObject = new JSONObject();
-                        //itemsJsonArray.put(itemJsonObject);
-
 
                         jsonObject.put("name", username);
                         jsonObject.put("receiptID", "-1");
@@ -120,6 +151,21 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                         jsonObject.put("totalCost", tCost);
                         jsonObject.put("tax", tax);
                         jsonObject.put("businessName", company);
+
+                        JSONArray itemsJsonArray = new JSONArray();
+                        if(!newItems.isEmpty()){
+                            //itemsJsonArray.put(itemJsonObject);
+                            for(int i=0; i<newItems.size();i++){
+                                JSONObject itemJsonObject = new JSONObject();
+                                itemJsonObject.put("itemName", newItems.get(i).getItemName());
+                                itemJsonObject.put("itemDesc","");
+                                itemJsonObject.put("itemPrice", Double.toString(newItems.get(i).getItemPrice()));
+                                itemsJsonArray.put(itemJsonObject);
+                            }
+                        }
+
+                        Log.i("itemsJsonArray", itemsJsonArray.toString());
+
                         jsonObject.put("items",itemsJsonArray);
 
                         //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
@@ -131,6 +177,8 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                         //test addReceiptToLocal and parseJsonToReceiptOBJ in Information class:
 
                         Receipt receipt = DataController.parseJsonToReceiptOBJ(jsonString);
+                        //Log.i("ITEMaaaa",receipt.getItems().get(0).getItemName());
+
 
                         Log.i("RECEIPTUSERNAME", receipt.getName());
 
@@ -275,5 +323,16 @@ public class AddReceiptFormActivity extends AppCompatActivity {
         return cDateInString;
     }
 
+    void loadItemObjToListview(ArrayList<Receipt.Item> items ){
+        if(!items.isEmpty()){
+            ItemListViewAdapter adapter = new ItemListViewAdapter(this,items);
+            listView.setAdapter(adapter);
+        }else{
+            String[] emptyString = {};
+            ArrayAdapter<String> arrayAdapterEmpty = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, emptyString);
+            listView.setAdapter(arrayAdapterEmpty);
+            Log.i("NORECEIPT!","true");
+        }
+    }
 
 }

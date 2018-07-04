@@ -122,7 +122,9 @@
                     android:id="@+id/item_list_view"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight=".40" />
+                    android:layout_weight=".40"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -194,8 +196,9 @@
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/share_logo" />
 
+
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/imageButton1"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
@@ -204,13 +207,13 @@
                 app:srcCompat="@drawable/share_logo" />
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/buttonDelete"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/share_logo" />
+                app:srcCompat="@drawable/delete_btn" />
 
             <ImageButton
                 android:id="@+id/imageButton4"

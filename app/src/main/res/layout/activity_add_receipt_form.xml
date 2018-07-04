@@ -34,7 +34,7 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="@string/company_name"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -60,7 +60,7 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="@string/receipt_date"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -86,7 +86,7 @@
                 android:layout_weight="1"
                 android:padding="10dp"
                 android:text="@string/receipt_category"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <Spinner
@@ -135,7 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="10dp"
+                    android:paddingTop="10dp"
                     android:paddingBottom="5dp"
                     android:text="@string/item_name_label"
                     android:textSize="18sp"
@@ -147,7 +147,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:padding="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="22dp"
                     android:paddingBottom="5dp"
                     android:text="@string/item_cost_label"
                     android:textSize="18sp"
@@ -167,6 +168,7 @@
             </LinearLayout>
 
             <ListView
+                android:id="@+id/add_item_listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -181,7 +183,7 @@
                 android:weightSum="6">
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/add_receipt_item_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
@@ -190,12 +192,12 @@
                     android:text="" />
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/add_receipt_item_price"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:hint="@string/item_price_input_hint"
-                    android:inputType="textPersonName"
+                    android:inputType="numberDecimal"
                     android:text="" />
 
                 <Button
