@@ -140,12 +140,16 @@ public class OCRTextActivity extends AppCompatActivity {
             File imgFile = new  File(imagePath);
 
             if(imgFile.exists()){
+               if(ocrAble != null) {
+                   ocrAble.recycle();
+
+               }
                  ocrAble = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 Matrix matrix = new Matrix();
                 matrix.postRotate(90);
                 ocrAble = ocrAble.createBitmap(ocrAble,0,0, ocrAble.getWidth(), ocrAble.getHeight(),matrix, true);
-                imgrecv.setImageBitmap(ocrAble);
-                imgrecv.setScaleType(ImageView.ScaleType.FIT_XY);
+                //imgrecv.setImageBitmap(ocrAble);
+               // imgrecv.setScaleType(ImageView.ScaleType.FIT_XY);
                 scanOCR();
 
             }
@@ -169,13 +173,14 @@ public class OCRTextActivity extends AppCompatActivity {
                 .build();
 
         SparseArray<TextBlock> textBlocks = textRecognizer.detect(imageFrame);
-        String blocks = "";
+
         for (int index = 0; index < textBlocks.size(); index++) {
             //extract scanned text blocks here
             TextBlock tBlock = textBlocks.valueAt(index);
-
+            System.out.println("Comparing this block: " + tBlock.getValue() + "========");
+            boolean matched = false;
             //Check against every other text block
-            for(int i = 0; i < textBlocks.size(); i++){
+            for(int i = 0; i < textBlocks.size() && !matched; i++){
                 //Dont self check
                 if(i != index) {
                     //Pass the target block and the inspector block if they are similar on the y-axis
@@ -183,10 +188,28 @@ public class OCRTextActivity extends AppCompatActivity {
                   if(checkBlockTolerance(tBlock, tBlocks)){
                       System.out.println("These Blocks Matched!--->" + tBlock.getValue() + "\n<--- || --->\n" + tBlocks.getValue() + "\n====END======");
                       //Pass the Lines to be matched where possible
+                      matched = true;
                       checkLineTolerance(toLines(tBlock),toLines(tBlocks));
+                      textBlocks.removeAt(index);
+                      textBlocks.removeAt(i);
+
                   }
 
                 }
+
+            }
+            if(!matched){
+                List<? extends Text> inspected =  toLines(tBlock);
+                for(int j = 0; j < inspected.size(); j++){
+
+                 String t =  inspected.get(j).getValue();
+                     if(t.matches("^[a-zA-Z]*([0-9])+.+$") ) {
+                         itemsRaw.add(t);
+                         System.out.println("Item Added for Word + Number! " + t);
+
+                     }
+                }
+
 
             }
 
@@ -198,6 +221,13 @@ public class OCRTextActivity extends AppCompatActivity {
 
         sweepItems();
         System.out.print("\n\nDone!\n\n");
+        parseItems();
+
+
+    }
+
+    private void parseItems() {
+
 
 
     }
@@ -255,7 +285,7 @@ public class OCRTextActivity extends AppCompatActivity {
                 for(int j = 0; j < target.size(); j++){
                   int targY = target.get(j).getBoundingBox().centerY();
                   int dif = Math.abs(inspY - targY);
-                  if(yTolerance > dif){
+                  if(yTolerance > dif && dif < 120){
                       yTolerance = dif;
                       System.out.println(yTolerance + " is now closest");
                       item = inspected.get(i).getValue() + " " + target.get(j).getValue();
@@ -276,7 +306,7 @@ public class OCRTextActivity extends AppCompatActivity {
     //Determines if the textblocks are relatively the same line
     public boolean checkBlockTolerance(TextBlock a, TextBlock b){
         int yTolerance = a.getBoundingBox().centerY() - b.getBoundingBox().centerY();
-        if(yTolerance <= 100 && yTolerance >= -100) {
+        if(yTolerance <= 150 && yTolerance >= -150) {
            // System.out.println(yTolerance + "-->" + a.getValue() + "<--Good-->" + b.getValue());
 
             return true;
