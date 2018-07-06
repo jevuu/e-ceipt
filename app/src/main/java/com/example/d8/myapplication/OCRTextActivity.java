@@ -226,6 +226,8 @@ public class OCRTextActivity extends AppCompatActivity {
 
     }
 
+    //Todo
+    //This function takes the raw items and attempts to turn them into items objects. These objects are then verified or in simple mode tossed(trys only to find the total)
     private void parseItems() {
 
 
