@@ -18,26 +18,6 @@
         tools:layout_editor_absoluteY="10dp">
 
         <EditText
-            android:id="@+id/edtErr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ocr_pic"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:cropToPadding="true"
-            android:scaleType="matrix"
-            app:srcCompat="@color/colorEceiptOrange" />
-
-        <EditText
             android:id="@+id/ocr_recvText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

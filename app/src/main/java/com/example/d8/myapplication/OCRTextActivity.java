@@ -42,9 +42,9 @@ import java.util.List;
 //This class handles the primary bulk of text OCR
 //Last Modifcation: 6/11/2018
 public class OCRTextActivity extends AppCompatActivity {
-    TextView txt_add;
+  //  TextView txt_add;
     Bitmap ocrAble;
-    ImageView imgrecv;
+   // ImageView imgrecv;
     String imagePath = "";
     TextView txt_ocr;
 
@@ -56,9 +56,9 @@ public class OCRTextActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocrtext);
-        txt_add = (TextView) findViewById(R.id.edtErr);
+      //  txt_add = (TextView) findViewById(R.id.edtErr);
         txt_ocr = (TextView) findViewById(R.id.ocr_recvText);
-        imgrecv = (ImageView) findViewById(R.id.ocr_pic);
+       //imgrecv = (ImageView) findViewById(R.id.ocr_pic);
         itemsRaw = new ArrayList<>();
         takePhoto();
     }
@@ -106,7 +106,7 @@ public class OCRTextActivity extends AppCompatActivity {
         }catch(Exception e){
             Toast.makeText(this, "Something is wrong:  " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
-            txt_add.setText(e.getMessage());
+       //     txt_add.setText(e.getMessage());
 
 
         }
@@ -148,8 +148,7 @@ public class OCRTextActivity extends AppCompatActivity {
                 Matrix matrix = new Matrix();
                 matrix.postRotate(90);
                 ocrAble = ocrAble.createBitmap(ocrAble,0,0, ocrAble.getWidth(), ocrAble.getHeight(),matrix, true);
-                //imgrecv.setImageBitmap(ocrAble);
-               // imgrecv.setScaleType(ImageView.ScaleType.FIT_XY);
+
                 scanOCR();
 
             }
@@ -203,7 +202,7 @@ public class OCRTextActivity extends AppCompatActivity {
                 for(int j = 0; j < inspected.size(); j++){
 
                  String t =  inspected.get(j).getValue();
-                     if(t.matches("^[a-zA-Z]*([0-9])+.+$") ) {
+                     if(t.matches("^\\D+\\d+.*") ) {
                          itemsRaw.add(t);
                          System.out.println("Item Added for Word + Number! " + t);
 
@@ -220,9 +219,8 @@ public class OCRTextActivity extends AppCompatActivity {
         }
 
         sweepItems();
-        System.out.print("\n\nDone!\n\n");
         parseItems();
-
+        System.out.print("\n\nDone!\n\n");
 
     }
 
@@ -232,6 +230,32 @@ public class OCRTextActivity extends AppCompatActivity {
 
 
 
+
+
+
+    }
+    //This function implements the Levenshtein(LEV-EN-SHTEEN) distance in determining key values such as Total, SubTotal, HST, CREDIT-CARD3
+    //@Param 1: The string for distance
+    //@Param 2: The target to match
+    //Overall a distance value of 2 is plausible to be a near match.
+    public static int distance(String a, String b) {
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+        // i == 0
+        int [] costs = new int [b.length() + 1];
+        for (int j = 0; j < costs.length; j++)
+            costs[j] = j;
+        for (int i = 1; i <= a.length(); i++) {
+            // j == 0; nw = lev(i - 1, j)
+            costs[0] = i;
+            int nw = i - 1;
+            for (int j = 1; j <= b.length(); j++) {
+                int cj = Math.min(1 + Math.min(costs[j], costs[j - 1]), a.charAt(i - 1) == b.charAt(j - 1) ? nw : nw + 1);
+                nw = costs[j];
+                costs[j] = cj;
+            }
+        }
+        return costs[b.length()];
     }
 
     //This function enforces text rules upon the raw items
