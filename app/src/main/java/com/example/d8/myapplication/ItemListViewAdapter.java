@@ -53,26 +53,19 @@ public class ItemListViewAdapter extends BaseAdapter {
         Log.i("CLASSESSSS:",classname);
 
         final String itemName = getItemName(position);
-        final String itemPrice = Double.toString(getItemPrice(position));
+        String itemPrice = "";
+        double itemPriceDouble = getItemPrice(position);
+        if(itemPriceDouble == -1){
+            itemPrice = "N/A";
+        }else{
+            itemPrice = Double.toString(itemPriceDouble);
+        }
 
         TextView item_name = (TextView)v.findViewById(R.id.add_receipt_itemname_label);
         TextView item_price = (TextView)v.findViewById(R.id.add_receipt_itemprice_label);
 
         item_name.setText(itemName);
         item_price.setText(itemPrice);
-
-//        final String itemName = getItem(position).getI();
-//        final String receiptDate = getItem(position).getDate();
-//        final String totalCost = String.format("%.2f",getItem(position).getTotalCost());
-
-//
-//        TextView company_name = (TextView)v.findViewById(R.id.business_name);
-//        TextView receipt_date = (TextView)v.findViewById(R.id.receipt_date);
-//        TextView receipt_totalcost = (TextView)v.findViewById(R.id.receipt_total_cost);
-//
-//        company_name.setText(companyName);
-//        receipt_date.setText(receiptDate);
-//        receipt_totalcost.setText(totalCost);
 
         return v;
     }

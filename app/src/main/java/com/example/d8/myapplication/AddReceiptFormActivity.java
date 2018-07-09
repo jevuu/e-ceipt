@@ -1,13 +1,17 @@
 package com.example.d8.myapplication;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.IDNA;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -103,9 +107,20 @@ public class AddReceiptFormActivity extends AppCompatActivity {
             public void onClick(View v) {
                 itemName = (EditText)findViewById(R.id.add_receipt_item_name);
                 String itemname = itemName.getText().toString();
+                if(TextUtils.isEmpty(itemname)){
+                    itemname = "N/A";
+                }
 
                 itemPrice = (EditText)findViewById(R.id.add_receipt_item_price);
-                double itemprice = Double.parseDouble(itemPrice.getText().toString());
+                String itempriceStr = itemPrice.getText().toString();
+                double itemprice = 0.0;
+                if( TextUtils.isEmpty(itempriceStr)){
+                    Log.i("ITEMPRICE IS: ", "NULL");
+                    itemprice = -1;
+                }else{
+                    itemprice = Double.parseDouble(itempriceStr);
+                }
+
                 String itemdesc = "";
 
                 Receipt.Item item = new Receipt().new Item(itemname,itemdesc,itemprice);
@@ -114,11 +129,48 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
                 double totalCostInDouble = 0.0;
                 for(int i=0; i<newItems.size(); i++){
-                    totalCostInDouble+=newItems.get(i).getItemPrice();
+                    if(newItems.get(i).getItemPrice()==-1){
+                        totalCostInDouble+=0.00;
+                    }else{
+                        totalCostInDouble+=newItems.get(i).getItemPrice();
+                    }
+
                 }
                 totalCost.setText(Double.toString(totalCostInDouble));
                 itemName.setText("");
                 itemPrice.setText("");
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("positionZZZZ: ", Integer.toString(position));
+
+                AlertDialog alertDialog = new AlertDialog.Builder(AddReceiptFormActivity.this).create();
+                alertDialog.setTitle("Delete item");
+                alertDialog.setMessage("Do you want to delete this item?");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                newItems.remove(position);
+                                loadItemObjToListview(newItems);
+
+                                double totalCostInDouble = 0.0;
+                                for(int i=0; i<newItems.size(); i++){
+                                    if(newItems.get(i).getItemPrice()==-1){
+                                        totalCostInDouble+=0.00;
+                                    }else{
+                                        totalCostInDouble+=newItems.get(i).getItemPrice();
+                                    }
+
+                                }
+                                totalCost.setText(Double.toString(totalCostInDouble));
+
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
             }
         });
 

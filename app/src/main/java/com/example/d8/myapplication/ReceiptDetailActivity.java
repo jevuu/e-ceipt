@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class ReceiptDetailActivity extends AppCompatActivity {
     ListView listView;
     TextView date;
+    TextView total_cost;
     ImageButton deleteImgBtn;
     String USERID = Information.authUser.getUserId();
     String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
@@ -75,6 +76,20 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(), index, Toast.LENGTH_LONG).show();
 //        loadItemListView(Integer.parseInt(index));
         loadItemObjToListview(receipt.getItems());
+
+        total_cost = (TextView)findViewById(R.id.total_cost);
+
+        double totalCostInDouble = 0.0;
+        for(int i=0; i<receipt.getItems().size(); i++){
+            if(receipt.getItems().get(i).getItemPrice()==-1){
+                totalCostInDouble+=0.00;
+            }else{
+                totalCostInDouble+=receipt.getItems().get(i).getItemPrice();
+            }
+
+        }
+        total_cost.setText(Double.toString(totalCostInDouble));
+
     }
 
     void loadItemListView(int index){

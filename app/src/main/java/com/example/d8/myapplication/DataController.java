@@ -228,7 +228,7 @@ public class DataController {
 
         }
 
-
+    //transfer receipt object to json format data
     static JSONObject toJsonObject(Receipt receipt, Context ctx)throws JSONException{
 
         JSONObject jsonObject = new JSONObject();
@@ -626,6 +626,145 @@ public class DataController {
         //String cDateInString = sdf.format(dateInString).toString();
         Date currentDate = sdf.parse(dateInString);
         return currentDate;
+    }
+
+    public static Receipt getReceiptById(int id, final String urlWebService, Context ctx)throws Exception{
+        Receipt newReceipt = new Receipt();
+
+        class GetReceiptById extends AsyncTask<Void, Void, String> {
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    ////////////////////////////////////////////////////////////////////////////
+                    //Post version
+                    //creating a URL
+                    URL url = new URL(urlWebService);
+                    HttpURLConnection conn = null;
+
+                    String username = Information.authUser.getName();
+                    String userId = Information.authUser.getUserId();
+//                    String userId = "2";
+//                    String username = "Freddy";
+
+                    //open connection
+                    conn = (HttpURLConnection) url.openConnection();
+
+                    //set the request method to post
+                    conn.setReadTimeout(10000);
+                    conn.setConnectTimeout(15000);
+                    conn.setRequestMethod("POST");
+                    conn.setDoInput(true);
+                    conn.setDoOutput(true);
+
+//                    //parse data from receipt obj
+//                    String date = receipt.getDate();
+//                    String totalCost = Double.toString(receipt.getTotalCost());
+//                    String tax = Double.toString(receipt.getTax());
+//                    String businessName = receipt.getBusinessName();
+//
+//                    //Data in Json object
+//                    //JSONArray receiptsJsonArray = new JSONArray();
+//                    JSONObject jsonObject = new JSONObject();
+//
+//                    String userID = Information.authUser.getFirebaseUID();
+//                    //jsonObject.put("name", username);
+//                    jsonObject.put("userID", userID);
+//                    //jsonObject.put("receiptID", "-1");
+//                    jsonObject.put("date", date);
+//                    jsonObject.put("totalCost", totalCost);
+//                    jsonObject.put("tax", tax);
+//                    jsonObject.put("businessName", businessName);
+//                    //jsonObject.put("items",itemsJsonArray);
+//
+//                    JSONArray itemsJsonArray = new JSONArray();
+//                    if(!receipt.getItems().isEmpty()){
+//                        //itemsJsonArray.put(itemJsonObject);
+//                        for(int i=0; i<receipt.getItems().size();i++){
+//                            JSONObject itemJsonObject = new JSONObject();
+//                            itemJsonObject.put("itemName", receipt.getItems().get(i).getItemName());
+//                            itemJsonObject.put("itemDesc","");
+//                            itemJsonObject.put("itemPrice", Double.toString(receipt.getItems().get(i).getItemPrice()));
+//                            itemsJsonArray.put(itemJsonObject);
+//                        }
+//                    }
+//
+//                    jsonObject.put("items",itemsJsonArray);
+
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("receiptId",id);
+
+
+                    //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
+                    String message = jsonObject.toString();
+
+                    Log.i("NEWRECEIPTPOST",message);
+
+                    //Output the stream to the server
+                    OutputStream os = conn.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(
+                            new OutputStreamWriter(os, "UTF-8"));
+                    writer.write(message);
+                    writer.flush();
+                    writer.close();
+                    os.close();
+
+                    conn.connect();
+
+                    //StringBuilder object to read the string from the service
+                    StringBuilder sb = new StringBuilder();
+
+                    //We will use a buffered reader to read the string from service
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    //A simple string to read values from each line
+                    String json;
+
+                    //reading until we don't find null
+                    while ((json = bufferedReader.readLine()) != null) {
+                        Log.d("JSONARRAY", json);
+                        //appending it to string builder
+                        sb.append(json + "\n");
+                    }
+
+                    String jsonReturn = sb.toString().trim();
+
+                    Log.i("JSONRETURN", jsonReturn);
+                    //storeJsonToLocal(jsonReturn, RECEIPTDATAFILE, ctx);
+                    //storeJsonToLocal(jsonReturn);
+
+                    //finally returning the read string
+                    return sb.toString().trim();
+
+                    ////////////////////////////////////////////////////////////////////////////
+
+                } catch (Exception e) {
+                    Log.i("FAIL222",e.toString());
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+        }
+
+        GetReceiptById getReceiptById = new GetReceiptById();
+        String result = "";
+        result = getReceiptById.execute().get();
+        newReceipt = parseJsonToReceiptOBJ(result);
+
+        return newReceipt;
     }
 
 

@@ -253,8 +253,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     Log.i("TOTALCOST22222", Double.toString(totalCost));
                 }
 
-                Log.i("TOTALCOST22222", Double.toString(totalCost));
-                receiptsTotalCost.setText(Double.toString(totalCost));
+                Log.i("TOTALCOST22222", String.format("%.2f", totalCost));
+                receiptsTotalCost.setText(String.format("%.2f", totalCost));
 
 
             }
