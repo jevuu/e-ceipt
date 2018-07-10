@@ -40,15 +40,13 @@ import java.util.List;
 
 //Initial Class for Textual Activity Reading
 //This class handles the primary bulk of text OCR
-//Last Modifcation: 6/11/2018
+//Last Modifcation: 7/10/2018
 public class OCRTextActivity extends AppCompatActivity {
   //  TextView txt_add;
     Bitmap ocrAble;
    // ImageView imgrecv;
     String imagePath = "";
     TextView txt_ocr;
-
-
     ArrayList<String> itemsRaw;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -62,10 +60,8 @@ public class OCRTextActivity extends AppCompatActivity {
         itemsRaw = new ArrayList<>();
         takePhoto();
     }
-
     //==================== Get User Photo/Camera =======================//
-//This function executes a valid bitmap intent from the camera.
-
+   //This function executes a valid bitmap intent from the camera.
     private void takePhoto() {
         try {
             //Checks for permissions of Camera and External Write
@@ -106,11 +102,8 @@ public class OCRTextActivity extends AppCompatActivity {
         }catch(Exception e){
             Toast.makeText(this, "Something is wrong:  " + e.getMessage(),
                     Toast.LENGTH_LONG).show();
-       //     txt_add.setText(e.getMessage());
-
 
         }
-
     }
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -121,7 +114,6 @@ public class OCRTextActivity extends AppCompatActivity {
             Toast.makeText(this, "You Cannot take a photo by denying the permissions!!",
                     Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public static boolean isIntentAvailable(Context context, String action) {
@@ -142,21 +134,16 @@ public class OCRTextActivity extends AppCompatActivity {
             if(imgFile.exists()){
                if(ocrAble != null) {
                    ocrAble.recycle();
-
                }
                  ocrAble = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 Matrix matrix = new Matrix();
                 matrix.postRotate(90);
                 ocrAble = ocrAble.createBitmap(ocrAble,0,0, ocrAble.getWidth(), ocrAble.getHeight(),matrix, true);
-
                 scanOCR();
 
             }
-
-
         }
     }
-
     public void scanOCR(){
         TextRecognizer textRecognizer = new TextRecognizer.Builder(this).build();
         if(!textRecognizer.isOperational()) {

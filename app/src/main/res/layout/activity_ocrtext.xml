@@ -10,12 +10,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         android:padding="20dp"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="10dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/ocr_recvText"
@@ -25,5 +31,61 @@
             android:ems="10"
             android:inputType="textMultiLine"
             tools:background="@color/colorEceiptDarkGrey" />
+
+        <TextView
+            android:id="@+id/ocr_instruc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="TextView" />
+
+        <ImageView
+            android:id="@+id/ocr_instrucPic"
+            android:layout_width="match_parent"
+            android:layout_height="152dp"
+            app:srcCompat="@drawable/receiptsnap_logo" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/ocr_backItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorEceiptDeepRed"
+                android:text="Button"
+                android:theme="?attr/buttonStyleSmall" />
+
+            <Button
+                android:id="@+id/ocr_fwdItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_green_light"
+                android:text="Button" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/ocr_acceptItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:text="Button" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
