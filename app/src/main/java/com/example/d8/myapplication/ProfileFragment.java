@@ -177,8 +177,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
                             } else {
                                 System.out.println("PAIN IN PROFILE!");
-                                Toast.makeText(getContext(), "Your Display Name was NOT Updated!",
-                                        Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Your Display Name was NOT Updated!" + task.getException().getMessage(),
+                                        Toast.LENGTH_LONG).show();
                                 username.setText(Information.authUser.getName());
 
                             }
@@ -207,9 +207,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
                             }else{
                                 System.out.println("PAIN IN EMAIL! " + task.getException());
-                                Toast.makeText(getContext(), "Your Email could not be updated!",
-                                        Toast.LENGTH_SHORT).show();
-                                Cemail.setText(Information.authUser.getName());
+                                Toast.makeText(getContext(), "Your Email could not be updated!" + task.getException().getMessage(),
+                                        Toast.LENGTH_LONG).show();
+                                Cemail.setText(Information.authUser.getEmail());
 
                                 Cemail.setTextColor(getResources().getColor(R.color.colorAccent));
 

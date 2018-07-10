@@ -1,14 +1,22 @@
 package com.example.d8.myapplication;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.icu.text.IDNA;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -25,6 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -32,7 +41,16 @@ import java.util.Locale;
 public class AddReceiptFormActivity extends AppCompatActivity {
     EditText companyName;
     EditText receiptDate;
+    EditText totalCost;
     Button receiptSubmitButton;
+    Button addItemBtn;
+    EditText itemName;
+    EditText itemPrice;
+    ArrayList<Receipt.Item>newItems = new ArrayList<Receipt.Item>();
+    ListView listView;
+
+    String USERID = Information.authUser.getUserId();
+    String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
 
     int mYear;
     int mMonth;
@@ -45,6 +63,8 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
         companyName = (EditText)findViewById(R.id.company_name);
         receiptDate = (EditText)findViewById(R.id.receipt_date);
+        totalCost = (EditText)findViewById(R.id.add_receipt_total_cost);
+        listView = (ListView)findViewById(R.id.add_item_listview);
 
         String cDateInString = getCurrentDate();
 
@@ -80,45 +100,163 @@ public class AddReceiptFormActivity extends AppCompatActivity {
             }
         });
 
+        addItemBtn = (Button)findViewById(R.id.add_receipt_add_item_btn);
+
+        addItemBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                itemName = (EditText)findViewById(R.id.add_receipt_item_name);
+                String itemname = itemName.getText().toString();
+                if(TextUtils.isEmpty(itemname)){
+                    itemname = "N/A";
+                }
+
+                itemPrice = (EditText)findViewById(R.id.add_receipt_item_price);
+                String itempriceStr = itemPrice.getText().toString();
+                double itemprice = 0.0;
+                if( TextUtils.isEmpty(itempriceStr)){
+                    Log.i("ITEMPRICE IS: ", "NULL");
+                    itemprice = -1;
+                }else{
+                    itemprice = Double.parseDouble(itempriceStr);
+                }
+
+                String itemdesc = "";
+
+                Receipt.Item item = new Receipt().new Item(itemname,itemdesc,itemprice);
+                newItems.add(item);
+                loadItemObjToListview(newItems);
+
+                double totalCostInDouble = 0.0;
+                for(int i=0; i<newItems.size(); i++){
+                    if(newItems.get(i).getItemPrice()==-1){
+                        totalCostInDouble+=0.00;
+                    }else{
+                        totalCostInDouble+=newItems.get(i).getItemPrice();
+                    }
+
+                }
+                String.format("%.2f",totalCostInDouble);
+                totalCost.setText(String.format("%.2f",totalCostInDouble));
+                itemName.setText("");
+                itemPrice.setText("");
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("positionZZZZ: ", Integer.toString(position));
+
+                AlertDialog alertDialog = new AlertDialog.Builder(AddReceiptFormActivity.this).create();
+                alertDialog.setTitle("Delete item");
+                alertDialog.setMessage("Do you want to delete this item?");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                newItems.remove(position);
+                                loadItemObjToListview(newItems);
+
+                                double totalCostInDouble = 0.0;
+                                for(int i=0; i<newItems.size(); i++){
+                                    if(newItems.get(i).getItemPrice()==-1){
+                                        totalCostInDouble+=0.00;
+                                    }else{
+                                        totalCostInDouble+=newItems.get(i).getItemPrice();
+                                    }
+
+                                }
+                                totalCost.setText(Double.toString(totalCostInDouble));
+
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
+
         receiptSubmitButton = (Button)findViewById(R.id.receipt_submit_btn);
 
         receiptSubmitButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 String company = companyName.getText().toString();
                 String date = receiptDate.getText().toString();
-                String username = "freddy";
-                String userId = "007";
-                String totalCost = "100";
+                String username = Information.authUser.getUserId();
+                String UID = Information.authUser.getFirebaseUID();
+                String tCost = totalCost.getText().toString();
                 String tax = "14";
 
+                //validate text input empty
+                if(company.equals("")){
+                    Toast.makeText(getApplicationContext(),"Please enter your name!",Toast.LENGTH_LONG).show();
+                }else if(tCost.equals("")){
+                    Toast.makeText(getApplicationContext(),"Please enter receipt's total cost!",Toast.LENGTH_LONG).show();
+                }else{
+                    //all input are validated!
+                    String receiptsJSON = DataController.readJsonFile(USERRECEIPTFILENAME, AddReceiptFormActivity.this);
+                    try{
+                        JSONArray receiptsJsonArray = new JSONArray(receiptsJSON);
+                        JSONObject jsonObject = new JSONObject();
+
+                        jsonObject.put("name", username);
+                        jsonObject.put("receiptID", "-1");
+                        jsonObject.put("date", date);
+                        jsonObject.put("totalCost", tCost);
+                        jsonObject.put("tax", tax);
+                        jsonObject.put("businessName", company);
+
+                        JSONArray itemsJsonArray = new JSONArray();
+                        if(!newItems.isEmpty()){
+                            //itemsJsonArray.put(itemJsonObject);
+                            for(int i=0; i<newItems.size();i++){
+                                JSONObject itemJsonObject = new JSONObject();
+                                itemJsonObject.put("itemName", newItems.get(i).getItemName());
+                                itemJsonObject.put("itemDesc","");
+                                itemJsonObject.put("itemPrice", Double.toString(newItems.get(i).getItemPrice()));
+                                itemsJsonArray.put(itemJsonObject);
+                            }
+                        }
+
+                        Log.i("itemsJsonArray", itemsJsonArray.toString());
+
+                        jsonObject.put("items",itemsJsonArray);
+
+                        //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
+                        String jsonString = jsonObject.toString();
+
+                        Log.i("JAAAAASON", jsonString);
+                        Log.e("USERNAME", username);
+
+                        //test addReceiptToLocal and parseJsonToReceiptOBJ in Information class:
+
+                        Receipt receipt = DataController.parseJsonToReceiptOBJ(jsonString);
+                        //Log.i("ITEMaaaa",receipt.getItems().get(0).getItemName());
 
 
-                try{
-                    JSONArray jsonArray = new JSONArray();
-                    JSONObject jsonObject = new JSONObject();
-
-                    jsonObject.put("name", username);
-                    //jsonObject.put("receiptID", "232");
-                    jsonObject.put("date", date);
-                    //jsonObject.put("totalCost", totalCost);
-                    jsonObject.put("tax", tax);
-                    jsonObject.put("businessName", company);
+                        Log.i("RECEIPTUSERNAME", receipt.getName());
 
 
+                        DataController.addReceiptToLocal(USERID, receipt,AddReceiptFormActivity.this);
 
-                    //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
-                    String jsonString = jsonObject.toString();
+                        DataController.addReceiptToDB(receipt,"http://myvmlab.senecacollege.ca:6207/addReceipt.php",AddReceiptFormActivity.this);
+//                        Log.i("JSONINAddReceiptForm:", jsonString);
+//
+//                        receiptsJsonArray.put(jsonObject);
+//
+//                        String jArrayString = receiptsJsonArray.toString();
+//                        Log.i("JArrAddReceiptForm:", jArrayString);
+//
+//                        DataController.storeJsonToLocal(jArrayString, Information.RECEIPTSLOCALFILENAME, AddReceiptFormActivity.this);
+//
 
-                    Log.i("JSONINAddReceiptForm:", jsonString);
+                        //sendToDB(jsonString, "http://myvmlab.senecacollege.ca:6207/addReceipt.php");
+                        Intent homeIntent = new Intent(AddReceiptFormActivity.this, MenuActivity.class);
+                        startActivity(homeIntent);
 
-                    sendToDB(jsonString, "http://myvmlab.senecacollege.ca:6207/addReceipt.php");
-
-                }catch(JSONException e){
-                    Log.e("EXCEPTION1:", e.toString());
+                    }catch(JSONException e){
+                        Log.e("EXCEPTION1:", e.toString());
+                    }
                 }
-
-
-
             }
         });
 
@@ -219,7 +357,6 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
     String getCurrentDate(){
         //get current date and time
-        Date currentDate = new Date();
         Calendar calender = Calendar.getInstance();
         int cDay = calender.get(Calendar.DAY_OF_MONTH);
         int cMonth = calender.get(Calendar.MONTH) + 1;
@@ -239,5 +376,16 @@ public class AddReceiptFormActivity extends AppCompatActivity {
         return cDateInString;
     }
 
+    void loadItemObjToListview(ArrayList<Receipt.Item> items ){
+        if(!items.isEmpty()){
+            ItemListViewAdapter adapter = new ItemListViewAdapter(this,items);
+            listView.setAdapter(adapter);
+        }else{
+            String[] emptyString = {};
+            ArrayAdapter<String> arrayAdapterEmpty = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, emptyString);
+            listView.setAdapter(arrayAdapterEmpty);
+            Log.i("NORECEIPT!","true");
+        }
+    }
 
 }

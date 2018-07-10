@@ -51,7 +51,7 @@
 
     <!-- Add receipt form layout -->
     <string name="company_name">Company:</string>
-    <string name="receipt_date">Receipt date:</string>
+    <string name="receipt_date">Date:</string>
     <string name="receipt_category">Category:</string>
     <string name="item_list_label">Item list</string>
     <string name="item_name_label">Item name</string>
@@ -86,9 +86,15 @@
 
     <string name="QR_gen_title">Receipt QR Code</string>
 
+
+    <!-- null value -->
+    <string name="string_null">null</string>
+    <string name="num_null">0.00</string>
+
     <string name="profile_name">Display Name</string>
     <string name="profile_userName">Username </string>
     <string name="profile_Unlc">Edit Your Information</string>
     <string name="profile_unkCancel">Cancel</string>
     <string name="profile_conf">Confirm Changes</string>
+
 </resources>
