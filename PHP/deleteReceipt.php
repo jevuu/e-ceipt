@@ -6,8 +6,11 @@ $json 			= file_get_contents('php://input');
 $obj 			= json_decode($json);
 $rID			= $obj->{'receiptID'};
 
+//Delete receipt
 $qString = "DELETE FROM receipts WHERE receiptID = " . $rID;
-mysqli_query($conn, $qString);
+if(mysqli_query($conn, $qString) === FALSE){
+	echo "Failed to delete receipt.";
+}
 
 //Test deletion
 /*$qString = "SELECT FROM receipts WHERE receiptID = " . $rID;

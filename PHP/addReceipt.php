@@ -43,10 +43,10 @@ $uID = $row[0];
 //echo "User ID found: " . $uID;	
 */
 // INSERT RECEIPT
-$qReceiptString = "INSERT INTO receipts (`userID`, `creationDate`, `totalCost`, `tax`) 
-	VALUES('$uID', '$receiptDate', " . $totalCost . ", " . $tax . ")";
+$qReceiptString = "INSERT INTO receipts (`userID`, `businessName`, `creationDate`, `totalCost`, `tax`) 
+	VALUES('$uID', '$businessName', '$receiptDate', " . $totalCost . ", " . $tax . ")";
 if(mysqli_query($conn, $qReceiptString) === FALSE){
-	echo "An error occured creating the receipt.";
+	echo "An error occured creating the receipt. \n '$businessName'";
 }
 
 // GET receiptID
@@ -65,9 +65,9 @@ $itemCount = count($items); //Loop through $items and append data from it into t
 	echo $items[$itm]->price;
 }*/
 foreach($items as $key => $itm){
-	$itemName  = $itm->name;
-	$itemDesc  = $itm->description;
-	$itemPrice = $itm->price;
+	$itemName  = $itm->itemName;
+	$itemDesc  = $itm->itemDesc;
+	$itemPrice = $itm->itemPrice;
 	$qItemsString = $qItemsString . "('$uID', '$itemName', '$itemDesc', " . $itemPrice . ")";
 	if($key < $itemCount - 1){
 		$qItemsString = $qItemsString . ", ";
