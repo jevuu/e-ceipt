@@ -56,13 +56,16 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(RegisterActivity.this, "Registered, please check your email to verify",
+                                    Toast.makeText(RegisterActivity.this, "Registered, have fun!",
                                             Toast.LENGTH_SHORT).show();
 
 
                                     authUser a = new authUser();
                                     a.createUser();
-                                    a.updateProfile(a.getName(), null);
+                                    String ab = a.getEmail();
+                                    String[] n = ab.split("@");
+
+                                    a.updateProfile(n[0], null);
                                     a.contactSql_reg(RegisterActivity.this);
 
 

@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:fillViewport="true">-->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -246,52 +241,16 @@
             android:background="@drawable/btn_roundcorner"
             android:text="Scan"
             android:textColor="@color/colorEceiptWhite"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </LinearLayout>
-<!--<<<<<<< HEAD-->
 
-    </LinearLayout>
-<!--</ScrollView>-->
-<!--&lt;!&ndash;=======&ndash;&gt;-->
-    <!--<LinearLayout-->
+    <!--<ProgressBar-->
+        <!--android:id="@+id/progressBar"-->
+        <!--style="?android:attr/progressBarStyleHorizontal"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
-        <!--android:paddingLeft="16dp"-->
-        <!--android:paddingRight="16dp"-->
-        <!--android:layout_marginTop="16dp"-->
-        <!--&gt;-->
+        <!--/>-->
 
-        <!--<Button-->
-            <!--android:id="@+id/analyze_btn"-->
-            <!--android:layout_width="175dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="left"-->
-            <!--android:layout_marginBottom="16dp"-->
-            <!--android:layout_marginTop="16dp"-->
-            <!--android:background="@drawable/btn_roundcorner"-->
-            <!--android:text="Analyze"-->
-            <!--android:textColor="@color/colorEceiptWhite"-->
-            <!--android:textSize="18dp"-->
-            <!--android:textStyle="bold" />-->
-
-        <!--<Button-->
-            <!--android:id="@+id/scan_btn"-->
-            <!--android:layout_width="175dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="right"-->
-            <!--android:layout_marginBottom="16dp"-->
-            <!--android:layout_marginTop="16dp"-->
-            <!--android:onClick="onOCR"-->
-            <!--android:background="@drawable/btn_roundcorner"-->
-            <!--android:text="Scan Barcode"-->
-            <!--android:textColor="@color/colorEceiptWhite"-->
-            <!--android:textSize="18dp"-->
-            <!--android:textStyle="bold" />-->
-
-    <!--</LinearLayout>-->
-
-
-<!--</LinearLayout>-->
-<!--&gt;>>>>>> 27b86939b0ce596a35bde3aeb26765fa8ab23cfd-->
+</LinearLayout>

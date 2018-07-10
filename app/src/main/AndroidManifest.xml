@@ -37,7 +37,9 @@
         <activity android:name=".ReceiptDetailActivity" />
         <activity android:name=".PassActivity" />
         <activity android:name=".AddReceiptOptionActivity" />
-        <activity android:name=".AddReceiptFormActivity" />
+        <activity android:name=".AddReceiptFormActivity" >
+
+        </activity>
         <activity
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu"

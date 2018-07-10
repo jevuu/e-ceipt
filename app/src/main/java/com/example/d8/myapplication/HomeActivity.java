@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -50,6 +51,8 @@ public class HomeActivity extends AppCompatActivity {
     String username = Information.authUser.getUserId();
     String userFirebaseUID = Information.authUser.getFirebaseUID();
     String email = Information.authUser.getEmail();
+    Button btn_add ;
+    //String RECEIPTDATAFILE = "_receipts.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +65,25 @@ public class HomeActivity extends AppCompatActivity {
 
         listView = (ListView)findViewById(R.id.receipts_list_view);
 
-        getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
+        //DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
+
         initCustomSpinner();
 
         try{
-            String json = readJsonFile();
-            if(Information.receipts.isEmpty()){
-                loadReceiptsObj(json);
+            String json = DataController.readJsonFile(Information.RECEIPTSLOCALFILENAME, this);
+            Log.i("JSONHOME", json);
+//            if(Information.receipts.isEmpty()){
+//                DataController.loadReceiptsObj(json);
+//                loadReceiptObjToListView();
+//            }else{
+//
+//            }
+            if(!Information.receipts.isEmpty()){
+                Information.receipts.clear();
             }
-            //loadIntoListView(json);
+            DataController.loadReceiptsObj(json);
             loadReceiptObjToListView();
+
         }catch(JSONException e){
             Log.e("JSONERROR", e.toString());
         }
@@ -83,6 +95,15 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(),ReceiptDetailActivity.class);
                 intent.putExtra("RECEIPTINDEX", Integer.toString(position));
                 startActivity(intent);
+            }
+        });
+
+        btn_add = (Button)findViewById(R.id.add_btn);
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addOption = new Intent(getBaseContext(),AddReceiptOptionActivity.class);
+                startActivity(addOption);
             }
         });
 
@@ -202,133 +223,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    //code from "https://www.simplifiedcoding.net/android-json-parsing-tutorial/"
-    //this method is actually fetching the json string
-    private String getJSON(final String urlWebService) {
-        /*
-        * As fetching the json string is a network operation
-        * And we cannot perform a network operation in main thread
-        * so we need an AsyncTask
-        * The constrains defined here are
-        * Void -> We are not passing anything
-        * Void -> Nothing at progress update as well
-        * String -> After completion it should return a string and it will be the json string
-        * */
-        class GetJSON extends AsyncTask<Void, Void, String> {
-
-            //this method will be called before execution
-            //you can display a progress bar or something
-            //so that user can understand that he should wait
-            //as network operation may take some time
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            //this method will be called after execution
-            //so here we are displaying a toast with the json string
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
-            }
-
-            @Override
-            protected void onProgressUpdate(Void... values) {
-                super.onProgressUpdate(values);
-
-            }
-
-            //in this method we are fetching the json string
-            @Override
-            protected String doInBackground(Void... voids) {
-
-                try {
-                    //creating a URL
-                    URL url = new URL(urlWebService);
-
-                    //Opening the URL using HttpURLConnection
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
-                    con.setRequestMethod("GET");
-                    con.connect();
-                    //StringBuilder object to read the string from the service
-                    StringBuilder sb = new StringBuilder();
-
-                    //We will use a buffered reader to read the string from service
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    //A simple string to read values from each line
-                    String json;
-
-                    //reading until we don't find null
-                    while ((json = bufferedReader.readLine()) != null) {
-                        Log.d("JSONARRAY", json);
-                        //appending it to string builder
-                        sb.append(json + "\n");
-                    }
-
-                    String jsonReturn = sb.toString().trim();
-
-                    Log.i("JSONRETURN", jsonReturn);
-                    storeJsonToLocal(jsonReturn);
-
-                    //finally returning the read string
-                    return sb.toString().trim();
-                } catch (Exception e) {
-                    Log.i("FAIL222",e.toString());
-                    return null;
-                }
-
-            }
-        }
-
-
-        //creating asynctask object and executing it
-        GetJSON getJSON = new GetJSON();
-        String result="";
-        try{
-            result = getJSON.execute().get();
-        }catch (Exception e){
-
-        }
-
-        return result;
-    }
-
-
-    private void storeJsonToLocal(String json) throws JSONException{
-        //String username = Information.user.getUserName();
-        String filename = "_receipts"+".txt";
-
-        try {
-            FileOutputStream outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-            outputStream.write(json.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("STOREERROR:", e.toString());
-        }
-    }
-
-    private String readJsonFile(){
-        //String username = Information.user.getUserName();
-        String filename = "_receipts"+".txt";
-        String json = "";
-        try{
-            FileInputStream inputStream = openFileInput(filename);
-            int size = inputStream.available();
-            byte[] buffer = new byte[size];
-            inputStream.read(buffer);
-            inputStream.close();
-            json = new String(buffer);
-            //Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
-            return json;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
+    //Load the receipts data to listview(from json string to listview)
     private void loadIntoListView(String json) throws JSONException {
         JSONArray jsonArray = new JSONArray(json);
         String[] receipts = new String[jsonArray.length()];
@@ -341,63 +236,7 @@ public class HomeActivity extends AppCompatActivity {
         listView.setAdapter(arrayAdapter);
     }
 
-    private void loadReceiptsObj(String json) throws JSONException {
-        try{
-            JSONArray jsonArray = new JSONArray(json);
-            Receipt receipt;
-
-            Log.i("JSONOOOOOO",json);
-            Log.i("JSONLENGHT", Integer.toString(jsonArray.length()));
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject obj = jsonArray.getJSONObject(i);
-
-                receipt =  new Receipt();
-                Log.d("RECEIPTname:", obj.getString("name"));
-                receipt.setName(obj.getString("name"));
-                Log.d("RECEIPTid:", obj.getString("receiptID"));
-                receipt.setReceipId(obj.getString("receiptID"));
-                Log.d("RECEIPTdate:", obj.getString("date"));
-                receipt.setDate(obj.getString("date"));
-                Log.d("RECEIPTtotalcost:", obj.getString("totalCost"));
-                receipt.setTotalCost(Double.parseDouble(obj.getString("totalCost")));
-                Log.d("RECEIPTtax:", obj.getString("tax"));
-                receipt.setTax(Double.parseDouble(obj.getString("tax")));
-                Log.d("RECEIPTbusiness:", obj.getString("businessName"));
-                receipt.setBusinessName(obj.getString("businessName"));
-
-                Log.d("RECEIPTOBJ", "name:"+receipt.getName()+
-                        "id:"+receipt.getReceipId()+
-                        "date:"+receipt.getDate()+
-                        "totalCost:"+receipt.getTotalCost()+receipt.getTax());
-
-                JSONArray itemarray = obj.getJSONArray("items");
-
-                Log.d("ITEMARRAYL:",itemarray.toString());
-
-                for(int j=0; j<itemarray.length();j++){
-                    JSONObject itemObj = itemarray.getJSONObject(j);
-
-                    Log.d("ITEMNAME22222", itemObj.getString("itemName"));
-                    Log.d("ITEMDECS", itemObj.getString("itemDesc"));
-                    Log.d("ITEMPRICE", itemObj.getString("itemPrice"));
-
-                    receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")));
-                }
-
-                Information.receipts.add(receipt);
-
-            }
-        }catch(Exception e){
-            Log.e("ERRRRR:",e.toString());
-        }
-
-        if(!Information.receipts.get(0).getItems().isEmpty()){
-            Log.d("RECEIPTOBJ2:",Information.receipts.get(0).getItems().get(1).getItemName());
-
-        }
-    }
-
+    //Load the receipts data to listview(from object to listview)
     void loadReceiptObjToListView(){
         if(!Information.receipts.isEmpty()){
             String[] receipts = new String[Information.receipts.size()];
