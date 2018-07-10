@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        try{
 //            //Just for test
-//            DataController.getReceiptById(66, "http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
+//            DataController.deleteReceiptFromDB(118, "http://myvmlab.senecacollege.ca:6207/deleteReceipt.php", this);
 //        }catch (Exception e){
 //
 //        }

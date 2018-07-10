@@ -136,7 +136,8 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                     }
 
                 }
-                totalCost.setText(Double.toString(totalCostInDouble));
+                String.format("%.2f",totalCostInDouble);
+                totalCost.setText(String.format("%.2f",totalCostInDouble));
                 itemName.setText("");
                 itemPrice.setText("");
             }

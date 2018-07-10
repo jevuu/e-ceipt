@@ -57,6 +57,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     ListView listView=null;
     TextView receiptsTotalCost;
 
+    private String daysSpinnerSelect;
+    private String cateSpinnerSelect;
+
     private OnFragmentInteractionListener mListener;
 
     public HomeFragment() {
@@ -226,6 +229,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
+                daysSpinnerSelect = item;
+
                 Log.i("ITEMSAaaaaa", item);
                 double totalCost = 0.0;
 
@@ -277,6 +282,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
+                cateSpinnerSelect = item;
                 //Toast.makeText(parent.getContext(), "Android Custom Spinner Example Output..." + item, Toast.LENGTH_LONG).show();
             }
 
@@ -355,5 +361,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             listView.setAdapter(arrayAdapterEmpty);
             Log.i("NORECEIPT!","true");
         }
+    }
+
+    void loadReceiptObjToListviewByDaysAndCate(ArrayList<Receipt> _receipts, String daysSelect, String cateSelect){
+
     }
 }
