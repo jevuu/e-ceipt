@@ -21,6 +21,8 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+
+    buildToolsVersion '27.0.3' // Older versions may give compile errors
 }
 
 dependencies {
@@ -48,6 +50,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+//    implementation 'com.android.support:appcompat-v7:25.3.1'   // Minimum 23+ is required
+}
+
+repositories {
+    jcenter()
 }
 
 apply plugin: 'com.google.gms.google-services'
