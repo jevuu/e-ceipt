@@ -7,14 +7,9 @@ $json = file_get_contents('php://input');
 $obj = json_decode($json);
 $rID = $obj->{'receiptID'};
 
-//If userName doesn't exist, use grab from John Doe. ONLY FOR TESTING PURPOSES. REMOVE IN FINAL
-if($rID == ""){
-	$rID = "1";
-}
-
 //Get one receipt by receiptID
 //$qString = "SELECT u.name, r.receiptID, r.creationDate, r.totalCost, r.tax, r.businessID 
-$qString = "SELECT u.name, r.receiptID, r.creationDate, r.totalCost, r.tax, r.businessName 
+$qString = "SELECT u.userID, r.receiptID, r.creationDate, r.totalCost, r.tax, r.businessName, r.categoryID 
 FROM users u 
 INNER JOIN receipts r ON r.userID = u.userID 
 WHERE r.receiptID= '$rID'" ;
@@ -57,7 +52,8 @@ $receipt= mysqli_fetch_row($qReceipt);
 		'tax' 			=> $receipt[4],
 		'items'			=> $items,
 		//'businessName'	=> $businessName->name	//Not used as business is stored in receipt now
-		'businessName'	=> $receipt[5]
+		'businessName'	=> $receipt[5],
+		'categoryID'	=> $receipt[6]
 	];
 
 //Display the data in json format
