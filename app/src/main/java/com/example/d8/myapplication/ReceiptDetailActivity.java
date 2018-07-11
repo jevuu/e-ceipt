@@ -27,9 +27,11 @@ public class ReceiptDetailActivity extends AppCompatActivity {
     TextView total_cost;
     TextView businessName;
     ImageButton deleteImgBtn;
+
     ImageButton backToHomeBtn;
     ImageButton shareReceiptBtn;
     ImageButton modifyImgBtn;
+
     String USERID = Information.authUser.getUserId();
     String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
     @Override
@@ -41,7 +43,9 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         Log.i("INDEX", index);
 
         Receipt receipt = Information.receipts.get(Integer.parseInt(index));
+
         String receiptIDStr_ = receipt.getReceipId();
+
 
         listView = (ListView)findViewById(R.id.item_list_view);
         date = (TextView)findViewById(R.id.receipt_detail_date) ;
@@ -142,6 +146,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 //                startActivity(intent);
             }
         });
+
 
 
         //Toast.makeText(getApplicationContext(), index, Toast.LENGTH_LONG).show();

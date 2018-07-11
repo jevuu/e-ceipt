@@ -5,24 +5,21 @@ require "conn.php";
 //Get userName from JSON
 $json = file_get_contents('php://input');
 $obj = json_decode($json);
-$userID = $obj->{'userID'};
+$rID = $obj->{'receiptID'};
 
 //If userName doesn't exist, use grab from John Doe. ONLY FOR TESTING PURPOSES. REMOVE IN FINAL
-if($userID == ""){
-	$userID = "1";
+if($rID == ""){
+	$rID = "1";
 }
 
-//Array of receipts to pass back
-$receipts = array();
-
-//Get all receipts from userName
+//Get one receipt by receiptID
 //$qString = "SELECT u.name, r.receiptID, r.creationDate, r.totalCost, r.tax, r.businessID 
 $qString = "SELECT u.name, r.receiptID, r.creationDate, r.totalCost, r.tax, r.businessName 
 FROM users u 
 INNER JOIN receipts r ON r.userID = u.userID 
-WHERE u.userID= '$userID'" ;
+WHERE r.receiptID= '$rID'" ;
 $qReceipt= mysqli_query($conn, $qString);
-while($receipt= mysqli_fetch_row($qReceipt)){
+$receipt= mysqli_fetch_row($qReceipt);
 	
 	/*Get business name from Business table
 	$qString = "SELECT u.name
@@ -51,8 +48,8 @@ while($receipt= mysqli_fetch_row($qReceipt)){
 		array_push($items, $tempItem);
 	}
 	
-	//Build the receipt array and push into "receipts" array
-	$tempReceipt = [
+	//Build the receipt
+	$receipt = [
 		'name' 			=> $receipt[0],
 		'receiptID' 	=> $receipt[1],
 		'date' 			=> $receipt[2],
@@ -62,9 +59,7 @@ while($receipt= mysqli_fetch_row($qReceipt)){
 		//'businessName'	=> $businessName->name	//Not used as business is stored in receipt now
 		'businessName'	=> $receipt[5]
 	];
-	array_push($receipts, $tempReceipt);
-}
 
 //Display the data in json format
-echo json_encode($receipts);
+echo json_encode($receipt);
 ?>
