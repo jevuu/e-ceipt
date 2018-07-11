@@ -46,7 +46,11 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".OCRActivity" />
         <activity android:name=".BarcodeActivity" />
-        <activity android:name=".OCRTextActivity"></activity>
+        <activity android:name=".OCRTextActivity" />
+        <activity
+            android:name=".QRGenActivity"
+            android:label="@string/QR_gen_title"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -25,6 +25,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
     ListView listView;
     TextView date;
     TextView total_cost;
+    ImageButton shareImgBtn;
     ImageButton deleteImgBtn;
     String USERID = Information.authUser.getUserId();
     String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
@@ -42,6 +43,19 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         date = (TextView)findViewById(R.id.receipt_detail_date) ;
         date.setText(Information.receipts.get(Integer.parseInt(index)).getDate());
 
+        //SHARE RECEIPT LISTENER
+        shareImgBtn = (ImageButton) findViewById(R.id.buttonShare);
+        shareImgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int receiptID = Integer.parseInt(Information.receipts.get(Integer.parseInt(index)).getReceipId());
+                Intent goToQRGen = new Intent(ReceiptDetailActivity.this, QRGenActivity.class);
+                goToQRGen.putExtra("receiptID", receiptID);
+                startActivity(goToQRGen);
+            }
+        });
+
+        //DELETE RECEIPT LISTENER
         deleteImgBtn = (ImageButton)findViewById(R.id.buttonDelete);
         deleteImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override

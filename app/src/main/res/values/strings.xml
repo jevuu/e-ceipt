@@ -84,6 +84,7 @@
     <string name="bg_Title">Select Background Colour</string>
     <string name="bg_colourDesc">Pick Any Colour You Like!</string>
 
+    <string name="QR_gen_title">Receipt QR Code</string>
 
 
     <!-- null value -->
