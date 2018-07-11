@@ -26,6 +26,8 @@ public class ReceiptDetailActivity extends AppCompatActivity {
     TextView date;
     TextView total_cost;
     ImageButton deleteImgBtn;
+    ImageButton backToHomeBtn;
+    ImageButton shareReceiptBtn;
     String USERID = Information.authUser.getUserId();
     String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
     @Override
@@ -37,6 +39,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         Log.i("INDEX", index);
 
         Receipt receipt = Information.receipts.get(Integer.parseInt(index));
+        String receiptIDStr_ = receipt.getReceipId();
 
         listView = (ListView)findViewById(R.id.item_list_view);
         date = (TextView)findViewById(R.id.receipt_detail_date) ;
@@ -95,6 +98,28 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 
 
 
+            }
+        });
+
+        backToHomeBtn = (ImageButton)findViewById(R.id.receipt_detail_back_to_home_btn);
+        backToHomeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), MenuActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        shareReceiptBtn = (ImageButton)findViewById(R.id.receipt_detail_share_btn);
+        shareReceiptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),ReceiptShareActivity.class);
+                intent.putExtra("RECEIPTID", receiptIDStr_);
+                startActivity(intent);
+
+//                Intent intent = new Intent(getBaseContext(), ReceiptShareActivity.class);
+//                startActivity(intent);
             }
         });
 

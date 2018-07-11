@@ -57,8 +57,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     ListView listView=null;
     TextView receiptsTotalCost;
 
-    private String daysSpinnerSelect;
-    private String cateSpinnerSelect;
+    private String daysSpinnerSelect = "All receipts";
+    private String cateSpinnerSelect = "All receipts";
+    ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
 
     private OnFragmentInteractionListener mListener;
 
@@ -234,30 +235,36 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Log.i("ITEMSAaaaaa", item);
                 double totalCost = 0.0;
 
-                if(item.equals("All receipts")){
-                    loadReceiptObjToListView(Information.receipts);
-
-
-                    for(Receipt receipt:Information.receipts){
+                ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
+                receiptsSelect = loadReceiptObjToListviewByDaysAndCate(Information.receipts,daysSpinnerSelect,cateSpinnerSelect);
+                loadReceiptObjToListView(receiptsSelect);
+//                if(item.equals("All receipts")){
+//                    loadReceiptObjToListView(Information.receipts);
+//
+//
+//                    for(Receipt receipt:Information.receipts){
+//                        totalCost += receipt.getTotalCost();
+//                    }
+//                }else{
+//                    String daysNumString = item.replaceAll("\\D+","");
+//
+//                    Integer daysNum = Integer.parseInt(daysNumString);
+//
+//                    //Toast.makeText(parent.getContext(), "Android Custom Spinner Example Output..." + daysNumString, Toast.LENGTH_LONG).show();
+//                    ArrayList<Receipt> receipts = DataController.getReceiptsInDays(daysNum);
+//
+//
+//
+//                    loadReceiptObjToListView(receipts);
+//
+//                    for(Receipt receipt:receipts){
+//                        totalCost += receipt.getTotalCost();
+//                    }
+//                    Log.i("TOTALCOST22222", Double.toString(totalCost));
+//                }
+                for(Receipt receipt:receiptsSelect){
                         totalCost += receipt.getTotalCost();
-                    }
-                }else{
-                    String daysNumString = item.replaceAll("\\D+","");
-                    Integer daysNum = Integer.parseInt(daysNumString);
-
-                    //Toast.makeText(parent.getContext(), "Android Custom Spinner Example Output..." + daysNumString, Toast.LENGTH_LONG).show();
-                    ArrayList<Receipt> receipts = DataController.getReceiptsInDays(daysNum);
-
-
-
-                    loadReceiptObjToListView(receipts);
-
-                    for(Receipt receipt:receipts){
-                        totalCost += receipt.getTotalCost();
-                    }
-                    Log.i("TOTALCOST22222", Double.toString(totalCost));
                 }
-
                 Log.i("TOTALCOST22222", String.format("%.2f", totalCost));
                 receiptsTotalCost.setText(String.format("%.2f", totalCost));
 
@@ -283,6 +290,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
                 cateSpinnerSelect = item;
+
+                double totalCost = 0.0;
+                if(item.equals("All receipts")){
+                    //loadReceiptObjToListView(Information.receipts);
+
+
+                    for(Receipt receipt:Information.receipts){
+                        totalCost += receipt.getTotalCost();
+                    }
+                }
                 //Toast.makeText(parent.getContext(), "Android Custom Spinner Example Output..." + item, Toast.LENGTH_LONG).show();
             }
 
@@ -363,7 +380,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    void loadReceiptObjToListviewByDaysAndCate(ArrayList<Receipt> _receipts, String daysSelect, String cateSelect){
+    ArrayList<Receipt> loadReceiptObjToListviewByDaysAndCate(ArrayList<Receipt> _receipts, String daysSelect, String cateSelect){
+        ArrayList<Receipt> receipts = new ArrayList<Receipt>();
+        if(daysSelect.equals("All receipts") && cateSelect.equals("All receipts")){
+            receipts = Information.receipts;
+        }else if(daysSelect.equals("All receipts") && !cateSelect.equals("All receipts")){
+            receipts = DataController.getReceiptsInCategory(cateSelect);
+        }else if(!daysSelect.equals("All receipts") && cateSelect.equals("All receipts")){
+            String daysNumString = daysSelect.replaceAll("\\D+","");
+            Integer daysNum = Integer.parseInt(daysNumString);
+            receipts = DataController.getReceiptsInDays(daysNum);
+        }else if(!daysSelect.equals("All receipts") && !cateSelect.equals("All receipts")){
+            String daysNumString = daysSelect.replaceAll("\\D+","");
+            Integer daysNum = Integer.parseInt(daysNumString);
+            receipts = DataController.getReceiptsInDaysAndCategory(daysNum, cateSelect);
+        }
 
+        return receipts;
     }
 }

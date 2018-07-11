@@ -9,6 +9,8 @@ public class Receipt {
     private double totalCost;
     private double tax;
     private String businessName;
+    private String userId;
+    private String category;
     private ArrayList<Item> items = new ArrayList<Item>();
 
     //getter
@@ -40,6 +42,13 @@ public class Receipt {
         return items;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
 
     //setter
     public void setReceipId(String receipId) {
@@ -75,6 +84,13 @@ public class Receipt {
         items.add(item);
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
 
     public class Item{
