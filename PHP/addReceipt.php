@@ -11,6 +11,7 @@ $totalCost 		= $obj->{'totalCost'};
 $tax 			= $obj->{'tax'};
 $businessName 	= $obj->{'businessName'};
 $items 			= $obj->{'items'};
+$categoryID		= $obj->{'categoryID'};
 
 //
 $uID = $userID;
@@ -43,8 +44,8 @@ $uID = $row[0];
 //echo "User ID found: " . $uID;	
 */
 // INSERT RECEIPT
-$qReceiptString = "INSERT INTO receipts (`userID`, `businessName`, `creationDate`, `totalCost`, `tax`) 
-	VALUES('$uID', '$businessName', '$receiptDate', " . $totalCost . ", " . $tax . ")";
+$qReceiptString = "INSERT INTO receipts (`userID`, `businessName`, `creationDate`, `totalCost`, `tax`, `categoryID`) 
+	VALUES('$uID', '$businessName', '$receiptDate', " . $totalCost . ", " . $tax . ", " . $categoryID . ")";
 if(mysqli_query($conn, $qReceiptString) === FALSE){
 	echo "An error occured creating the receipt. \n '$businessName'";
 }
