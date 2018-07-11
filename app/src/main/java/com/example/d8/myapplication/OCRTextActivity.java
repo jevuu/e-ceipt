@@ -46,7 +46,7 @@ public class OCRTextActivity extends AppCompatActivity {
     Bitmap ocrAble;
    // ImageView imgrecv;
     String imagePath = "";
-    TextView txt_ocr;
+ //   TextView txt_ocr;
     ArrayList<String> itemsRaw;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -55,7 +55,7 @@ public class OCRTextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocrtext);
       //  txt_add = (TextView) findViewById(R.id.edtErr);
-        txt_ocr = (TextView) findViewById(R.id.ocr_recvText);
+     //   txt_ocr = (TextView) findViewById(R.id.ocr_recvText);
        //imgrecv = (ImageView) findViewById(R.id.ocr_pic);
         itemsRaw = new ArrayList<>();
         takePhoto();
@@ -212,7 +212,7 @@ public class OCRTextActivity extends AppCompatActivity {
     }
 
     //Todo
-    //This function takes the raw items and attempts to turn them into items objects. These objects are then verified or in simple mode tossed(trys only to find the total)
+    //This function takes the raw items and attempts to turn them into objects. These objects are then verified or in simple mode tossed(trys only to find the total)
     private void parseItems() {
 
 
