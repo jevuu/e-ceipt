@@ -175,11 +175,16 @@ public class MainActivity extends AppCompatActivity {
         aUser.contactSql_log(this);
         Information.authUser = aUser;
 
+
         //Saves the username of this user to preferances for next login, clean.
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("pref_username", aUser.getEmail());
         editor.apply();
+
+        DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
+
+
 
 
         Intent goToReg = new Intent(this, MenuActivity.class);

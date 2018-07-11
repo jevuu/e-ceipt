@@ -41,9 +41,7 @@ public class DataController {
 
         JSONArray receiptsJsonArray = new JSONArray(receiptsJSON);
         JSONObject jsonObject = new JSONObject();
-        JSONArray itemsJsonArray = new JSONArray();
-        JSONObject itemJsonObject = new JSONObject();
-        //itemsJsonArray.put(itemJsonObject);
+
 
         String username = receipt.getName();
         String company = receipt.getBusinessName();
@@ -58,6 +56,24 @@ public class DataController {
         jsonObject.put("totalCost", tCost);
         jsonObject.put("tax", tax);
         jsonObject.put("businessName", company);
+
+        JSONArray itemsJsonArray = new JSONArray();
+        if(!receipt.getItems().isEmpty()){
+            //itemsJsonArray.put(itemJsonObject);
+            for(int i=0; i<receipt.getItems().size();i++){
+                JSONObject itemJsonObject = new JSONObject();
+                itemJsonObject.put("itemName", receipt.getItems().get(i).getItemName());
+                itemJsonObject.put("itemDesc","");
+                itemJsonObject.put("itemPrice", Double.toString(receipt.getItems().get(i).getItemPrice()));
+                itemsJsonArray.put(itemJsonObject);
+            }
+        }
+
+        Log.i("itemsJsonArray", itemsJsonArray.toString());
+
+        //jsonObject.put("items",itemsJsonArray);
+
+
         jsonObject.put("items",itemsJsonArray);
 
         String jsonString = jsonObject.toString();
@@ -91,7 +107,6 @@ public class DataController {
 //                    String userId = "2";
 //                    String username = "Freddy";
 
-
                     //open connection
                     conn = (HttpURLConnection) url.openConnection();
 
@@ -108,22 +123,32 @@ public class DataController {
                     String tax = Double.toString(receipt.getTax());
                     String businessName = receipt.getBusinessName();
 
-
-
                     //Data in Json object
                     //JSONArray receiptsJsonArray = new JSONArray();
                     JSONObject jsonObject = new JSONObject();
-                    JSONArray itemsJsonArray = new JSONArray();
-                    JSONObject itemJsonObject = new JSONObject();
-                    //itemsJsonArray.put(itemJsonObject);
 
-
-                    jsonObject.put("name", username);
-                    jsonObject.put("receiptID", "-1");
+                    String userID = Information.authUser.getFirebaseUID();
+                    //jsonObject.put("name", username);
+                    jsonObject.put("userID", userID);
+                    //jsonObject.put("receiptID", "-1");
                     jsonObject.put("date", date);
                     jsonObject.put("totalCost", totalCost);
                     jsonObject.put("tax", tax);
                     jsonObject.put("businessName", businessName);
+                    //jsonObject.put("items",itemsJsonArray);
+
+                    JSONArray itemsJsonArray = new JSONArray();
+                    if(!receipt.getItems().isEmpty()){
+                        //itemsJsonArray.put(itemJsonObject);
+                        for(int i=0; i<receipt.getItems().size();i++){
+                            JSONObject itemJsonObject = new JSONObject();
+                            itemJsonObject.put("itemName", receipt.getItems().get(i).getItemName());
+                            itemJsonObject.put("itemDesc","");
+                            itemJsonObject.put("itemPrice", Double.toString(receipt.getItems().get(i).getItemPrice()));
+                            itemsJsonArray.put(itemJsonObject);
+                        }
+                    }
+
                     jsonObject.put("items",itemsJsonArray);
 
                     //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
@@ -166,7 +191,6 @@ public class DataController {
                     //finally returning the read string
                     return sb.toString().trim();
 
-
                     ////////////////////////////////////////////////////////////////////////////
 
                 } catch (Exception e) {
@@ -195,6 +219,7 @@ public class DataController {
         String result="";
         try{
             result = addReceiptToDB.execute().get();
+            Log.i("RESULTDBBB", result);
         }catch (Exception e){
 
         }
@@ -202,6 +227,45 @@ public class DataController {
         return result;
 
         }
+
+    //transfer receipt object to json format data
+    static JSONObject toJsonObject(Receipt receipt, Context ctx)throws JSONException{
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("name", receipt.getName());
+        jsonObject.put("receiptID", receipt.getReceipId());
+        jsonObject.put("date", receipt.getDate());
+        jsonObject.put("totalCost", receipt.getTotalCost());
+        jsonObject.put("tax", receipt.getTax());
+        jsonObject.put("businessName", receipt.getBusinessName());
+        //jsonObject.put("items",itemsJsonArray);
+
+        JSONArray itemsJsonArray = new JSONArray();
+        if(!receipt.getItems().isEmpty()){
+            //itemsJsonArray.put(itemJsonObject);
+            for(int i=0; i<receipt.getItems().size();i++){
+                JSONObject itemJsonObject = new JSONObject();
+                itemJsonObject.put("itemName", receipt.getItems().get(i).getItemName());
+                itemJsonObject.put("itemDesc","");
+                itemJsonObject.put("itemPrice", Double.toString(receipt.getItems().get(i).getItemPrice()));
+                itemsJsonArray.put(itemJsonObject);
+            }
+        }
+
+        Log.i("itemsJsonArray", itemsJsonArray.toString());
+
+        //jsonObject.put("items",itemsJsonArray);
+
+
+        jsonObject.put("items",itemsJsonArray);
+        //String jsonString = jsonObject.toString();
+
+        Log.i("JSONINAddReceiptForm:", jsonObject.toString());
+
+
+        return jsonObject;
+    }
 
     //Store json string to mobile local file
     public static void storeJsonToLocal(String json, String filename, Context ctx) throws JSONException {
@@ -292,7 +356,7 @@ public class DataController {
                     HttpURLConnection conn = null;
 
                     String username = Information.authUser.getName();
-                    String userId = Information.authUser.getUserId();
+                    String userFirebaseUId = Information.authUser.getFirebaseUID();
 //                    String userId = "2";
 //                    String username = "Freddy";
 
@@ -311,12 +375,9 @@ public class DataController {
                     //List<NameValuePair> params = new ArrayList<NameValuePair>();
                     List<AbstractMap.SimpleEntry> params = new ArrayList<AbstractMap.SimpleEntry>();
 
-//                  params.add(new BasicNameValuePair("firstParam", paramValue1));
-//                  params.add(new BasicNameValuePair("secondParam", paramValue2));
-//                  params.add(new BasicNameValuePair("thirdParam", paramValue3));
                     JSONObject newJson = new JSONObject();
                     newJson.put("userName", username);
-                    newJson.put("userID", userId);
+                    newJson.put("userID", userFirebaseUId);
 
                     String message = newJson.toString();
 
@@ -370,7 +431,7 @@ public class DataController {
 
 
                 } catch (Exception e) {
-                    Log.i("FAIL222",e.toString());
+                    Log.i("SYNCHRONIZEFAIL",e.toString());
                     return null;
                 }
             }
@@ -381,6 +442,7 @@ public class DataController {
         String result="";
         try{
             result = getJSON.execute().get();
+            Log.i("SYNCHRONIZERESULT",result);
         }catch (Exception e){
 
         }
@@ -468,6 +530,8 @@ public class DataController {
                 "date:"+receipt.getDate()+
                 "totalCost:"+receipt.getTotalCost()+receipt.getTax());
 
+        Log.d("jjjjj",json.toString());
+
         JSONArray itemarray = obj.getJSONArray("items");
 
         Log.d("ITEMARRAYL:",itemarray.toString());
@@ -477,6 +541,8 @@ public class DataController {
 
             receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")));
         }
+
+        //Log.i("ITEMSssss",receipt.getItems().get(0).getItemName());
         return receipt;
     }
 
@@ -553,6 +619,7 @@ public class DataController {
         return result;
     }
 
+    //parse data from String type to Date type
     public static Date parseStringToDate(String dateInString)throws Exception{
 
 
@@ -562,5 +629,198 @@ public class DataController {
         return currentDate;
     }
 
+    //get receipt from DB by ID
+    public static Receipt getReceiptById(int id, final String urlWebService, Context ctx)throws Exception{
+        Receipt newReceipt = new Receipt();
 
+        class GetReceiptById extends AsyncTask<Void, Void, String> {
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    ////////////////////////////////////////////////////////////////////////////
+                    //Post version
+                    //creating a URL
+                    URL url = new URL(urlWebService);
+                    HttpURLConnection conn = null;
+
+                    String username = Information.authUser.getName();
+                    String userId = Information.authUser.getUserId();
+
+                    //open connection
+                    conn = (HttpURLConnection) url.openConnection();
+
+                    //set the request method to post
+                    conn.setReadTimeout(10000);
+                    conn.setConnectTimeout(15000);
+                    conn.setRequestMethod("POST");
+                    conn.setDoInput(true);
+                    conn.setDoOutput(true);
+
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("receiptID",id);
+
+
+                    //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
+                    String message = jsonObject.toString();
+
+                    Log.i("GetReceiptByIDPost",message);
+
+                    //Output the stream to the server
+                    OutputStream os = conn.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(
+                            new OutputStreamWriter(os, "UTF-8"));
+                    writer.write(message);
+                    writer.flush();
+                    writer.close();
+                    os.close();
+
+                    conn.connect();
+
+                    //StringBuilder object to read the string from the service
+                    StringBuilder sb = new StringBuilder();
+
+                    //We will use a buffered reader to read the string from service
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    //A simple string to read values from each line
+                    String json;
+
+                    //reading until we don't find null
+                    while ((json = bufferedReader.readLine()) != null) {
+                        Log.d("JSONARRAY", json);
+                        //appending it to string builder
+                        sb.append(json + "\n");
+                    }
+
+                    String jsonReturn = sb.toString().trim();
+
+                    Log.i("GetReceiptReturn", jsonReturn);
+
+                    //finally returning the read string
+                    return sb.toString().trim();
+                } catch (Exception e) {
+                    Log.i("FAIL222",e.toString());
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+        }
+
+        GetReceiptById getReceiptById = new GetReceiptById();
+        String result = "";
+        result = getReceiptById.execute().get();
+        newReceipt = parseJsonToReceiptOBJ(result);
+
+        return newReceipt;
+    }
+
+    //delete receipt from DB
+    public static void deleteReceiptFromDB(int id, final String urlWebService, Context ctx)throws Exception{
+        Receipt newReceipt = new Receipt();
+
+        class DeleteReceiptById extends AsyncTask<Void, Void, String> {
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    //Post version
+                    //creating a URL
+                    URL url = new URL(urlWebService);
+                    HttpURLConnection conn = null;
+
+                    String username = Information.authUser.getName();
+                    String userId = Information.authUser.getUserId();
+
+                    //open connection
+                    conn = (HttpURLConnection) url.openConnection();
+
+                    //set the request method to post
+                    conn.setReadTimeout(10000);
+                    conn.setConnectTimeout(15000);
+                    conn.setRequestMethod("POST");
+                    conn.setDoInput(true);
+                    conn.setDoOutput(true);
+
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("receiptID",id);
+
+
+                    //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
+                    String message = jsonObject.toString();
+
+                    Log.i("deleteReceiptByIDPost",message);
+
+                    //Output the stream to the server
+                    OutputStream os = conn.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(
+                            new OutputStreamWriter(os, "UTF-8"));
+                    writer.write(message);
+                    writer.flush();
+                    writer.close();
+                    os.close();
+
+                    conn.connect();
+
+                    //StringBuilder object to read the string from the service
+                    StringBuilder sb = new StringBuilder();
+
+                    //We will use a buffered reader to read the string from service
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    //A simple string to read values from each line
+                    String json;
+
+                    //reading until we don't find null
+                    while ((json = bufferedReader.readLine()) != null) {
+                        Log.d("JSONARRAY", json);
+                        //appending it to string builder
+                        sb.append(json + "\n");
+                    }
+
+                    String jsonReturn = sb.toString().trim();
+
+                    Log.i("GetReceiptReturn", jsonReturn);
+
+                    //finally returning the read string
+                    return sb.toString().trim();
+                } catch (Exception e) {
+                    Log.i("FAIL222",e.toString());
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+        }
+
+        DeleteReceiptById deleteReceiptById = new DeleteReceiptById();
+        String result = "";
+        result = deleteReceiptById.execute().get();
+        newReceipt = parseJsonToReceiptOBJ(result);
+    }
 }
