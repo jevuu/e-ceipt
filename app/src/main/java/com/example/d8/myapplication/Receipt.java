@@ -87,7 +87,7 @@ public class Receipt {
     public void setCategory(String category) {
         this.category = category;
     }
-    
+
     public void setUserId(String userId) {
         this.userId = userId;
     }

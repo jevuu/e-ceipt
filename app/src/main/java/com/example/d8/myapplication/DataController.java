@@ -773,7 +773,13 @@ public class DataController {
         GetReceiptById getReceiptById = new GetReceiptById();
         String result = "";
         result = getReceiptById.execute().get();
-        newReceipt = parseJsonToReceiptOBJ(result);
+
+        JSONObject jsonObject = new JSONObject(result);
+        String receiptID = jsonObject.getString("receiptID");
+
+        if(!receiptID.equals("null")){
+            newReceipt = parseJsonToReceiptOBJ(result);
+        }
 
         return newReceipt;
     }

@@ -95,4 +95,7 @@
     <string name="profile_unkCancel">Cancel</string>
     <string name="profile_conf">Confirm Changes</string>
 
+
+    <string name="update_item_btn">Update item</string>
+
 </resources>

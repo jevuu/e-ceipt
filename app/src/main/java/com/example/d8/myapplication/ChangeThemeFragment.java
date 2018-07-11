@@ -94,6 +94,7 @@ public class ChangeThemeFragment extends Fragment {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 getActivity().recreate();
 
+
                 SharedPreferences settings = getActivity().getSharedPreferences("Settings",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=settings.edit();
                 editor.putInt("Theme_DayNight",AppCompatDelegate.MODE_NIGHT_YES);

@@ -25,9 +25,11 @@ public class ReceiptDetailActivity extends AppCompatActivity {
     ListView listView;
     TextView date;
     TextView total_cost;
+    TextView businessName;
     ImageButton deleteImgBtn;
     ImageButton backToHomeBtn;
     ImageButton shareReceiptBtn;
+    ImageButton modifyImgBtn;
     String USERID = Information.authUser.getUserId();
     String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
     @Override
@@ -44,6 +46,9 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.item_list_view);
         date = (TextView)findViewById(R.id.receipt_detail_date) ;
         date.setText(Information.receipts.get(Integer.parseInt(index)).getDate());
+
+        businessName = (TextView)findViewById(R.id.business_name_in_receipt_detail);
+        businessName.setText(receipt.getBusinessName());
 
         deleteImgBtn = (ImageButton)findViewById(R.id.buttonDelete);
         deleteImgBtn.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +105,21 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        //Modify receipt
+        modifyImgBtn = (ImageButton)findViewById(R.id.buttonModify);
+        modifyImgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Start MenuActivity to get refreshed
+                Intent intent = new Intent(getBaseContext(), ModifyReceiptActivity.class);
+                intent.putExtra("RECEIPTINDEX",index);
+                startActivity(intent);
+                //Just finished this activity, and will go back to tracked previous activity.(No refresh)
+                //finish();
+            }
+        });
+
 
         backToHomeBtn = (ImageButton)findViewById(R.id.receipt_detail_back_to_home_btn);
         backToHomeBtn.setOnClickListener(new View.OnClickListener() {
