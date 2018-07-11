@@ -7,9 +7,12 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.CameraSource;
@@ -20,26 +23,27 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 
 public class BarcodeActivity extends Activity {
-    private static final String TAG = "BarcodeActivity";
+    String TAG = "BarcodeActivity";
 
-    private SurfaceView surfaceView;
-    private CameraSource cameraSource;
+    SurfaceView surfaceView;
+    CameraSource cameraSource;
+    SurfaceHolder holder;
+    BarcodeDetector barcodeDetector;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_barcode);
-
-        boolean autoFocus = true;
-
         surfaceView = (SurfaceView) findViewById(R.id.preview);
-        createCameraSource(autoFocus);
+        holder = surfaceView.getHolder();
+        createCameraSource();
     }
 
-    private void createCameraSource(boolean autoFocus) {
+    private void createCameraSource() {
         Context context = getApplicationContext();
-
-        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(context).build();
+        barcodeDetector = new BarcodeDetector.Builder(context)
+                .setBarcodeFormats(Barcode.QR_CODE)
+                .build();
 
         // Creates and starts the camera.  Note that this uses a higher resolution in comparison
         // to other detection examples to enable the text recognizer to detect small pieces of text.
@@ -48,13 +52,12 @@ public class BarcodeActivity extends Activity {
                         .setFacing(CameraSource.CAMERA_FACING_BACK)
                         .setRequestedPreviewSize(1280, 1024)
                         .setRequestedFps(2.0f)
-                        .setAutoFocusEnabled(autoFocus)
+                        .setAutoFocusEnabled(true)
                         .build();
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
-
                 try {
                     if (ActivityCompat.checkSelfPermission(BarcodeActivity.this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
@@ -70,7 +73,6 @@ public class BarcodeActivity extends Activity {
                 } catch(IOException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -94,10 +96,12 @@ public class BarcodeActivity extends Activity {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if(barcodes.size() > 0) {
+                    Log.d("Barcode", "Found QR code!");
                     Intent intent = new Intent();
                     intent.putExtra("barcode", barcodes.valueAt(0));
-                    setResult(CommonStatusCodes.SUCCESS, intent);
+                    setResult(RESULT_OK, intent);
                     finish();
+                    Log.d("Barcode", "Finished!");
                 }
             }
         });

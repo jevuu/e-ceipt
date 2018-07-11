@@ -1,5 +1,6 @@
 package com.example.d8.myapplication;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,10 +18,20 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class QRGenActivity extends AppCompatActivity {
 
+    int receiptID;      //Holds the receipt ID that will be passed in
+    String QRString;    //Holds the receipt ID as a string
     ImageView QRView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Get the receiptID passed in from ReceiptDetailActivity and convert to string
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            receiptID = extras.getInt("receiptID");
+            QRString = String.valueOf(receiptID);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrgen);
 
@@ -28,10 +39,11 @@ public class QRGenActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String text="TEXT"; // Whatever you need to encode in the QR code
+        //Build the QR code
+        //String text="TEXT"; // Whatever you need to encode in the QR code
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE,200,200);
+            BitMatrix bitMatrix = multiFormatWriter.encode(QRString, BarcodeFormat.QR_CODE,200,200);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             QRView.setImageBitmap(bitmap);
