@@ -29,6 +29,7 @@ public class BarcodeActivity extends Activity {
     CameraSource cameraSource;
     SurfaceHolder holder;
     BarcodeDetector barcodeDetector;
+    Boolean QRFound = false;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -95,11 +96,19 @@ public class BarcodeActivity extends Activity {
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-                if(barcodes.size() > 0) {
+                if(barcodes.size() > 0 && QRFound == false) {
                     Log.d("Barcode", "Found QR code!");
-                    Intent intent = new Intent();
-                    intent.putExtra("barcode", barcodes.valueAt(0));
-                    setResult(RESULT_OK, intent);
+                    //Barcode bcode = barcodes.valueAt(0);
+                    //Log.d("Barcode", bcode.displayValue);
+
+                    //int receiptID = Integer.parseInt(bcode.displayValue);
+                    //DataController.getReceiptById(receiptID, "http://myvmlab.senecacollege.ca:6207/getOneReceipt.php", )
+
+                    Intent returnReceipt = new Intent();
+                    returnReceipt.putExtra("barcode", barcodes.valueAt(0));
+                    setResult(RESULT_OK, returnReceipt);
+
+                    QRFound = true; //Prevents this function from being called twice
                     finish();
                     Log.d("Barcode", "Finished!");
                 }
