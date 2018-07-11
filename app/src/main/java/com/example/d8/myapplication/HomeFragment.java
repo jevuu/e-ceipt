@@ -57,9 +57,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     ListView listView=null;
     TextView receiptsTotalCost;
 
+
     private String daysSpinnerSelect = "All receipts";
     private String cateSpinnerSelect = "All receipts";
     ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -265,6 +267,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 for(Receipt receipt:receiptsSelect){
                         totalCost += receipt.getTotalCost();
                 }
+
                 Log.i("TOTALCOST22222", String.format("%.2f", totalCost));
                 receiptsTotalCost.setText(String.format("%.2f", totalCost));
 
@@ -291,6 +294,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 String item = parent.getItemAtPosition(position).toString();
                 cateSpinnerSelect = item;
 
+
                 double totalCost = 0.0;
                 if(item.equals("All receipts")){
                     //loadReceiptObjToListView(Information.receipts);
@@ -300,6 +304,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         totalCost += receipt.getTotalCost();
                     }
                 }
+
                 //Toast.makeText(parent.getContext(), "Android Custom Spinner Example Output..." + item, Toast.LENGTH_LONG).show();
             }
 
@@ -380,6 +385,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+
     ArrayList<Receipt> loadReceiptObjToListviewByDaysAndCate(ArrayList<Receipt> _receipts, String daysSelect, String cateSelect){
         ArrayList<Receipt> receipts = new ArrayList<Receipt>();
         if(daysSelect.equals("All receipts") && cateSelect.equals("All receipts")){
@@ -397,5 +403,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
 
         return receipts;
+
     }
 }
