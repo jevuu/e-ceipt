@@ -94,6 +94,7 @@ public class Receipt {
 
 
     public class Item{
+        public String itemID;
         public String itemName;
         public String itemDesc;
         public double itemPrice;
@@ -132,6 +133,14 @@ public class Receipt {
 
         public void setItemPrice(double itemPrice) {
             this.itemPrice = itemPrice;
+        }
+
+        public String getItemID() {
+            return itemID;
+        }
+
+        public void setItemID(String itemID) {
+            this.itemID = itemID;
         }
     }
 

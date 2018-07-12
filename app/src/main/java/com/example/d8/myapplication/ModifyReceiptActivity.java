@@ -158,6 +158,9 @@ public class ModifyReceiptActivity extends AppCompatActivity {
 
                         Information.receipts.set(Integer.parseInt(index),receipt);
 
+                        String result = DataController.toJsonObject(receipt, ModifyReceiptActivity.this).toString();
+                        Log.i("MODIFYSTR", result);
+
                         JSONArray ja=new JSONArray();
                         JSONObject j1=null;
                         try {

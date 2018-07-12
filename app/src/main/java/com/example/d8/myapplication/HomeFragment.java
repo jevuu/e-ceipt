@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
 
         getActivity().setTitle("Home");
-        //DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", getContext());
+        DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", getContext());
 
 
     }

@@ -135,6 +135,7 @@ public class DataController {
                     jsonObject.put("totalCost", totalCost);
                     jsonObject.put("tax", tax);
                     jsonObject.put("businessName", businessName);
+                    jsonObject.put("categoryID", "1");
                     //jsonObject.put("items",itemsJsonArray);
 
                     JSONArray itemsJsonArray = new JSONArray();
@@ -184,7 +185,7 @@ public class DataController {
 
                     String jsonReturn = sb.toString().trim();
 
-                    Log.i("JSONRETURN", jsonReturn);
+                    Log.i("ADDRECEIPTDBTURN", jsonReturn);
                     //storeJsonToLocal(jsonReturn, RECEIPTDATAFILE, ctx);
                     //storeJsonToLocal(jsonReturn);
 
