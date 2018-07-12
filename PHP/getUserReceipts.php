@@ -31,7 +31,7 @@ while($receipt= mysqli_fetch_row($qReceipt)){
 	//Build an array of items from the receipt
 	//Then push into the "items" array
 	$items = array();
-	$qString = "SELECT i.name, i.description, i.price
+	$qString = "SELECT i.name, i.description, i.price, i.itemID
 	FROM items i 
 	INNER JOIN receiptItems ri ON ri.itemID = i.itemID 
 	INNER JOIN receipts r ON r.receiptID = ri.receiptID 
@@ -41,10 +41,19 @@ while($receipt= mysqli_fetch_row($qReceipt)){
 		$tempItem = [
 			'itemName'	=> $receiptItem[0],
 			'itemDesc'	=> $receiptItem[1],
-			'itemPrice'	=> $receiptItem[2]
+			'itemPrice'	=> $receiptItem[2],
+			'itemID'	=> $receiptItem[3]
 		];
 		array_push($items, $tempItem);
 	}
+	
+	/*
+	// GET categoryName
+	$qCategoryString = "SELECT name FROM categories WHERE categoryID = " . $receipt[6];
+	$result = mysqli_query($conn, $qCategoryString);
+	$row = mysqli_fetch_row($result);
+	$categoryName = $row[0];
+	*/
 	
 	//Build the receipt array and push into "receipts" array
 	$tempReceipt = [

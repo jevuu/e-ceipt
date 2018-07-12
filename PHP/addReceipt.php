@@ -43,6 +43,15 @@ $row = mysqli_fetch_row($result);
 $uID = $row[0];
 //echo "User ID found: " . $uID;	
 */
+
+/*
+// GET categoryID
+$qCategoryString = "SELECT categoryID FROM categories WHERE userID = '$uID' AND name = '$categoryName' LIMIT 1";
+$result = mysqli_query($conn, $qCategoryString);
+$row = mysqli_fetch_row($result);
+$categoryID = $row[0];
+*/
+
 // INSERT RECEIPT
 $qReceiptString = "INSERT INTO receipts (`userID`, `businessName`, `creationDate`, `totalCost`, `tax`, `categoryID`) 
 	VALUES('$uID', '$businessName', '$receiptDate', " . $totalCost . ", " . $tax . ", " . $categoryID . ")";
