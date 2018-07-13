@@ -65,25 +65,19 @@ public class DataController {
                 itemJsonObject.put("itemName", receipt.getItems().get(i).getItemName());
                 itemJsonObject.put("itemDesc","");
                 itemJsonObject.put("itemPrice", Double.toString(receipt.getItems().get(i).getItemPrice()));
+                itemJsonObject.put("itemID", receipt.getItems().get(i).getItemID());
                 itemsJsonArray.put(itemJsonObject);
             }
         }
-
-        Log.i("itemsJsonArray", itemsJsonArray.toString());
-
-        //jsonObject.put("items",itemsJsonArray);
-
 
         jsonObject.put("items",itemsJsonArray);
 
         String jsonString = jsonObject.toString();
 
-        Log.i("JSONINAddReceiptForm:", jsonString);
-
         receiptsJsonArray.put(jsonObject);
 
         String jArrayString = receiptsJsonArray.toString();
-        Log.i("JArrAddReceiptForm:", jArrayString);
+        Log.i("addReceiptToLocalRES:", jArrayString);
 
         DataController.storeJsonToLocal(jArrayString, userReceiptFileName, ctx);
     }
@@ -135,7 +129,7 @@ public class DataController {
                     jsonObject.put("totalCost", totalCost);
                     jsonObject.put("tax", tax);
                     jsonObject.put("businessName", businessName);
-                    jsonObject.put("categoryID", "1");
+                    jsonObject.put("categoryName", receipt.getCategory());
                     //jsonObject.put("items",itemsJsonArray);
 
                     JSONArray itemsJsonArray = new JSONArray();
@@ -240,6 +234,7 @@ public class DataController {
         jsonObject.put("totalCost", receipt.getTotalCost());
         jsonObject.put("tax", receipt.getTax());
         jsonObject.put("businessName", receipt.getBusinessName());
+        jsonObject.put("categoryName", receipt.getCategory());
         //jsonObject.put("items",itemsJsonArray);
 
         JSONArray itemsJsonArray = new JSONArray();
@@ -250,6 +245,7 @@ public class DataController {
                 itemJsonObject.put("itemName", receipt.getItems().get(i).getItemName());
                 itemJsonObject.put("itemDesc","");
                 itemJsonObject.put("itemPrice", Double.toString(receipt.getItems().get(i).getItemPrice()));
+                itemJsonObject.put("itemID", receipt.getItems().get(i).getItemID());
                 itemsJsonArray.put(itemJsonObject);
             }
         }
@@ -476,6 +472,8 @@ public class DataController {
                 receipt.setTax(Double.parseDouble(obj.getString("tax")));
                 Log.d("RECEIPTbusiness:", obj.getString("businessName"));
                 receipt.setBusinessName(obj.getString("businessName"));
+                Log.d("RECEIPTcategory:", obj.getString("categoryName"));
+                receipt.setCategory(obj.getString("categoryName"));
 
                 Log.d("RECEIPTOBJ", "name:"+receipt.getName()+
                         "id:"+receipt.getReceipId()+
@@ -493,7 +491,7 @@ public class DataController {
                     Log.d("ITEMDECS", itemObj.getString("itemDesc"));
                     Log.d("ITEMPRICE", itemObj.getString("itemPrice"));
 
-                    receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")));
+                    receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")), itemObj.getString("itemID"));
                 }
 
                 Information.receipts.add(receipt);
@@ -526,6 +524,8 @@ public class DataController {
         Log.d("RECEIPTbusiness:", obj.getString("businessName"));
         receipt.setBusinessName(obj.getString("businessName"));
 
+        receipt.setCategory(obj.getString("categoryName"));
+
         Log.d("RECEIPTOBJ", "name:"+receipt.getName()+
                 "id:"+receipt.getReceipId()+
                 "date:"+receipt.getDate()+
@@ -540,7 +540,7 @@ public class DataController {
         for(int j=0; j<itemarray.length();j++){
             JSONObject itemObj = itemarray.getJSONObject(j);
 
-            receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")));
+            receipt.addItem(itemObj.getString("itemName"), itemObj.getString("itemDesc"), Double.parseDouble(itemObj.getString("itemPrice")),itemObj.getString("itemID"));
         }
 
         //Log.i("ITEMSssss",receipt.getItems().get(0).getItemName());
@@ -880,4 +880,144 @@ public class DataController {
         result = deleteReceiptById.execute().get();
         newReceipt = parseJsonToReceiptOBJ(result);
     }
+
+    //update receipt in DB (modify)
+     public static String modifyReceipt(Receipt receipt, final String urlWebService, Context ctx){
+         class ModifyReceiptToDB extends AsyncTask<Void, Void, String> {
+
+             @Override
+             protected String doInBackground(Void... voids) {
+                 try {
+                     ////////////////////////////////////////////////////////////////////////////
+                     //Post version
+                     //creating a URL
+                     URL url = new URL(urlWebService);
+                     HttpURLConnection conn = null;
+
+                     String username = Information.authUser.getName();
+                     String userId = Information.authUser.getUserId();
+//                    String userId = "2";
+//                    String username = "Freddy";
+
+                     //open connection
+                     conn = (HttpURLConnection) url.openConnection();
+
+                     //set the request method to post
+                     conn.setReadTimeout(10000);
+                     conn.setConnectTimeout(15000);
+                     conn.setRequestMethod("POST");
+                     conn.setDoInput(true);
+                     conn.setDoOutput(true);
+
+                     //parse data from receipt obj
+                     String date = receipt.getDate();
+                     String totalCost = Double.toString(receipt.getTotalCost());
+                     String tax = Double.toString(receipt.getTax());
+                     String businessName = receipt.getBusinessName();
+
+                     //Data in Json object
+                     //JSONArray receiptsJsonArray = new JSONArray();
+                     JSONObject jsonObject = new JSONObject();
+
+                     String userID = Information.authUser.getFirebaseUID();
+                     //jsonObject.put("name", username);
+                     jsonObject.put("userID", userID);
+                     //jsonObject.put("receiptID", "-1");
+                     jsonObject.put("date", date);
+                     jsonObject.put("totalCost", totalCost);
+                     jsonObject.put("tax", tax);
+                     jsonObject.put("businessName", businessName);
+                     jsonObject.put("categoryName", receipt.getCategory());
+                     jsonObject.put("receiptID", receipt.getReceipId());
+                     //jsonObject.put("items",itemsJsonArray);
+
+                     JSONArray itemsJsonArray = new JSONArray();
+                     if(!receipt.getItems().isEmpty()){
+                         //itemsJsonArray.put(itemJsonObject);
+                         for(int i=0; i<receipt.getItems().size();i++){
+                             JSONObject itemJsonObject = new JSONObject();
+                             itemJsonObject.put("itemName", receipt.getItems().get(i).getItemName());
+                             itemJsonObject.put("itemDesc","");
+                             itemJsonObject.put("itemPrice", Double.toString(receipt.getItems().get(i).getItemPrice()));
+                             itemJsonObject.put("itemID", receipt.getItems().get(i).getItemID());
+                             itemsJsonArray.put(itemJsonObject);
+                         }
+                     }
+
+                     jsonObject.put("items",itemsJsonArray);
+
+                     //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
+                     String message = jsonObject.toString();
+
+                     Log.i("ModifyReceiptTPOST",message);
+
+                     //Output the stream to the server
+                     OutputStream os = conn.getOutputStream();
+                     BufferedWriter writer = new BufferedWriter(
+                             new OutputStreamWriter(os, "UTF-8"));
+                     writer.write(message);
+                     writer.flush();
+                     writer.close();
+                     os.close();
+
+                     conn.connect();
+
+                     //StringBuilder object to read the string from the service
+                     StringBuilder sb = new StringBuilder();
+
+                     //We will use a buffered reader to read the string from service
+                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                     //A simple string to read values from each line
+                     String json;
+
+                     //reading until we don't find null
+                     while ((json = bufferedReader.readLine()) != null) {
+                         Log.d("JSONARRAY", json);
+                         //appending it to string builder
+                         sb.append(json + "\n");
+                     }
+
+                     String jsonReturn = sb.toString().trim();
+
+                     //storeJsonToLocal(jsonReturn, RECEIPTDATAFILE, ctx);
+                     //storeJsonToLocal(jsonReturn);
+
+                     //finally returning the read string
+                     return sb.toString().trim();
+
+                     ////////////////////////////////////////////////////////////////////////////
+
+                 } catch (Exception e) {
+                     Log.i("FAIL222",e.toString());
+                     return null;
+                 }
+             }
+
+             @Override
+             protected void onPreExecute() {
+                 super.onPreExecute();
+             }
+
+             @Override
+             protected void onPostExecute(String s) {
+                 super.onPostExecute(s);
+             }
+
+             @Override
+             protected void onProgressUpdate(Void... values) {
+                 super.onProgressUpdate(values);
+             }
+         }
+         //creating asynctask object and executing it
+         ModifyReceiptToDB modifyReceiptToDB = new ModifyReceiptToDB();
+         String result="";
+         try{
+             result = modifyReceiptToDB.execute().get();
+             Log.i("MODIFYRESULT", result);
+         }catch (Exception e){
+
+         }
+
+         return result;
+     }
 }

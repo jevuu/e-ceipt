@@ -26,6 +26,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
     TextView date;
     TextView total_cost;
     TextView businessName;
+    TextView category;
     ImageButton deleteImgBtn;
 
     ImageButton backToHomeBtn;
@@ -45,7 +46,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         Receipt receipt = Information.receipts.get(Integer.parseInt(index));
 
         String receiptIDStr_ = receipt.getReceipId();
-
+        Log.i("receiptITEMAAAA:" , receipt.getItems().get(0).getItemID());
 
         listView = (ListView)findViewById(R.id.item_list_view);
         date = (TextView)findViewById(R.id.receipt_detail_date) ;
@@ -53,6 +54,9 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 
         businessName = (TextView)findViewById(R.id.business_name_in_receipt_detail);
         businessName.setText(receipt.getBusinessName());
+
+        category = (TextView)findViewById(R.id.category_in_receipt_detail);
+        category.setText("-  "+receipt.getCategory()+"  -");
 
         deleteImgBtn = (ImageButton)findViewById(R.id.buttonDelete);
         deleteImgBtn.setOnClickListener(new View.OnClickListener() {

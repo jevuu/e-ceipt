@@ -79,8 +79,8 @@ public class Receipt {
         this.items = items;
     }
 
-    public void addItem(String itemName, String itemDesc, double itemPrice){
-        Item item = new Item(itemName, itemDesc, itemPrice);
+    public void addItem(String itemName, String itemDesc, double itemPrice, String itemID){
+        Item item = new Item(itemName, itemDesc, itemPrice, itemID);
         items.add(item);
     }
 
@@ -99,7 +99,8 @@ public class Receipt {
         public String itemDesc;
         public double itemPrice;
 
-        public Item(String itemName, String itemDesc, double itemPrice) {
+        public Item(String itemName, String itemDesc, double itemPrice, String itemID) {
+            this.itemID = itemID;
             this.itemName = itemName;
             this.itemDesc = itemDesc;
             this.itemPrice = itemPrice;
