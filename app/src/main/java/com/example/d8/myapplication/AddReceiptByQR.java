@@ -19,6 +19,7 @@ public class AddReceiptByQR extends AppCompatActivity {
     TextView date;
     TextView total_cost;
     TextView businessName;
+
     Button submitBtn;
     String USERID = Information.authUser.getUserId();
     String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
@@ -30,6 +31,7 @@ public class AddReceiptByQR extends AppCompatActivity {
         setContentView(R.layout.activity_add_receipt_by_qr);
 
         String receiptIdStr = getIntent().getStringExtra("RECEIPTID_");
+
 
             try{
                 receipt = DataController.getReceiptById(Integer.parseInt(receiptIdStr),"http://myvmlab.senecacollege.ca:6207/getOneReceipt.php",AddReceiptByQR.this);
@@ -69,7 +71,6 @@ public class AddReceiptByQR extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-
 
     }
 
