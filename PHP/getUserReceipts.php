@@ -12,7 +12,7 @@ $receipts = array();
 
 //Get all receipts from userName
 //$qString = "SELECT u.name, r.receiptID, r.creationDate, r.totalCost, r.tax, r.businessID 
-$qString = "SELECT u.userID, r.receiptID, r.creationDate, r.totalCost, r.tax, r.businessName, r.categoryID 
+$qString = "SELECT u.userID, r.receiptID, r.creationDate, r.totalCost, r.tax, r.businessName, r.categoryName 
 FROM users u 
 INNER JOIN receipts r ON r.userID = u.userID 
 WHERE u.userID= '$userID'" ;
@@ -65,7 +65,7 @@ while($receipt= mysqli_fetch_row($qReceipt)){
 		'items'			=> $items,
 		//'businessName'	=> $businessName->name	//Not used as business is stored in receipt now
 		'businessName'	=> $receipt[5],
-		'categoryID'	=> $receipt[6]
+		'categoryName'	=> $receipt[6]
 	];
 	array_push($receipts, $tempReceipt);
 }

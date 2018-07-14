@@ -12,7 +12,7 @@ $totalCost 		= $obj->{'totalCost'};
 $tax 			= $obj->{'tax'};
 $businessName 	= $obj->{'businessName'};
 $items 			= $obj->{'items'};
-$categoryID		= $obj->{'categoryID'};
+$categoryName	= $obj->{'categoryName'};
 
 //Update Receipt
 //Test to see data before change
@@ -21,7 +21,7 @@ $result = mysqli_query($conn, $q);
 $row = mysqli_fetch_row($result);
 echo "Receipt before: " . $row[0] . ", " . $row[1] . ", " . $row[2] . ", " . $row[3] . ", " . $row[4] . ", " . $row[5] . ", " . $row[6] . ", " . $row[7] . "\n";
 
-$qReceiptString = "UPDATE receipts SET creationDate = '$receiptDate', businessName = '$businessName', totalCost = " . $totalCost . ", tax = " . $tax . ", categoryID = " . $categoryID . "
+$qReceiptString = "UPDATE receipts SET creationDate = '$receiptDate', businessName = '$businessName', totalCost = " . $totalCost . ", tax = " . $tax . ", categoryName = '$categoryName'
 WHERE receiptID = " . $receiptID;
 mysqli_query($conn, $qReceiptString);
 
