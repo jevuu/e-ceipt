@@ -227,19 +227,31 @@ public class OCRTextActivity extends AppCompatActivity {
             match = current.matcher(t);
             if(match.find()){
                 try {
-                    double tx = Double.parseDouble(match.group());
+                    double tVal = Double.parseDouble(match.group());
                     t = t.trim().replaceAll("\\d+\\.\\d+","");
                     t = t.replaceAll("\\$", "");
                     t = t.replaceAll("( +)"," ");
 
 
-                    nx.addItem(t,"",tx);
+                    //Debug
+                    t = "total";
+                    tVal = 4.00;
+                    if(t.contains("total") || t.contains("tax")) {
+                        if (distance(t, "total") <= 2) {
+                            nx.setTotalCost(tVal);
+                        }else if(distance(t, "tax") <= 2){
+                            nx.setTax(tVal);
+                        }
+
+                    }else {
+                        nx.addItem(t, "", tVal);
+                    }
                 }catch(Exception e){
                     System.out.println("\n\n**Error in parseItems!\n\n");
                 }
             }
         }
-        
+
 
 
 
