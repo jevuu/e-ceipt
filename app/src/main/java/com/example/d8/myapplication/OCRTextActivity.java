@@ -234,17 +234,11 @@ public class OCRTextActivity extends AppCompatActivity {
                     t = t.replaceAll("( +)"," ");
 
 
-                    //Debug
-                    t = "total";
-                    tVal = 4.00;
-                    if(t.contains("total") || t.contains("tax")) {
-                        if (distance(t, "total") <= 2) {
+                        if (distance(t, "total") <= 2 || t.contains("total")) {
                             nx.setTotalCost(tVal);
-                        }else if(distance(t, "tax") <= 2){
+                        }else if(distance(t, "tax") <= 2 || t.contains("tax")){
                             nx.setTax(tVal);
-                        }
-
-                    }else {
+                        }else {
                         nx.addItem(t, "", tVal);
                     }
                 }catch(Exception e){
