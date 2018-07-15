@@ -37,6 +37,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //Initial Class for Textual Activity Reading
 //This class handles the primary bulk of text OCR
@@ -206,18 +208,44 @@ public class OCRTextActivity extends AppCompatActivity {
         }
 
         sweepItems();
-        parseItems();
+        Receipt nx = new Receipt();
+        parseItems(nx);
         System.out.print("\n\nDone!\n\n");
 
     }
 
     //Todo
     //This function takes the raw items and attempts to turn them into objects. These objects are then verified or in simple mode tossed(trys only to find the total)
-    private void parseItems() {
+    private void parseItems(Receipt nx) {
+
+
+        Pattern current = Pattern.compile("\\d+\\.\\d+");
+        Matcher match;
+
+        //Extract Item value from item and add both as an item
+        for(String t: itemsRaw){
+            match = current.matcher(t);
+            if(match.find()){
+                try {
+                    double tx = Double.parseDouble(match.group());
+                    t = t.trim().replaceAll("\\d+\\.\\d+","");
+                    t = t.replaceAll("\\$", "");
+                    t = t.replaceAll("( +)"," ");
+
+
+                    nx.addItem(t,"",tx);
+                }catch(Exception e){
+                    System.out.println("\n\n**Error in parseItems!\n\n");
+                }
+            }
+        }
+        
 
 
 
+        //Find total
 
+        //Place into receipt
 
 
     }
