@@ -15,7 +15,7 @@
         tools:context="com.example.d8.myapplication.ReceiptDetailActivity">
 
         <ImageView
-            android:id="@+id/business_logo"
+            android:id="@+id/add_receipt_business_logo"
             android:layout_width="220dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
@@ -40,7 +40,7 @@
                 android:background="@android:color/holo_blue_dark" />
 
             <LinearLayout
-                android:id="@+id/layout_item_list"
+                android:id="@+id/add_receipt_layout_item_list"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
@@ -71,7 +71,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/receipt_detail_date"
+                        android:id="@+id/add_receipt_receipt_detail_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -121,7 +121,7 @@
                 </LinearLayout>
 
                 <ListView
-                    android:id="@+id/item_list_view"
+                    android:id="@+id/add_receipt_item_list_view"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight=".40"
@@ -151,7 +151,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/total_cost"
+                        android:id="@+id/add_receipt_total_cost"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
@@ -184,48 +184,61 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingBottom="16dp"
             android:paddingTop="16dp">
 
 
-            <ImageButton
-                android:id="@+id/receipt_detail_back_to_home_btn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/home_round2" />
+            <Button
+                android:id="@+id/add_receipt_qr_btn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:background="@drawable/btn_roundcorner"
+                android:text="OK"
+                android:textColor="@color/colorEceiptWhite"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!--<ImageButton-->
+                <!--android:id="@+id/receipt_detail_back_to_home_btn"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--android:scaleType="centerInside"-->
+                <!--app:srcCompat="@drawable/home_round2" />-->
 
 
+            <!--<ImageButton-->
+                <!--android:id="@+id/imageButton2"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--android:scaleType="centerInside"-->
+                <!--app:srcCompat="@drawable/circle_edit" />-->
 
-            <ImageButton
-                android:id="@+id/imageButton1"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/circle_edit" />
+            <!--<ImageButton-->
+                <!--android:id="@+id/buttonDelete"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--android:scaleType="centerInside"-->
+                <!--app:srcCompat="@drawable/delete_btn" />-->
 
-            <ImageButton
-                android:id="@+id/buttonDelete"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/delete_btn" />
-
-            <ImageButton
-                android:id="@+id/receipt_detail_share_btn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/share_logo" />
+            <!--<ImageButton-->
+                <!--android:id="@+id/receipt_detail_share_btn"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--android:scaleType="centerInside"-->
+                <!--app:srcCompat="@drawable/share_logo" />-->
         </LinearLayout>
 
 

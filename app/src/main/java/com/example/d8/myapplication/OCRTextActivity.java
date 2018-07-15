@@ -205,6 +205,7 @@ public class OCRTextActivity extends AppCompatActivity {
 
         for(String t: itemsRaw){
             System.out.println(t);
+
         }
 
         sweepItems();
@@ -313,7 +314,6 @@ public class OCRTextActivity extends AppCompatActivity {
         for(String t : itemsRaw){
             System.out.println(t);
         }
-
 
     }
 
