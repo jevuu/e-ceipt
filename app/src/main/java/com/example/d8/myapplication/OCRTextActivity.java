@@ -25,6 +25,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +54,7 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
     Button ocr_del;
     Button ocr_scn;
     Button ocr_fin;
-
+    ProgressBar pb;
 
     TextView ocr_instLow;
     TextView ocr_itemName;
@@ -94,6 +95,7 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
         nx.setUserId(Information.authUser.getFirebaseUID());
         nx.setTax(0.00);
 
+        pb = (ProgressBar) findViewById(R.id.progressBar);
 
         ocr_instLow = (TextView) findViewById(R.id.ocr_instruc2);
         itemsRaw = new ArrayList<>();
@@ -118,10 +120,12 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 displayItem();
                 System.out.println(itemItr);
+                updatePb();
+
                 break;
             case R.id.ocr_deleteItem:
 
-
+                updatePb();
                   break;
             case R.id.ocr_fwdItem:
                 if(itemItr >= -1 && itemItr < nx.getItems().size()){
@@ -138,6 +142,7 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                     ocr_itemName.setTextColor(getResources().getColor(R.color.colorEceiptWhite));
                     ocr_itemPrice.setTextColor(getResources().getColor(R.color.colorEceiptWhite));
                 }
+                updatePb();
                 displayItem();
                 System.out.println(itemItr);
                 break;
@@ -155,6 +160,17 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
 
 
 
+    }
+
+    private void updatePb() {
+        pb.setMax(nx.getItems().size());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            System.out.println("Iterator " + (itemItr + 2)/nx.getItems().size());
+            pb.setProgress(itemItr + 2/nx.getItems().size(),true);
+        }else{
+            pb.setProgress(itemItr/nx.getItems().size());
+        }
     }
 
     //This function sets the item display box to the itemItr's position with get() if available
@@ -371,7 +387,7 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
         ocr_itemName.setText("Total");
         ocr_itemName.setTextColor(getResources().getColor(R.color.colorEceiptOrange));
         ocr_itemPrice.setText(String.valueOf(nx.getTotalCost()));
-
+        pb.setIndeterminate(false);
         itemItr = -1;
 
     }
