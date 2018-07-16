@@ -14,5 +14,7 @@ public class Information {
     public static authUser authUser;
     public static Receipt receipt = new Receipt();
 
+    public static ArrayList<String> categories = new ArrayList<String>();
+
     //public static User user = new User();
 }

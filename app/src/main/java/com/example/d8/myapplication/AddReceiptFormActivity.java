@@ -2,21 +2,30 @@ package com.example.d8.myapplication;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.icu.text.IDNA;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -34,6 +43,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -48,6 +58,10 @@ public class AddReceiptFormActivity extends AppCompatActivity {
     EditText itemPrice;
     ArrayList<Receipt.Item>newItems = new ArrayList<Receipt.Item>();
     ListView listView;
+    String category = "No category";
+    String temp = "";
+
+    ArrayList<String> resourceCate = new ArrayList<String>();
 
     String USERID = Information.authUser.getUserId();
     String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
@@ -67,6 +81,8 @@ public class AddReceiptFormActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.add_item_listview);
 
         String cDateInString = getCurrentDate();
+
+        initCustomSpinner();
 
         receiptDate.setText(cDateInString);
 
@@ -123,7 +139,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
                 String itemdesc = "";
 
-                Receipt.Item item = new Receipt().new Item(itemname,itemdesc,itemprice);
+                Receipt.Item item = new Receipt().new Item(itemname,itemdesc,itemprice, "-1");
                 newItems.add(item);
                 loadItemObjToListview(newItems);
 
@@ -171,6 +187,13 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                                 dialog.dismiss();
                             }
                         });
+
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancle", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
                 alertDialog.show();
             }
         });
@@ -204,6 +227,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                         jsonObject.put("totalCost", tCost);
                         jsonObject.put("tax", tax);
                         jsonObject.put("businessName", company);
+                        jsonObject.put("categoryName", category);
 
                         JSONArray itemsJsonArray = new JSONArray();
                         if(!newItems.isEmpty()){
@@ -213,6 +237,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                                 itemJsonObject.put("itemName", newItems.get(i).getItemName());
                                 itemJsonObject.put("itemDesc","");
                                 itemJsonObject.put("itemPrice", Double.toString(newItems.get(i).getItemPrice()));
+                                itemJsonObject.put("itemID", newItems.get(i).getItemID());
                                 itemsJsonArray.put(itemJsonObject);
                             }
                         }
@@ -224,7 +249,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                         //Toast.makeText(getApplicationContext(),jsonObject.toString(),Toast.LENGTH_LONG).show();
                         String jsonString = jsonObject.toString();
 
-                        Log.i("JAAAAASON", jsonString);
+                        Log.i("AddReceiptFormResult", jsonString);
                         Log.e("USERNAME", username);
 
                         //test addReceiptToLocal and parseJsonToReceiptOBJ in Information class:
@@ -239,6 +264,8 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                         DataController.addReceiptToLocal(USERID, receipt,AddReceiptFormActivity.this);
 
                         DataController.addReceiptToDB(receipt,"http://myvmlab.senecacollege.ca:6207/addReceipt.php",AddReceiptFormActivity.this);
+
+                        DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", AddReceiptFormActivity.this);
 //                        Log.i("JSONINAddReceiptForm:", jsonString);
 //
 //                        receiptsJsonArray.put(jsonObject);
@@ -385,6 +412,133 @@ public class AddReceiptFormActivity extends AppCompatActivity {
             ArrayAdapter<String> arrayAdapterEmpty = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, emptyString);
             listView.setAdapter(arrayAdapterEmpty);
             Log.i("NORECEIPT!","true");
+        }
+    }
+
+
+    private void initCustomSpinner() {
+        //Set spinner for day number select
+        Spinner spinnerCate = (Spinner) findViewById(R.id.add_receipt_form_categories_spinner);
+
+        resourceCate.clear();
+        for(int i=0; i<Information.categories.size(); i++){
+            resourceCate.add(Information.categories.get(i));
+        }
+        resourceCate.set(0,"Select a category");
+        resourceCate.add("  New category");
+
+
+        CustomSpinnerAdapter customSpinnerAdapterDay=new CustomSpinnerAdapter(AddReceiptFormActivity.this,resourceCate);
+        spinnerCate.setAdapter(customSpinnerAdapterDay);
+
+        spinnerCate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position == 0){
+                    category = "No category";
+                }else if(position == resourceCate.size()-1){
+//                    Toast.makeText(getBaseContext(), "Add New Category", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddReceiptFormActivity.this);
+                    builder.setTitle("New category");
+                    builder.setMessage("Enter new category name:");
+
+// Set up the input
+                    final EditText input = new EditText(AddReceiptFormActivity.this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+
+// Set up the buttons
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            temp = input.getText().toString();
+                            temp = temp.substring(0,1).toUpperCase()+temp.substring(1).toLowerCase();
+                            temp = temp.trim();
+                            resourceCate.remove(resourceCate.size()-1);
+                            resourceCate.add("  " + temp);
+                            resourceCate.add("  New category");
+
+                            CustomSpinnerAdapter customSpinnerAdapterDay=new CustomSpinnerAdapter(AddReceiptFormActivity.this,resourceCate);
+                            spinnerCate.setAdapter(customSpinnerAdapterDay);
+                            spinnerCate.setSelection(resourceCate.size()-2);
+
+                            category = temp.trim();
+
+                            Log.i("NEWCATEGORY:",temp);
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    builder.show();
+                }else{
+                    String item = parent.getItemAtPosition(position).toString();
+                    Log.i("ITEMSAaaaaa", item);
+                    Toast.makeText(getBaseContext(), "selected " + item, Toast.LENGTH_LONG).show();
+                    category = item.trim();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+    }
+
+    public class CustomSpinnerAdapter extends BaseAdapter implements SpinnerAdapter {
+        private final Context activity;
+        private ArrayList<String> asr;
+
+        public CustomSpinnerAdapter(Context context,ArrayList<String> asr) {
+            this.asr=asr;
+            activity = context;
+        }
+
+        public int getCount()
+        {
+            return asr.size();
+        }
+
+        public Object getItem(int i)
+        {
+            return asr.get(i);
+        }
+
+        public long getItemId(int i)
+        {
+            return (long)i;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            TextView txt = new TextView(AddReceiptFormActivity.this);
+            txt.setPadding(16, 16, 16, 16);
+            txt.setTextSize(18);
+            txt.setGravity(Gravity.LEFT);
+            txt.setText(asr.get(position));
+            txt.setTextColor(Color.parseColor("#000000"));
+            return  txt;
+        }
+
+        public View getView(int i, View view, ViewGroup viewgroup) {
+            TextView txt = new TextView(AddReceiptFormActivity.this);
+            txt.setGravity(Gravity.CENTER);
+            txt.setPadding(16, 16, 16, 16);
+            txt.setTextSize(16);
+            //txt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down, 0);
+            txt.setText(asr.get(i));
+            txt.setTextColor(Color.parseColor("#000000"));
+            return  txt;
         }
     }
 

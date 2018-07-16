@@ -14,17 +14,38 @@
         android:orientation="vertical"
         tools:context="com.example.d8.myapplication.ReceiptDetailActivity">
 
-        <ImageView
-            android:id="@+id/business_logo"
-            android:layout_width="220dp"
-            android:layout_height="60dp"
+        <!--<ImageView-->
+            <!--android:id="@+id/business_logo"-->
+            <!--android:layout_width="220dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginTop="22dp"-->
+            <!--android:layout_marginBottom="12dp"-->
+            <!--android:scaleType="centerInside"-->
+            <!--app:srcCompat="@drawable/walmart_logo"-->
+            <!--tools:layout_editor_absoluteX="151dp"-->
+            <!--tools:layout_editor_absoluteY="88dp" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/business_name_in_receipt_detail"
+            android:text="BusinessName"
+            android:textSize="38sp"
             android:layout_gravity="center"
-            android:layout_marginTop="22dp"
-            android:layout_marginBottom="12dp"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/walmart_logo"
-            tools:layout_editor_absoluteX="151dp"
-            tools:layout_editor_absoluteY="88dp" />
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="1dp"
+            android:paddingBottom="0dp"/>
+
+        <TextView
+            android:id="@+id/category_in_receipt_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="22sp"
+            android:layout_marginBottom="19dp"
+            android:layout_marginTop="1dp"
+            android:text="Category" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -201,7 +222,7 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton1"
+                android:id="@+id/buttonModify"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"

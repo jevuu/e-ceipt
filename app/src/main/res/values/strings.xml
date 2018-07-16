@@ -106,4 +106,7 @@
     <string name="ocr_complete">Finish</string>
 
 
+
+    <string name="update_item_btn">Update item</string>
+
 </resources>
