@@ -63,7 +63,7 @@
     <string name="item_price_input_hint">Item price</string>
     <string name="item_name_input_hint">Item name</string>
     <string name="receipt_date_input_hint">Enter receipt creation date</string>
-    <string name="business_name_input_hint">Please enter receipt's business name</string>
+    <string name="business_name_input_hint">Please enter receipt\'s business name</string>
 
 
     <!-- home layout -->

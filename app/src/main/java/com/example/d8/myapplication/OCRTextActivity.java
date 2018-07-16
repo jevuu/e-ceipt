@@ -56,11 +56,17 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
 
 
     TextView ocr_instLow;
+    TextView ocr_itemName;
+    TextView ocr_itemPrice;
 
 
     ArrayList<String> itemsRaw;
     Receipt nx = new Receipt();
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
+
+    //Iterator for items list
+    int itemItr = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +93,13 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
 
         nx.setUserId(Information.authUser.getFirebaseUID());
         nx.setTax(0.00);
+
+
         ocr_instLow = (TextView) findViewById(R.id.ocr_instruc2);
         itemsRaw = new ArrayList<>();
 
+        ocr_itemName = (TextView) findViewById(R.id.ocr_itemName);
+        ocr_itemPrice = (TextView) findViewById(R.id.ocr_itemPrice);
     }
 
     //Button override, executes whats needed
@@ -97,12 +107,43 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ocr_backItem:
+
+                if(itemItr > -1){
+                itemItr--;
+                }
+                if(itemItr <= -1 ){
+                    itemItr = -1; //Protective
+                    ocr_itemName.setTextColor(getResources().getColor(R.color.colorEceiptOrange));
+                    ocr_itemPrice.setTextColor(getResources().getColor(R.color.colorEceiptOrange));
+                }
+                displayItem();
+                System.out.println(itemItr);
                 break;
             case R.id.ocr_deleteItem:
+
+
                   break;
             case R.id.ocr_fwdItem:
+                if(itemItr >= -1 && itemItr < nx.getItems().size()){
+                    itemItr++;
+                }
+                if(itemItr <= -1 ){
+                    itemItr = -1; //Protective
+
+                    //Makes text orange
+                    ocr_itemName.setTextColor(getResources().getColor(R.color.colorEceiptOrange));
+                    ocr_itemPrice.setTextColor(getResources().getColor(R.color.colorEceiptOrange));
+                }else{
+                    //Makes text white
+                    ocr_itemName.setTextColor(getResources().getColor(R.color.colorEceiptWhite));
+                    ocr_itemPrice.setTextColor(getResources().getColor(R.color.colorEceiptWhite));
+                }
+                displayItem();
+                System.out.println(itemItr);
                 break;
             case R.id.ocr_finish:
+
+
                 break;
             case R.id.ocr_executePhoto:
                takePhoto();
@@ -115,6 +156,24 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
 
 
     }
+
+    //This function sets the item display box to the itemItr's position with get() if available
+    private void displayItem() {
+
+        if(itemItr == -1){
+            ocr_itemPrice.setText(String.valueOf(nx.getTotalCost()));
+            ocr_itemName.setText("Total");
+        }else{
+            try{
+                ocr_itemPrice.setText(String.valueOf(nx.getItembyId(itemItr).itemPrice));
+                ocr_itemName.setText(nx.getItembyId(itemItr).itemName);
+            }catch(Exception e){
+                //...//
+            }
+
+        }
+    }
+
     //==================== Get User Photo/Camera =======================//
    //This function executes a valid bitmap intent from the camera.
     private void takePhoto() {
@@ -278,9 +337,9 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                     t = t.replaceAll("( +)"," ");
 
 
-                        if (distance(t, "total") <= 2 || t.contains("total")) {
+                        if (distance(t.toLowerCase(), "total") <= 3 || t.toLowerCase().contains("total")) {
                             nx.setTotalCost(tVal);
-                        }else if(distance(t, "tax") <= 2 || t.contains("tax")){
+                        }else if(distance(t.toLowerCase(), "tax") <= 2 || t.toLowerCase().contains("tax")){
                             nx.setTax(tVal);
                         }else {
                         nx.addItem(t, "", tVal);
@@ -301,13 +360,19 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
     //This function displays the selection buttons and renders the 1st item to the item list
     //TODO
     private void renderItems() {
-        ocr_instLow.setText("By Clicking Finish, all items will be added in their current state. You can also remove/add items at the next step if desired.");
+        ocr_instLow.setText("By Clicking Finish, all items will be added in their current state. You can also remove/add items at the next step if you like.");
         ocr_fin.setVisibility(View.VISIBLE);
+        ocr_scn.setVisibility(View.GONE);
         ocr_fin.setEnabled(true);
         ocr_fwd.setEnabled(true);
         ocr_bak.setEnabled(true);
         ocr_del.setEnabled(true);
 
+        ocr_itemName.setText("Total");
+        ocr_itemName.setTextColor(getResources().getColor(R.color.colorEceiptOrange));
+        ocr_itemPrice.setText(String.valueOf(nx.getTotalCost()));
+
+        itemItr = -1;
 
     }
 

@@ -14,6 +14,9 @@ public class Receipt {
     private ArrayList<Item> items = new ArrayList<Item>();
 
     //getter
+    public Item getItembyId(int id){
+        return items.get(id);
+    }
     public String getReceipId() {
         return receipId;
     }
