@@ -54,7 +54,9 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
     Button ocr_scn;
     Button ocr_fin;
 
-    TextView txt_mul;
+
+    TextView ocr_instLow;
+
 
     ArrayList<String> itemsRaw;
     Receipt nx = new Receipt();
@@ -78,10 +80,14 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
         ocr_fin = (Button) findViewById(R.id.ocr_finish);
         ocr_fin.setOnClickListener(this);
         ocr_fin.setEnabled(false);
+        ocr_fin.setVisibility(View.GONE);
+
         ocr_scn = (Button) findViewById(R.id.ocr_executePhoto);
         ocr_scn.setOnClickListener(this);
 
-
+        nx.setUserId(Information.authUser.getFirebaseUID());
+        nx.setTax(0.00);
+        ocr_instLow = (TextView) findViewById(R.id.ocr_instruc2);
         itemsRaw = new ArrayList<>();
 
     }
@@ -295,6 +301,13 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
     //This function displays the selection buttons and renders the 1st item to the item list
     //TODO
     private void renderItems() {
+        ocr_instLow.setText("By Clicking Finish, all items will be added in their current state. You can also remove/add items at the next step if desired.");
+        ocr_fin.setVisibility(View.VISIBLE);
+        ocr_fin.setEnabled(true);
+        ocr_fwd.setEnabled(true);
+        ocr_bak.setEnabled(true);
+        ocr_del.setEnabled(true);
+
 
     }
 

@@ -108,7 +108,7 @@
     <string name="ocr_scanInst">Press Scan Receipt To Get Started</string>
     <string name="ocr_tip1">Take a Clear Photo with lots of light</string>
     <string name="ocr_tip2">Photo only the items and costs for best results. Hide any unneeded text. </string>
-    <string name="ocr_tip3">Receipt Scanning has <b>limited accuracy</b>.      You can edit your results or retake the photo as needed.</string>
+    <string name="ocr_tip3">Receipt Scanning has <b>limited accuracy</b>. You can correct your results/add missing information as needed.</string>
 
 
 </resources>
