@@ -57,7 +57,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
-        android:layout_marginBottom="4dp"
         android:orientation="vertical"
         android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -80,7 +79,7 @@
         <ImageView
             android:id="@+id/ocr_instrucPic"
             android:layout_width="match_parent"
-            android:layout_height="152dp"
+            android:layout_height="120dp"
             app:srcCompat="@drawable/receiptsnap_logo" />
 
         <LinearLayout
@@ -90,7 +89,7 @@
             android:padding="2dp">
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/ocr_itemName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -102,10 +101,10 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/ocr_itemPrice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:textAlignment="center"
@@ -113,6 +112,17 @@
                 android:textStyle="bold"
                 tools:hint="@string/ocr_itmPrice" />
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@android:color/black"
+            android:max="100"
+            tools:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -123,21 +133,36 @@
                 android:id="@+id/ocr_backItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
-                android:background="@android:color/holo_red_light"
+                android:background="@android:color/holo_orange_light"
+                android:drawableBottom="@android:drawable/ic_media_rew"
                 android:text="@string/ocr_backItemtxt"
                 android:textColor="@color/colorEceiptWhite"
                 android:textStyle="bold"
                 android:theme="?attr/buttonStyleSmall" />
 
             <Button
+                android:id="@+id/ocr_deleteItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_red_light"
+                android:drawableBottom="@android:drawable/ic_delete"
+                android:text="@string/ocr_deleteItem"
+                android:textAlignment="center"
+                android:textColor="@color/colorEceiptWhite"
+                android:textStyle="bold" />
+
+            <Button
                 android:id="@+id/ocr_fwdItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:background="@color/colorEceiptLightBlue"
+                android:drawableBottom="@android:drawable/ic_media_ff"
                 android:text="@string/ocr_fwdItemtxt"
                 android:textColor="@color/colorEceiptWhite"
                 android:textStyle="bold" />
@@ -145,12 +170,13 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/ocr_acceptItem"
+            android:id="@+id/ocr_finish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@android:color/holo_green_light"
+            android:drawableStart="@android:drawable/ic_menu_save"
             android:text="@string/ocr_complete"
             android:textColor="@color/colorEceiptWhite" />
 
@@ -158,12 +184,14 @@
             android:id="@+id/ocr_executePhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorEceiptOrange"
-            android:text="Button"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_roundcorner"
+            android:drawableStart="@drawable/ic_main_logo"
+            android:paddingStart="8dp"
+            android:text="@string/ocr_TakePhoto"
             android:textColor="@color/colorEceiptWhite"
             android:textSize="14sp"
-            android:textStyle="bold"
-            tools:text="@string/ocr_TakePhoto" />
+            android:textStyle="bold" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -104,6 +104,7 @@
     <string name="ocr_instrucTips">1.Make sure the photo displays text clearly!\n2.For best results, only  capture the item text!\n    - Ignore Ads or Promotions(see Picture)\n3.Keep your phone in Portrait Mode\n</string>
     <string name="ocr_TakePhoto">Scan Receipt</string>
     <string name="ocr_complete">Finish</string>
+    <string name="ocr_deleteItem">Delete Item</string>
 
 
 </resources>

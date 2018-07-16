@@ -22,6 +22,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,24 +45,64 @@ import java.util.regex.Pattern;
 //Initial Class for Textual Activity Reading
 //This class handles the primary bulk of text OCR
 //Last Modifcation: 7/10/2018
-public class OCRTextActivity extends AppCompatActivity {
-  //  TextView txt_add;
+public class OCRTextActivity extends AppCompatActivity implements View.OnClickListener {
     Bitmap ocrAble;
-   // ImageView imgrecv;
     String imagePath = "";
- //   TextView txt_ocr;
+    Button ocr_fwd;
+    Button ocr_bak;
+    Button ocr_del;
+    Button ocr_scn;
+    Button ocr_fin;
+
+    TextView txt_mul;
+
     ArrayList<String> itemsRaw;
+    Receipt nx = new Receipt();
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocrtext);
-      //  txt_add = (TextView) findViewById(R.id.edtErr);
-     //   txt_ocr = (TextView) findViewById(R.id.ocr_recvText);
-       //imgrecv = (ImageView) findViewById(R.id.ocr_pic);
+
+        //Set button listners
+        ocr_bak = (Button) findViewById(R.id.ocr_backItem);
+        ocr_bak.setOnClickListener(this);
+        ocr_del = (Button) findViewById(R.id.ocr_deleteItem);
+        ocr_del.setOnClickListener(this);
+        ocr_fwd = (Button) findViewById(R.id.ocr_fwdItem);
+        ocr_fwd.setOnClickListener(this);
+        ocr_fin = (Button) findViewById(R.id.ocr_finish);
+        ocr_fin.setOnClickListener(this);
+        ocr_scn = (Button) findViewById(R.id.ocr_executePhoto);
+        ocr_scn.setOnClickListener(this);
+
+
         itemsRaw = new ArrayList<>();
         takePhoto();
+    }
+
+    //Button override, executes whats needed
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ocr_backItem:
+                break;
+            case R.id.ocr_deleteItem:
+                  break;
+            case R.id.ocr_fwdItem:
+                break;
+            case R.id.ocr_finish:
+                break;
+            case R.id.ocr_executePhoto:
+                break;
+            default:
+                break;
+        }
+
+
+
+
     }
     //==================== Get User Photo/Camera =======================//
    //This function executes a valid bitmap intent from the camera.
@@ -180,16 +222,12 @@ public class OCRTextActivity extends AppCompatActivity {
                       checkLineTolerance(toLines(tBlock),toLines(tBlocks));
                       textBlocks.removeAt(index);
                       textBlocks.removeAt(i);
-
                   }
-
                 }
-
             }
             if(!matched){
                 List<? extends Text> inspected =  toLines(tBlock);
                 for(int j = 0; j < inspected.size(); j++){
-
                  String t =  inspected.get(j).getValue();
                      if(t.matches("^\\D+\\d+.*") ) {
                          itemsRaw.add(t);
@@ -197,20 +235,12 @@ public class OCRTextActivity extends AppCompatActivity {
 
                      }
                 }
-
-
             }
-
         }
-
-        for(String t: itemsRaw){
-            System.out.println(t);
-
-        }
-
         sweepItems();
-        Receipt nx = new Receipt();
         parseItems(nx);
+        renderItems();
+
         System.out.print("\n\nDone!\n\n");
 
     }
@@ -229,6 +259,8 @@ public class OCRTextActivity extends AppCompatActivity {
             if(match.find()){
                 try {
                     double tVal = Double.parseDouble(match.group());
+                    //Extract the number/decimal and add the item to the receipt
+
                     t = t.trim().replaceAll("\\d+\\.\\d+","");
                     t = t.replaceAll("\\$", "");
                     t = t.replaceAll("( +)"," ");
@@ -250,12 +282,16 @@ public class OCRTextActivity extends AppCompatActivity {
 
 
 
-        //Find total
-
-        //Place into receipt
 
 
     }
+
+    //This function displays the selection buttons and renders the 1st item to the item list
+    //TODO
+    private void renderItems() {
+
+    }
+
     //This function implements the Levenshtein(LEV-EN-SHTEEN) distance in determining key values such as Total, SubTotal, HST, CREDIT-CARD3
     //@Param 1: The string for distance
     //@Param 2: The target to match
