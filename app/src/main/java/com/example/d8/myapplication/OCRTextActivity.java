@@ -110,6 +110,7 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.ocr_backItem:
 
+                updateReceipt();
                 if(itemItr > -1){
                 itemItr--;
                 }
@@ -124,10 +125,13 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
 
                 break;
             case R.id.ocr_deleteItem:
-
+                deleteItem();
                 updatePb();
+                displayItem();
                   break;
             case R.id.ocr_fwdItem:
+
+                updateReceipt();
                 if(itemItr >= -1 && itemItr < nx.getItems().size()){
                     itemItr++;
                 }
@@ -142,6 +146,7 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                     ocr_itemName.setTextColor(getResources().getColor(R.color.colorEceiptWhite));
                     ocr_itemPrice.setTextColor(getResources().getColor(R.color.colorEceiptWhite));
                 }
+
                 updatePb();
                 displayItem();
                 System.out.println(itemItr);
@@ -156,10 +161,34 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
             default:
                 break;
         }
+    }
+
+    //Deletes the item from the receipt
+    private void deleteItem() {
+        if(itemItr != -1){
+         nx.getItems().remove(itemItr);
+            Toast.makeText(this, "Item Deleted",
+                    Toast.LENGTH_SHORT).show();
 
 
 
+        }else{
+            Toast.makeText(this, "You cannot delete the total!",
+                    Toast.LENGTH_SHORT).show();
+        }
 
+
+    }
+
+    //This function takes the text from each textview and sets it as the receipt's values
+    private void updateReceipt() {
+
+        if(itemItr == -1){
+            nx.setTotalCost(Double.parseDouble(String.valueOf(ocr_itemPrice.getText())));
+        }else {
+            nx.getItembyId(itemItr).itemName = String.valueOf(ocr_itemName.getText());
+            nx.getItembyId(itemItr).itemPrice = Double.parseDouble(String.valueOf(ocr_itemPrice.getText()));
+        }
     }
 
     private void updatePb() {
