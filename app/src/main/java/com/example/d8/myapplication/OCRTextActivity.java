@@ -65,21 +65,25 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocrtext);
 
-        //Set button listners
+        //Set button listners, disable until photo is taken
         ocr_bak = (Button) findViewById(R.id.ocr_backItem);
         ocr_bak.setOnClickListener(this);
+        ocr_bak.setEnabled(false);
         ocr_del = (Button) findViewById(R.id.ocr_deleteItem);
         ocr_del.setOnClickListener(this);
+        ocr_del.setEnabled(false);
         ocr_fwd = (Button) findViewById(R.id.ocr_fwdItem);
         ocr_fwd.setOnClickListener(this);
+        ocr_fwd.setEnabled(false);
         ocr_fin = (Button) findViewById(R.id.ocr_finish);
         ocr_fin.setOnClickListener(this);
+        ocr_fin.setEnabled(false);
         ocr_scn = (Button) findViewById(R.id.ocr_executePhoto);
         ocr_scn.setOnClickListener(this);
 
 
         itemsRaw = new ArrayList<>();
-        takePhoto();
+
     }
 
     //Button override, executes whats needed
@@ -95,7 +99,8 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.ocr_finish:
                 break;
             case R.id.ocr_executePhoto:
-                break;
+               takePhoto();
+               break;
             default:
                 break;
         }
@@ -133,6 +138,7 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                     imagePath = storageDir.getAbsolutePath() + "/" + imageFileName;
 
                     File file = new File(imagePath);
+
                     //Uri outputFileUri = Uri.fromFile(file);
                     Uri outputFileUri = FileProvider.getUriForFile(OCRTextActivity.this, OCRTextActivity.this.getApplicationContext().getPackageName(), file);
                    //Request Intent to return full size uri
