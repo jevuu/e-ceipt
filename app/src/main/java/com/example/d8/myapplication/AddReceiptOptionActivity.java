@@ -13,11 +13,11 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-
 /*
     The QR generation and scanning tech is fron Zxing opensourse:
     https://github.com/journeyapps/zxing-android-embedded/blob/master/README.md
  */
+
 
 public class AddReceiptOptionActivity extends AppCompatActivity {
 
@@ -53,11 +53,13 @@ public class AddReceiptOptionActivity extends AppCompatActivity {
         realReceiptOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 //                Intent addRecpt = new Intent(getBaseContext(), OCRTextActivity.class);
 //                startActivity(addRecpt);
 
                 Intent goOCR = new Intent(getBaseContext(), OCRActivity.class);
                 startActivity(goOCR);
+
 
             }
         });
@@ -78,6 +80,7 @@ public class AddReceiptOptionActivity extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null) {
             if(result.getContents() == null) {
+
 //                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
@@ -124,6 +127,7 @@ public class AddReceiptOptionActivity extends AppCompatActivity {
                             });
                     alertDialog.show();
                 }
+
 
             }
         } else {
