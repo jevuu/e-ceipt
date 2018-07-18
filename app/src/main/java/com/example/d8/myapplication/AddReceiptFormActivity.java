@@ -425,7 +425,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
             resourceCate.add(Information.categories.get(i));
         }
         resourceCate.set(0,"Select a category");
-        resourceCate.add("  New category");
+        resourceCate.add("  + New category +");
 
 
         CustomSpinnerAdapter customSpinnerAdapterDay=new CustomSpinnerAdapter(AddReceiptFormActivity.this,resourceCate);

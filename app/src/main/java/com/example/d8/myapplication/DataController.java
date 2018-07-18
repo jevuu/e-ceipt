@@ -582,7 +582,7 @@ public class DataController {
             try{
 
                 for(int i=0; i<Information.receipts.size(); i++){
-                    if(Information.receipts.get(i).getCategory()==category){
+                    if(Information.receipts.get(i).getCategory().equals(category)){
                         Log.i("RECEIPT["+i+"]",Information.receipts.get(i).toString());
                         receipts.add(Information.receipts.get(i));
                     }
