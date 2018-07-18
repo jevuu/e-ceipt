@@ -80,9 +80,9 @@ public class AddReceiptOptionActivity extends AppCompatActivity {
             if(result.getContents() == null) {
 //                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-//                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 String resultStr = result.getContents();
-                if(resultStr.matches("[0-9]+") && resultStr.length() > 2){
+                if(resultStr.matches("[0-9]+") && resultStr.length() > 0){
                     try{
                         receipt = DataController.getReceiptById(Integer.parseInt(resultStr),"http://myvmlab.senecacollege.ca:6207/getOneReceipt.php",AddReceiptOptionActivity.this);
                         if(receipt.getReceipId()==null){

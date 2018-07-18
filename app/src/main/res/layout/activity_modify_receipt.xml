@@ -171,7 +171,9 @@
                     android:id="@+id/receipt_items_listview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:listSelector="@android:color/holo_red_dark">
+
 
 
                 </ListView>

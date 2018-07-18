@@ -130,19 +130,67 @@ public class ModifyReceiptActivity extends AppCompatActivity {
         updateItemBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(itemIndex>=0) {
+//                if(itemIndex>=0) {
+//                    String itemname = itemName.getText().toString();
+//                    double itemprice = Double.parseDouble(itemPrice.getText().toString());
+//
+//                    Receipt.Item _item = receipt.getItems().get(itemIndex);
+//
+//                    _item.itemName = itemname;
+//                    _item.itemPrice = itemprice;
+//                    loadItemObjToListview(receipt.getItems());
+//
+//                    itemName.setText("");
+//                    itemPrice.setText("");
+//                    itemIndex = -1;
+//                }else
+//                {
+//                    //Update Total Cost
+//                    receipt.setTotalCost(receipt.getTotalCost()+itemprice);
+//
+//                    //Add item
+//                    _item=receipt.new Item();
+//                    _item.itemName = itemname;
+//                    _item.itemPrice = itemprice;
+//                    receipt.getItems().add(_item);
+//                }
+                try {
                     String itemname = itemName.getText().toString();
                     double itemprice = Double.parseDouble(itemPrice.getText().toString());
+                    if (itemname != null && !itemname.isEmpty()) {
+                        Receipt.Item _item=null;
+                        if (itemIndex >= 0) {
+                            //Modify item
+                            _item = receipt.getItems().get(itemIndex);
+                            //Update Total Cost
+                            receipt.setTotalCost(receipt.getTotalCost()-_item.itemPrice+itemprice);
+                            _item.itemName = itemname;
+                            _item.itemPrice = itemprice;
+                        }
+                        else
+                        {
+                            //Update Total Cost
+                            receipt.setTotalCost(receipt.getTotalCost()+itemprice);
 
-                    Receipt.Item _item = receipt.getItems().get(itemIndex);
+                            //Add item
+                            _item=receipt.new Item();
+                            _item.itemName = itemname;
+                            _item.itemPrice = itemprice;
+                            _item.itemDesc = "";
+                            _item.itemID = "-1";
+                            receipt.getItems().add(_item);
+                        }
+                        loadItemObjToListview(receipt.getItems());
+                        totalCost.setText(Double.toString(receipt.getTotalCost()));
 
-                    _item.itemName = itemname;
-                    _item.itemPrice = itemprice;
-                    loadItemObjToListview(receipt.getItems());
+                        itemName.setText("");
+                        itemPrice.setText("");
+                        itemIndex = -1;
+                    }
+                }
+                catch(Exception ex)
+                {
 
-                    itemName.setText("");
-                    itemPrice.setText("");
-                    itemIndex = -1;
                 }
             }
         });
@@ -320,7 +368,7 @@ public class ModifyReceiptActivity extends AppCompatActivity {
                 }else{
                     String item = parent.getItemAtPosition(position).toString();
                     Log.i("ITEMSAaaaaa", item);
-                    Toast.makeText(getBaseContext(), "selected " + item, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getBaseContext(), "selected " + item, Toast.LENGTH_LONG).show();
                     category = item.trim();
                 }
             }
