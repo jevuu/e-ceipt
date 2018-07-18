@@ -1,12 +1,15 @@
 package com.example.d8.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -42,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
     Button btnGms;
 
 
+
+    //Shared Preferances(stored to device)
+    public static final String PREFS_NAME = "prefs_authUser";
+    private static final String PREF_USERNAME = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,8 +76,16 @@ public class MainActivity extends AppCompatActivity {
 
         aUser.mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+        //Checks for stored username from the last user to login
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        String remember = sharedPref.getString("pref_username", "");
+        if(!remember.isEmpty()){
+            userET.setText(remember);
+        }
 
-
+        //Hides the auto keyboard
+        getWindow().setSoftInputMode(WindowManager.
+                LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
 
@@ -128,6 +144,9 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Google Auth Passed",
                                     Toast.LENGTH_SHORT).show();
                             aUser.createUser();
+
+
+
                             aUser.contactSql_log(getBaseContext());
 
                             Information.authUser = aUser;
@@ -155,14 +174,18 @@ public class MainActivity extends AppCompatActivity {
         //Excute VM connections
         aUser.contactSql_log(this);
         Information.authUser = aUser;
+
+
+        //Saves the username of this user to preferances for next login, clean.
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("pref_username", aUser.getEmail());
+        editor.apply();
+
         DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
 
-//        try{
-//            //Just for test
-//            DataController.deleteReceiptFromDB(118, "http://myvmlab.senecacollege.ca:6207/deleteReceipt.php", this);
-//        }catch (Exception e){
-//
-//        }
+
+
 
         Intent goToReg = new Intent(this, MenuActivity.class);
 

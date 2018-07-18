@@ -572,6 +572,56 @@ public class DataController {
         return receipts;
     }
 
+    //this metod is to get receipts in specific category
+    public static ArrayList<Receipt> getReceiptsInCategory(String category){
+        ArrayList<Receipt> receipts = new ArrayList<Receipt>();
+        try{
+            Date currentDate = DataController.getCurrentDate();
+
+            try{
+
+                for(int i=0; i<Information.receipts.size(); i++){
+                    if(Information.receipts.get(i).getCategory()==category){
+                        Log.i("RECEIPT["+i+"]",Information.receipts.get(i).toString());
+                        receipts.add(Information.receipts.get(i));
+                    }
+                }
+            }catch(Exception e){
+                Log.i("DAYSFAIL", e.toString());
+            }
+
+        }catch(Exception e){
+
+        }
+
+        return receipts;
+    }
+
+    //this metod is to get receipts in specific days and category
+    public static ArrayList<Receipt> getReceiptsInDaysAndCategory(int days, String category){
+        ArrayList<Receipt> receipts = new ArrayList<Receipt>();
+        try{
+            Date currentDate = DataController.getCurrentDate();
+
+            try{
+                for(int i=0; i<Information.receipts.size(); i++){
+                    Integer days_ = DataController.dateDiff(DataController.parseStringToDate(Information.receipts.get(i).getDate()),currentDate);
+                    if(days_<=days && Information.receipts.get(i).getCategory()==category){
+                        Log.i("RECEIPT["+i+"]",Information.receipts.get(i).toString());
+                        receipts.add(Information.receipts.get(i));
+                    }
+                }
+            }catch(Exception e){
+                Log.i("DAYSFAIL", e.toString());
+            }
+
+        }catch(Exception e){
+
+        }
+
+        return receipts;
+    }
+
     //method to get current date
     public static Date getCurrentDate()throws Exception{
 

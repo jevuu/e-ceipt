@@ -13,7 +13,7 @@
 
     </string-array>
     <string-array name="home_spinner_category">
-        <item>All Receipts</item>
+        <item>All receipts</item>
         <item>Food service</item>
         <item>Retail</item>
     </string-array>

@@ -85,7 +85,6 @@
     <string name="bg_colourDesc">Pick Any Colour You Like!</string>
 
 
-
     <!-- null value -->
     <string name="string_null">null</string>
     <string name="num_null">0.00</string>
@@ -95,5 +94,16 @@
     <string name="profile_Unlc">Edit Your Information</string>
     <string name="profile_unkCancel">Cancel</string>
     <string name="profile_conf">Confirm Changes</string>
+    <string name="main_phoneLogin">Sign In with Phone</string>
+    <string name="ocr_backItemtxt">Previous Item</string>
+    <string name="ocr_fwdItemtxt">Next Item</string>
+    <string name="ocr_itmName">Item Name</string>
+    <string name="ocr_itmPrice">Item Price</string>
+    <string name="ocr_Instruc">Tips for good Scanning</string>
+    <string name="ocr_RcpResultTitle">Receipt Scanning</string>
+    <string name="ocr_instrucTips">1.Make sure the photo displays text clearly!\n2.For best results, only  capture the item text!\n    - Ignore Ads or Promotions(see Picture)\n3.Keep your phone in Portrait Mode\n</string>
+    <string name="ocr_TakePhoto">Scan Receipt</string>
+    <string name="ocr_complete">Finish</string>
+
 
 </resources>
