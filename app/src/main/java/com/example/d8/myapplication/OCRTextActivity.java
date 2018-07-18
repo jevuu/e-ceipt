@@ -245,7 +245,7 @@ public class OCRTextActivity extends AppCompatActivity {
                         }
 
                     }else {
-                        nx.addItem(t, "", tVal);
+                        nx.addItem(t, "", tVal,"-1");
                     }
                 }catch(Exception e){
                     System.out.println("\n\n**Error in parseItems!\n\n");

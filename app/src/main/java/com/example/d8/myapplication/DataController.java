@@ -604,16 +604,12 @@ public class DataController {
         try{
             Date currentDate = DataController.getCurrentDate();
 
-            try{
-                for(int i=0; i<Information.receipts.size(); i++){
-                    Integer days_ = DataController.dateDiff(DataController.parseStringToDate(Information.receipts.get(i).getDate()),currentDate);
-                    if(days_<=days && Information.receipts.get(i).getCategory()==category){
-                        Log.i("RECEIPT["+i+"]",Information.receipts.get(i).toString());
-                        receipts.add(Information.receipts.get(i));
-                    }
+            for(int i=0; i<Information.receipts.size(); i++){
+                Integer days_ = DataController.dateDiff(DataController.parseStringToDate(Information.receipts.get(i).getDate()),currentDate);
+                if(days_<=days && Information.receipts.get(i).getCategory().equals(category)){
+                    Log.i("RECEIPT["+i+"]",Information.receipts.get(i).toString());
+                    receipts.add(Information.receipts.get(i));
                 }
-            }catch(Exception e){
-                Log.i("DAYSFAIL", e.toString());
             }
 
         }catch(Exception e){
