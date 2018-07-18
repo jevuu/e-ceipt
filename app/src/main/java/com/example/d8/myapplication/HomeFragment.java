@@ -258,7 +258,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
                 receiptsSelect = loadReceiptObjToListviewByDaysAndCate(Information.receipts,daysSpinnerSelect,cateSpinnerSelect);
                 loadReceiptObjToListView(receiptsSelect);
-
                 if(item.equals("All receipts")){
                     loadReceiptObjToListView(Information.receipts);
 
@@ -279,11 +278,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     loadReceiptObjToListView(receipts);
 
                     for(Receipt receipt:receipts){
-
                         totalCost += receipt.getTotalCost();
+                    }
+                    Log.i("TOTALCOST22222", Double.toString(totalCost));
                 }
                 for(Receipt receipt:receiptsSelect){
-                        totalCost += receipt.getTotalCost();
+                    totalCost += receipt.getTotalCost();
                 }
 
                 Log.i("TOTALCOST22222", String.format("%.2f", totalCost));
@@ -315,9 +315,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
                 double totalCost = 0.0;
-
                 if(item.equals("All categories")){
-
                     //loadReceiptObjToListView(Information.receipts);
 
 
