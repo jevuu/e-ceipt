@@ -70,6 +70,12 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
         receiptDate.setText(cDateInString);
 
+        Receipt ocrScn = (Receipt)(getIntent().getSerializableExtra("ocrScan"));
+        for(int i =0; i < ocrScn.getItems().size(); i++){
+
+            System.out.println(ocrScn.getItembyId(i).getItemName() + "--" + ocrScn.getItembyId(i).getItemPrice());
+
+        }
         receiptDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

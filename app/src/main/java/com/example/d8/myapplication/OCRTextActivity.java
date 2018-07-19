@@ -127,12 +127,17 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.ocr_deleteItem:
                 deleteItem();
                 updatePb();
+                if(itemItr <= -1 ){
+                    itemItr = -1; //Protective
+                    ocr_itemName.setTextColor(getResources().getColor(R.color.colorEceiptOrange));
+                    ocr_itemPrice.setTextColor(getResources().getColor(R.color.colorEceiptOrange));
+                }
                 displayItem();
                   break;
             case R.id.ocr_fwdItem:
 
                 updateReceipt();
-                if(itemItr >= -1 && itemItr < nx.getItems().size()){
+                if(itemItr >= -1 && itemItr < nx.getItems().size() - 1){
                     itemItr++;
                 }
                 if(itemItr <= -1 ){
@@ -154,9 +159,19 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.ocr_finish:
 
 
+                //When signing out, this prevents the user 'backing' into the app.
+                //finish() destroys the home activity as well.
+                Intent myIntent = new Intent(this, AddReceiptFormActivity.class);
+                myIntent.putExtra("ocrScan", nx);
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(myIntent);
+                finish();
                 break;
             case R.id.ocr_executePhoto:
                takePhoto();
+               ocr_scn.setEnabled(false);
                break;
             default:
                 break;
@@ -169,8 +184,7 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
          nx.getItems().remove(itemItr);
             Toast.makeText(this, "Item Deleted",
                     Toast.LENGTH_SHORT).show();
-
-
+            itemItr = -1;
 
         }else{
             Toast.makeText(this, "You cannot delete the total!",
@@ -186,19 +200,30 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
         if(itemItr == -1){
             nx.setTotalCost(Double.parseDouble(String.valueOf(ocr_itemPrice.getText())));
         }else {
+
+            System.out.print("\n\nIndex Access: " + itemItr + " Size of arr: " + itemsRaw.size()+ "\n\n");
+            System.out.print("\n\nIndex Access: " + itemItr + " Size of NX:  " + nx.getItems().size() + "\n\n");
             nx.getItembyId(itemItr).itemName = String.valueOf(ocr_itemName.getText());
             nx.getItembyId(itemItr).itemPrice = Double.parseDouble(String.valueOf(ocr_itemPrice.getText()));
         }
     }
 
+    //Updates the progress bar
+    //Checks for older Android APIs
     private void updatePb() {
         pb.setMax(nx.getItems().size());
-
+        int i = nx.getItems().size();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            System.out.println("Iterator " + (itemItr + 2)/nx.getItems().size());
-            pb.setProgress(itemItr + 2/nx.getItems().size(),true);
+            if(i != 0) {
+                System.out.print("\n\nMAX PB: " + nx.getItems().size() +"ItemITR " + itemItr + "\n\n");
+                pb.setProgress(itemItr + 1, true);
+            }
         }else{
-            pb.setProgress(itemItr/nx.getItems().size());
+            if(i != 0) {
+                pb.setProgress(itemItr + 1/ i);
+            }else {
+                pb.setProgress(0);
+            }
         }
     }
 
@@ -323,41 +348,40 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
         for (int index = 0; index < textBlocks.size(); index++) {
             //extract scanned text blocks here
             TextBlock tBlock = textBlocks.valueAt(index);
-            System.out.println("Comparing this block: " + tBlock.getValue() + "========");
+            System.out.println("Comparing this block: " + tBlock.getValue() + "\n========");
             boolean matched = false;
+
             //Check against every other text block
-            for(int i = 0; i < textBlocks.size() && !matched; i++){
-                //Dont self check
-                if(i != index) {
-                    //Pass the target block and the inspector block if they are similar on the y-axis
-                    TextBlock tBlocks = textBlocks.valueAt(i);
-                  if(checkBlockTolerance(tBlock, tBlocks)){
-                      System.out.println("These Blocks Matched!--->" + tBlock.getValue() + "\n<--- || --->\n" + tBlocks.getValue() + "\n====END======");
-                      //Pass the Lines to be matched where possible
-                      matched = true;
-                      checkLineTolerance(toLines(tBlock),toLines(tBlocks));
-                      textBlocks.removeAt(index);
-                      textBlocks.removeAt(i);
-                  }
-                }
-            }
-            if(!matched){
-                List<? extends Text> inspected =  toLines(tBlock);
+           for(int ii = 0; ii < 4; ii++) {
+               for (int i = 0; i < textBlocks.size(); i++) {
+                   //Dont self check
+                   if (i != index) {
+                       //Pass the target block and the inspector block if they are similar on the y-axis
+                       TextBlock tBlocks = textBlocks.valueAt(i);
+                       if (checkBlockTolerance(tBlock, tBlocks)) {
+                           System.out.println("These Blocks Matched!--->" + tBlock.getValue() + "\n<--- || --->\n" + tBlocks.getValue() + "\n====END======");
+                           //Pass the Lines to be matched where possible
+                           checkLineTolerance(toLines(tBlock), toLines(tBlocks));
+                       }
+                   }
+               }
+           }
+
+            List<? extends Text> inspected =  toLines(tBlock);
                 for(int j = 0; j < inspected.size(); j++){
                  String t =  inspected.get(j).getValue();
-                     if(t.matches("^\\D+\\d+.*") ) {
+                     if(t.matches("\\d+\\.\\d+") ) {
                          itemsRaw.add(t);
                          System.out.println("Item Added for Word + Number! " + t);
 
                      }
                 }
-            }
+
         }
         sweepItems();
         parseItems(nx);
         renderItems();
 
-        System.out.print("\n\nDone!\n\n");
 
     }
 
@@ -392,6 +416,12 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                 }catch(Exception e){
                     System.out.println("\n\n**Error in parseItems!\n\n");
                 }
+            }else{
+                t = t.trim().replaceAll("\\d+\\.\\d+","");
+                t = t.replaceAll("\\$", "");
+                t = t.replaceAll("( +)"," ");
+
+                nx.addItem(t, "", 0.00);
             }
         }
 
@@ -486,44 +516,62 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
         int yTolerance = 3000;
         if(inspected.size() == 1 && target.size() == 1){
             item = inspected.get(0).getValue() + " " + target.get(0).getValue();
+            inspected.remove(0);
+            target.remove(0);
             System.out.println("This is a raw item: " + item);
             itemsRaw.add(item);
         }else{
+            int iActual = -1;
+            int jActual = -1;
+
             //For each item in inspected...
             for(int i = 0; i < inspected.size(); i++){
                 int inspY = inspected.get(i).getBoundingBox().centerY();
                 yTolerance = 3000;
+
                 //Check against each item in target...
                 for(int j = 0; j < target.size(); j++){
                   int targY = target.get(j).getBoundingBox().centerY();
                   int dif = Math.abs(inspY - targY);
-                  if(yTolerance > dif && dif < 120){
+                  if(yTolerance > dif && dif < 85){
                       yTolerance = dif;
                       System.out.println(yTolerance + " is now closest");
+                      iActual = i;
+                      jActual = j;
                       item = inspected.get(i).getValue() + " " + target.get(j).getValue();
                   }
-                    System.out.println(yTolerance + "< J Lines -->"+ inspected.get(i).getValue() + " <--||--> " + target.get(j).getValue());
-
+                    System.out.println("Lines -->"+ inspected.get(i).getValue() + " <--||--> " + target.get(j).getValue());
+                }
+                if(iActual != -1 && jActual != -1) {
+                    System.out.println("***Closest Item was " + item + "****");
+                    itemsRaw.add(item);
+                    System.out.println("***Indexes are: " +iActual + "--" + jActual + "****");
+                    inspected.remove(iActual);
+                    target.remove(jActual);
+                    System.out.println("Done!");
+                     iActual = -1;
+                     jActual = -1;
+                }else{
+                    System.out.println("Lines Failed to match accurately!");
                 }
 
-                System.out.println("***Closest Item was " + item + "****");
-                itemsRaw.add(item);
             }
 
         }
 
-        System.out.println("\n***Finished Line Tolerance!***\n");
+
+
+        System.out.println("\n**=====*Finished Line Tolerance!*=====**\n");
     }
 
     //Determines if the textblocks are relatively the same line
     public boolean checkBlockTolerance(TextBlock a, TextBlock b){
         int yTolerance = a.getBoundingBox().centerY() - b.getBoundingBox().centerY();
-        if(yTolerance <= 150 && yTolerance >= -150) {
-           // System.out.println(yTolerance + "-->" + a.getValue() + "<--Good-->" + b.getValue());
-
+        if(yTolerance <= 250 && yTolerance >= -250) {
+         //   System.out.println("Block Match PASSED! Y was: " + yTolerance + " for " + a.getValue() + "\n==\n" + b.getValue());
             return true;
         }else{
-            System.out.println("Block Match Failed!");
+            //System.out.println("Block Match Failed! Y was: " + yTolerance + " for " + a.getValue() + "\n==\n" + b.getValue());
             return false;
         }
 
