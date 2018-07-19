@@ -320,7 +320,12 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                if(ocrAble != null) {
                    ocrAble.recycle();
                }
-                 ocrAble = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+               try {
+                   ocrAble = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+               }catch(Exception e){
+                   Toast.makeText(this,"You dont appear to have enough memory! Try Restarting the App!", Toast.LENGTH_LONG).show();
+               }
                 Matrix matrix = new Matrix();
                 matrix.postRotate(90);
                 ocrAble = ocrAble.createBitmap(ocrAble,0,0, ocrAble.getWidth(), ocrAble.getHeight(),matrix, true);
