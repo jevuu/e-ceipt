@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -1016,4 +1017,16 @@ public class DataController {
 
          return result;
      }
+
+    //delete local receipts data file
+    public static void deleteLocalFile(Context ctx){
+        String dir = ctx.getFilesDir().getAbsolutePath();
+        Log.i("FilePath", dir);
+        String USERID = Information.authUser.getUserId();
+        String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
+
+        File f0 = new File(dir, USERRECEIPTFILENAME);
+        boolean d0 = f0.delete();
+        Log.w("Delete Check", "File deleted: " + dir + "/myFile " + d0);
+    }
 }

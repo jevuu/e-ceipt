@@ -197,6 +197,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         initCustomSpinner();
 
+        //test
+        //DataController.deleteLocalFile(getActivity());
+
         return v;
     }
 
