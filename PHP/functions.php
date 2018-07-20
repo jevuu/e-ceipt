@@ -61,7 +61,6 @@ function build_receipt($conn, $row){
 //if option is "user", ID must be userID (string)
 //if option is "one", ID must be receiptID (int)
 function get_receipt($conn, $ID, $option){
-	echo "get_receipt called!\n\n";
 	$q = "SELECT userID, receiptID, creationDate, totalCost, tax, businessName, categoryName FROM receipts";
 	if($option == "user"){
 		$receipts = array();
@@ -76,7 +75,6 @@ function get_receipt($conn, $ID, $option){
 		return $receipts;
 	}else if ($option == "one"){
 		$q = $q . " WHERE receiptID = " . $ID;
-		echo $q . "\n\n";
 		$qReceipt = mysqli_query($conn, $q);
 		$row = mysqli_fetch_row($qReceipt);
 		
