@@ -1,7 +1,7 @@
 <?php
 
 require "conn.php";
-
+require "functions.php";
 
 $json 			= file_get_contents('php://input');
 $obj 			= json_decode($json);
@@ -38,20 +38,11 @@ foreach($items as $key => $itm){
 	$itemDesc  = $itm->itemDesc;
 	$itemPrice = $itm->itemPrice;
 	
-	//Test item before update
-	$q = "SELECT * FROM items WHERE itemID = " . $itemID;
-	$result = mysqli_query($conn, $q);
-	$row = mysqli_fetch_row($result);
-	echo "Item before: " . $row[0] . ", " . $row[1] . ", " . $row[2] . ", " . $row[3] . ", " . $row[4] . "\n";
-
-	$qItemsString = "UPDATE items SET name = '$itemName', description = '$itemDesc', price = '$itemPrice' WHERE itemID = " . $itemID;
-	mysqli_query($conn, $qItemsString);
-	
-	//Test item after update
-	$q = "SELECT * FROM items WHERE itemID = " . $itemID;
-	$result = mysqli_query($conn, $q);
-	$row = mysqli_fetch_row($result);
-	echo "Item after: " . $row[0] . ", " . $row[1] . ", " . $row[2] . ", " . $row[3] . ", " . $row[4] . "\n\n";
+	if($itemID == -1){
+		add_item($conn, $userID, $receiptID, $itemName, $itemDesc, $itemPrice);
+	}else{
+		edit_item($conn, $userID, $receiptID, $itemID, $itemName, $itemDesc, $itemPrice);
+	}
 }
 
 ?>
