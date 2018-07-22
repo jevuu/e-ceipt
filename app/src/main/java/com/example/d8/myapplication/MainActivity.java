@@ -190,8 +190,8 @@ public class MainActivity extends AppCompatActivity {
                             aUser.setPhone(true);
                             aUser.createUser();
 
-                            aUser.contactSql_log(getBaseContext());
-
+                           // aUser.contactSql_log(getBaseContext());
+                            aUser.contactSql_reg(getBaseContext());
                             Information.authUser = aUser;
                             onReady(this, "a");
 
@@ -259,13 +259,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Capture the phone and send sms
+    //Capture the phone number and send sms
     public void onSMS(View view){
         if (!validatePhoneNumber()) {
             return;
         }
         btnCode.setVisibility(View.VISIBLE);
-        startPhoneNumberVerification(phoneET.getText().toString());
+        String t = phoneET.getText().toString();
+        t = "+"+t;
+        startPhoneNumberVerification(t);
     }
 
     private void startPhoneNumberVerification(String phoneNumber) {
@@ -282,10 +284,15 @@ public class MainActivity extends AppCompatActivity {
     public void onCode(View view){
 
         String code = codeET.getText().toString();
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
+        if(!code.isEmpty()) {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
 
-        signInWithPhoneAuthCredential(credential);
+            signInWithPhoneAuthCredential(credential);
+        }else{
+            Toast.makeText(MainActivity.this, "You must enter a valid security code! eg: 123456",
+                    Toast.LENGTH_SHORT).show();
 
+        }
 
     }
     //Opens the Google Sign In applicaiton

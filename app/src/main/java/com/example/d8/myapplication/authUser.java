@@ -93,10 +93,13 @@ class authUser extends User{
 
             String name = mUser.getPhoneNumber();
             setUserId(name);
-            setEmail(name);
-            setName(mUser.getDisplayName());
+            setEmail("N/A");
+                if(mUser.getDisplayName() == null) {
+                    setName("Friendly Mobile User :)");
 
-
+                }else{
+                    setName(mUser.getDisplayName());
+                }
             }
             setFirebaseUID();
             photoUrl = mUser.getPhotoUrl();
@@ -125,7 +128,7 @@ class authUser extends User{
                     });
 
         }
-        if( (email != null && !email.isEmpty()) && !email.equals(getEmail())){
+        if( (email != null && !email.isEmpty()) && !email.equals(getEmail()) && !isPhone()){
             mUser.updateEmail(email)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
