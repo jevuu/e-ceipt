@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import static android.content.ContentValues.TAG;
 import static java.security.AccessController.getContext;
@@ -24,6 +25,9 @@ class authUser extends User{
     //==========Connection Classes=============//
     FirebaseAuth mAuth; //Firebase Connection
     FirebaseUser mUser; //The active user
+
+
+
     GoogleSignInClient mGoogleSignInClient; //Google connection
     String authError = "";
 

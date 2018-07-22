@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
 
 //Initial Class for Textual Activity Reading
 //This class handles the primary bulk of text OCR
-//Last Modifcation: 7/10/2018
+//Last Modifcation: 7/22/2018
 public class OCRTextActivity extends AppCompatActivity implements View.OnClickListener {
     Bitmap ocrAble;
     String imagePath = "";

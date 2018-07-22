@@ -70,6 +70,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
         receiptDate.setText(cDateInString);
 
+        //This accepts an OCR scanned receipt and pre-loads it into the form.
         Receipt ocrScn = (Receipt)(getIntent().getSerializableExtra("ocrScan"));
       if(ocrScn != null) {
           for (int i = 0; i < ocrScn.getItems().size(); i++) {

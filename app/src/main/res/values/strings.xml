@@ -109,6 +109,11 @@
     <string name="ocr_tip1">Take a Clear Photo with lots of light</string>
     <string name="ocr_tip2">Photo only the items and costs for best results. Hide any unneeded text. </string>
     <string name="ocr_tip3">Receipt Scanning has <b>limited accuracy</b>. You can correct your results/add missing information as needed.</string>
+    <string name="main_hint_code" >Security Code</string>
+    <string name="main_hint_phone">Phone Number</string>
+    <string name="main_phoneAlt">Standard SMS Rates may apply!</string>
+    <string name="main_phone_b1">(Re)Send SMS Code</string>
+    <string name="main_phone_b2">Confirm Code</string>
 
 
 </resources>
