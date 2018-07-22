@@ -27,7 +27,15 @@ class authUser extends User{
     FirebaseUser mUser; //The active user
 
 
+    public boolean isPhone() {
+        return isPhone;
+    }
 
+    public void setPhone(boolean phone) {
+        isPhone = phone;
+    }
+
+    boolean isPhone = false;
     GoogleSignInClient mGoogleSignInClient; //Google connection
     String authError = "";
 
@@ -73,18 +81,26 @@ class authUser extends User{
         MUser();
 
         if (mUser != null) {
-            String name = mUser.getEmail();
-            String[] n = name.split("@");
+            if(!isPhone()) {
+                String name = mUser.getEmail();
+                String[] n = name.split("@");
+                //Set Attributes
+                setUserId(n[0]);
+                setEmail(name);
+                setName(mUser.getDisplayName());
 
-            //Set Attributes
-            setUserId(n[0]);
+            }else{
+
+            String name = mUser.getPhoneNumber();
+            setUserId(name);
             setEmail(name);
             setName(mUser.getDisplayName());
+
+
+            }
             setFirebaseUID();
-
             photoUrl = mUser.getPhotoUrl();
-
-            System.out.println("Account is as follows:" + getUserId() + " " + getEmail() + " " + photoUrl);
+            System.out.println("Account is as follows:" + getUserId() + " " + getEmail() + " " + photoUrl + " " + getName());
         }
 
     }

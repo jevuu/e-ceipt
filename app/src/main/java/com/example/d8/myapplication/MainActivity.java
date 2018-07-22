@@ -184,7 +184,16 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
 
-                            FirebaseUser user = task.getResult().getUser();
+                            FirebaseUser user = aUser.mAuth.getCurrentUser();
+                            Toast.makeText(MainActivity.this, "Phone Authentication Passed",
+                                    Toast.LENGTH_SHORT).show();
+                            aUser.setPhone(true);
+                            aUser.createUser();
+
+                            aUser.contactSql_log(getBaseContext());
+
+                            Information.authUser = aUser;
+                            onReady(this, "a");
 
                         } else {
                             // Sign in failed, display a message and update the UI
@@ -192,10 +201,10 @@ public class MainActivity extends AppCompatActivity {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
                                 System.out.println(task.getException().getMessage());
+                                Toast.makeText(MainActivity.this, "Phone Authentication Failed: " + task.getException().getMessage() ,
+                                        Toast.LENGTH_SHORT).show();
 
                             }
-                            // [START_EXCLUDE silent]
-
                         }
                     }
                 });
@@ -260,15 +269,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startPhoneNumberVerification(String phoneNumber) {
-        // [START start_phone_auth]
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
                 60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
                 mCallbacks);        // OnVerificationStateChangedCallbacks
-        // [END start_phone_auth]
-
         mVerificationInProgress = true;
     }
 
@@ -351,23 +357,20 @@ public class MainActivity extends AppCompatActivity {
         Information.authUser = aUser;
 
 
-        //Saves the username of this user to preferances for next login, clean.
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("pref_username", aUser.getEmail());
-        editor.apply();
+        if(!aUser.isPhone()) {
+            //Saves the username of this user to preferances for next login, clean.
+            SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("pref_username", aUser.getEmail());
+            editor.apply();
 
+        }
         DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
-
-
-
-
         Intent goToReg = new Intent(this, MenuActivity.class);
-
         startActivity(goToReg);
 
     }
-    //Opens the Password Reset  Activity
+    //Opens the Password Reset Activity
     public void onPassW(View view){
         Intent goToPws = new Intent(this, PassActivity.class);
         startActivity(goToPws);
