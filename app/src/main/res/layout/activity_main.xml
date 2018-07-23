@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -104,8 +105,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/btn_roundcorner_white"
-                android:drawableStart="@drawable/common_google_signin_btn_icon_light_normal"
+                android:background="@drawable/common_google_signin_btn_text_light_normal"
                 android:onClick="onGoogle"
                 android:padding="0dp"
                 android:paddingStart="12dp"
@@ -127,12 +127,13 @@
             <!--</LinearLayout>-->
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/main_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/btn_roundcorner_red"
                 android:drawableStart="@drawable/ic_phone"
+                android:onClick="onPhoneAuth"
                 android:padding="6dp"
                 android:paddingBottom="6dp"
                 android:paddingEnd="12dp"
@@ -142,6 +143,99 @@
                 android:textColor="@color/colorEceiptWhite"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/ltns"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/main_phoneAuth"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:id="@+id/ln_visi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <EditText
+                            android:id="@+id/main_phoneIn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="@string/main_hint_phone"
+                            android:singleLine="true"
+                            android:textAlignment="center"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/main_code"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="@string/main_hint_code"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textAlignment="center"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:visibility="visible" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/main_phone_b1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:background="@android:color/holo_orange_light"
+                            android:onClick="onSMS"
+                            android:text="@string/main_phone_b1"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/main_phone_b2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:background="@android:color/holo_green_light"
+                            android:onClick="onCode"
+                            android:text="@string/main_phone_b2"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/main_phoneAlert"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@android:drawable/ic_dialog_alert"
+                    android:text="@string/main_phoneAlt"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorEceiptWhite"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/main_btn_reg"

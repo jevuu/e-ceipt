@@ -157,8 +157,13 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         backToHomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), MenuActivity.class);
-                startActivity(intent);
+                Intent addRecpt = new Intent(getBaseContext(), MenuActivity.class);
+                addRecpt.putExtra("finish", true);
+                addRecpt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(addRecpt);
+                finish();
             }
         });
 

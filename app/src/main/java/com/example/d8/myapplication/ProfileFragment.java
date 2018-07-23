@@ -186,7 +186,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                     });
 
         }
-        if( (email != null && !email.isEmpty()) && !email.equals(Information.authUser.getEmail())){
+        if( (email != null && !email.isEmpty()) && !email.equals(Information.authUser.getEmail()) && !Information.authUser.isPhone()){
            Information.authUser.mUser.updateEmail(email)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -219,6 +219,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                     });
 
 
+        }
+
+        if(Information.authUser.isPhone()){
+            Toast.makeText(getContext(), "Phone Users do not have an email!",
+                    Toast.LENGTH_LONG).show();
         }
     }
 

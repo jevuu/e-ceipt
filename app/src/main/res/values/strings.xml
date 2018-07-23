@@ -63,7 +63,7 @@
     <string name="item_price_input_hint">Item price</string>
     <string name="item_name_input_hint">Item name</string>
     <string name="receipt_date_input_hint">Enter receipt creation date</string>
-    <string name="business_name_input_hint">Please enter receipt's business name</string>
+    <string name="business_name_input_hint">Please enter receipt\'s business name</string>
 
 
     <!-- home layout -->
@@ -104,6 +104,16 @@
     <string name="ocr_instrucTips">1.Make sure the photo displays text clearly!\n2.For best results, only  capture the item text!\n    - Ignore Ads or Promotions(see Picture)\n3.Keep your phone in Portrait Mode\n</string>
     <string name="ocr_TakePhoto">Scan Receipt</string>
     <string name="ocr_complete">Finish</string>
+    <string name="ocr_deleteItem">Delete Item</string>
+    <string name="ocr_scanInst">Press Scan Receipt To Get Started</string>
+    <string name="ocr_tip1">Take a Clear Photo with lots of light</string>
+    <string name="ocr_tip2">Photo only the items and costs for best results. Hide any unneeded text. </string>
+    <string name="ocr_tip3">Receipt Scanning has <b>limited accuracy</b>. You can correct your results/add missing information as needed.</string>
+    <string name="main_hint_code" >Security Code</string>
+    <string name="main_hint_phone">Phone: (Area Code)(Phone Num)</string>
+    <string name="main_phoneAlt">Standard SMS Rates may apply!</string>
+    <string name="main_phone_b1">(Re)Send SMS Code</string>
+    <string name="main_phone_b2">Confirm Code</string>
 
 
 

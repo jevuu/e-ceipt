@@ -104,15 +104,23 @@ public class MenuActivity extends AppCompatActivity
     // 6/10/2018
     public void fetchProfile(){
 
-        t = (TextView) findViewById(R.id.nav_head_Name);
-        t.setText(Information.authUser.getName());
+//<<<<<<< HEAD
+//        t = (TextView) findViewById(R.id.nav_head_Name);
+//        t.setText(Information.authUser.getName());
+//=======
+        try {
+            TextView t = (TextView) findViewById(R.id.nav_head_Name);
+            t.setText(Information.authUser.getName());
+//>>>>>>> d26349acaa677ee84a080729b32f3eed8a781aee
 
-        ImageView im =  findViewById(R.id.nav_head_image);
-        im.setImageResource(R.drawable.receiptsnap_logo);
+            ImageView im = findViewById(R.id.nav_head_image);
+            im.setImageResource(R.drawable.receiptsnap_logo);
 
-        TextView te = (TextView) findViewById(R.id.nav_head_email);
-        te.setText(Information.authUser.getEmail());
+            TextView te = (TextView) findViewById(R.id.nav_head_email);
+            te.setText(Information.authUser.getEmail());
+        }catch(Exception e){
 
+        }
 
     }
 
@@ -160,6 +168,7 @@ public class MenuActivity extends AppCompatActivity
 
             //When signing out, this prevents the user 'backing' into the app.
             //finish() destroys the home activity as well.
+            Information.authUser.signOut();
             Intent myIntent = new Intent(this, MainActivity.class);
             myIntent.putExtra("finish", true);
             myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
