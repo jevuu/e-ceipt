@@ -235,7 +235,10 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         if(currentUser != null){
+            aUser.createUser();
+            Information.authUser = aUser;
             if(!aUser.isPhone()) {
                 //Saves the username of this user to preferances for next login, clean.
                 SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
@@ -268,8 +271,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy(){
         super.onDestroy();
-      //  FirebaseAuth.getInstance().signOut();
-      //  aUser.mGoogleSignInClient.signOut();
+        FirebaseAuth.getInstance().signOut();
+        aUser.mGoogleSignInClient.signOut();
 
     }
 

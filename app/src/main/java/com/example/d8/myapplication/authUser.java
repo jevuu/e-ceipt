@@ -50,6 +50,14 @@ class authUser extends User{
         this.mAuth = FirebaseAuth.getInstance();
 
     }
+
+    //Signs out the active user
+    public void signOut(){
+        FirebaseAuth.getInstance().signOut();
+         mGoogleSignInClient.signOut();
+
+
+    }
     //Get Firebase UID
     public String getFirebaseUID() {
         return firebaseUID;
