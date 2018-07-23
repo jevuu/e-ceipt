@@ -70,6 +70,19 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
         receiptDate.setText(cDateInString);
 
+        //This accepts an OCR scanned receipt and pre-loads it into the form.
+        Receipt ocrScn = (Receipt)(getIntent().getSerializableExtra("ocrScan"));
+      if(ocrScn != null) {
+          for (int i = 0; i < ocrScn.getItems().size(); i++) {
+
+              System.out.println(ocrScn.getItembyId(i).getItemName() + "--" + ocrScn.getItembyId(i).getItemPrice());
+              newItems.add(ocrScn.getItembyId(i));
+
+          }
+          loadItemObjToListview(newItems);
+          totalCost.setText(String.valueOf(ocrScn.getTotalCost()));
+
+      }
         receiptDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,7 +264,12 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
                         //sendToDB(jsonString, "http://myvmlab.senecacollege.ca:6207/addReceipt.php");
                         Intent homeIntent = new Intent(AddReceiptFormActivity.this, MenuActivity.class);
+                        homeIntent.putExtra("finish", true);
+                        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(homeIntent);
+                        finish();
 
                     }catch(JSONException e){
                         Log.e("EXCEPTION1:", e.toString());

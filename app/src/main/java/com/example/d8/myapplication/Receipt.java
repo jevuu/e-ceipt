@@ -1,8 +1,9 @@
 package com.example.d8.myapplication;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Receipt {
+public class Receipt implements Serializable {
     private String receipId;
     private String name;
     private String date;
@@ -14,6 +15,9 @@ public class Receipt {
     private ArrayList<Item> items = new ArrayList<Item>();
 
     //getter
+    public Item getItembyId(int id){
+        return items.get(id);
+    }
     public String getReceipId() {
         return receipId;
     }
@@ -93,7 +97,7 @@ public class Receipt {
     }
 
 
-    public class Item{
+    public class Item implements  Serializable{
         public String itemName;
         public String itemDesc;
         public double itemPrice;

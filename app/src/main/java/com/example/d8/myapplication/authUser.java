@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import static android.content.ContentValues.TAG;
 import static java.security.AccessController.getContext;
@@ -24,6 +25,17 @@ class authUser extends User{
     //==========Connection Classes=============//
     FirebaseAuth mAuth; //Firebase Connection
     FirebaseUser mUser; //The active user
+
+
+    public boolean isPhone() {
+        return isPhone;
+    }
+
+    public void setPhone(boolean phone) {
+        isPhone = phone;
+    }
+
+    boolean isPhone = false;
     GoogleSignInClient mGoogleSignInClient; //Google connection
     String authError = "";
 
@@ -36,6 +48,14 @@ class authUser extends User{
 
     authUser() {
         this.mAuth = FirebaseAuth.getInstance();
+
+    }
+
+    //Signs out the active user
+    public void signOut(){
+        FirebaseAuth.getInstance().signOut();
+         mGoogleSignInClient.signOut();
+
 
     }
     //Get Firebase UID
@@ -69,18 +89,29 @@ class authUser extends User{
         MUser();
 
         if (mUser != null) {
-            String name = mUser.getEmail();
-            String[] n = name.split("@");
+            if(!isPhone()) {
+                String name = mUser.getEmail();
+                String[] n = name.split("@");
+                //Set Attributes
+                setUserId(n[0]);
+                setEmail(name);
+                setName(mUser.getDisplayName());
 
-            //Set Attributes
-            setUserId(n[0]);
-            setEmail(name);
-            setName(mUser.getDisplayName());
+            }else{
+
+            String name = mUser.getPhoneNumber();
+            setUserId(name);
+            setEmail(mUser.getPhoneNumber());
+                if(mUser.getDisplayName() == null) {
+                    setName("Friendly Mobile User :)");
+
+                }else{
+                    setName(mUser.getDisplayName());
+                }
+            }
             setFirebaseUID();
-
             photoUrl = mUser.getPhotoUrl();
-
-            System.out.println("Account is as follows:" + getUserId() + " " + getEmail() + " " + photoUrl);
+            System.out.println("Account is as follows:" + getUserId() + " " + getEmail() + " " + photoUrl + " " + getName());
         }
 
     }
@@ -105,7 +136,7 @@ class authUser extends User{
                     });
 
         }
-        if( (email != null && !email.isEmpty()) && !email.equals(getEmail())){
+        if( (email != null && !email.isEmpty()) && !email.equals(getEmail()) && !isPhone()){
             mUser.updateEmail(email)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
