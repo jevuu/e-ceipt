@@ -83,26 +83,32 @@ public class Receipt implements Serializable {
         this.items = items;
     }
 
-    public void addItem(String itemName, String itemDesc, double itemPrice){
-        Item item = new Item(itemName, itemDesc, itemPrice);
+    public void addItem(String itemName, String itemDesc, double itemPrice, String itemID){
+        Item item = new Item(itemName, itemDesc, itemPrice, itemID);
         items.add(item);
     }
 
     public void setCategory(String category) {
         this.category = category;
     }
-    
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
 
+//<<<<<<< HEAD
+//    public class Item{
+//=======
     public class Item implements  Serializable{
         public String itemName;
         public String itemDesc;
         public double itemPrice;
+        public String itemID;
 
-        public Item(String itemName, String itemDesc, double itemPrice) {
+
+        public Item(String itemName, String itemDesc, double itemPrice, String itemID) {
+            this.itemID = itemID;
             this.itemName = itemName;
             this.itemDesc = itemDesc;
             this.itemPrice = itemPrice;
@@ -136,6 +142,14 @@ public class Receipt implements Serializable {
 
         public void setItemPrice(double itemPrice) {
             this.itemPrice = itemPrice;
+        }
+
+        public String getItemID() {
+            return itemID;
+        }
+
+        public void setItemID(String itemID) {
+            this.itemID = itemID;
         }
     }
 

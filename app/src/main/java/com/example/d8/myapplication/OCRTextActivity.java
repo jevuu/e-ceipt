@@ -415,8 +415,15 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                             nx.setTotalCost(tVal);
                         }else if(distance(t.toLowerCase(), "tax") <= 2 || t.toLowerCase().contains("tax")){
                             nx.setTax(tVal);
+//<<<<<<< HEAD
+//                        }
+//
+//                    }else {
+//                        nx.addItem(t, "", tVal,"-1");
+//=======
                         }else {
-                        nx.addItem(t, "", tVal);
+                        nx.addItem(t, "", tVal, "-1");
+//>>>>>>> d26349acaa677ee84a080729b32f3eed8a781aee
                     }
                 }catch(Exception e){
                     System.out.println("\n\n**Error in parseItems!\n\n");
@@ -426,7 +433,7 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                 t = t.replaceAll("\\$", "");
                 t = t.replaceAll("( +)"," ");
 
-                nx.addItem(t, "", 0.00);
+                nx.addItem(t, "", 0.00, "-1");
             }
         }
 

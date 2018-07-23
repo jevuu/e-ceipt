@@ -18,6 +18,8 @@ public class AddReceiptByQR extends AppCompatActivity {
     ListView listView;
     TextView date;
     TextView total_cost;
+    TextView businessName;
+
     Button submitBtn;
     String USERID = Information.authUser.getUserId();
     String USERRECEIPTFILENAME = USERID+Information.RECEIPTSLOCALFILENAME;
@@ -29,41 +31,46 @@ public class AddReceiptByQR extends AppCompatActivity {
         setContentView(R.layout.activity_add_receipt_by_qr);
 
         String receiptIdStr = getIntent().getStringExtra("RECEIPTID_");
-        Toast.makeText(this, "Scanned: " + receiptIdStr, Toast.LENGTH_LONG).show();
-
-        try{
-            receipt = DataController.getReceiptById(Integer.parseInt(receiptIdStr),"http://myvmlab.senecacollege.ca:6207/getOneReceipt.php",AddReceiptByQR.this);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        listView = (ListView)findViewById(R.id.add_receipt_item_list_view);
-        date = (TextView)findViewById(R.id.add_receipt_receipt_detail_date) ;
-        date.setText(receipt.getDate());
 
 
-        total_cost = (TextView)findViewById(R.id.add_receipt_total_cost);
+            try{
+                receipt = DataController.getReceiptById(Integer.parseInt(receiptIdStr),"http://myvmlab.senecacollege.ca:6207/getOneReceipt.php",AddReceiptByQR.this);
 
-        double totalCostInDouble = 0.0;
-
-        totalCostInDouble = receipt.getTotalCost();
-        total_cost.setText(Double.toString(totalCostInDouble));
-
-        loadItemObjToListview(receipt.getItems());
-
-        submitBtn = (Button)findViewById(R.id.add_receipt_qr_btn);
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    DataController.addReceiptToLocal(USERID, receipt,AddReceiptByQR.this);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                Intent intent = new Intent(getBaseContext(),MenuActivity.class);
-                startActivity(intent);
+            }catch (Exception e){
+                e.printStackTrace();
             }
-        });
+
+            listView = (ListView)findViewById(R.id.add_receipt_item_list_view);
+            date = (TextView)findViewById(R.id.add_receipt_receipt_detail_date) ;
+            date.setText(receipt.getDate());
+
+            businessName = (TextView)findViewById(R.id.business_name_in_add_by_qr);
+            businessName.setText(receipt.getBusinessName());
+
+
+            total_cost = (TextView)findViewById(R.id.add_receipt_total_cost);
+
+            double totalCostInDouble = 0.0;
+
+            totalCostInDouble = receipt.getTotalCost();
+            total_cost.setText(Double.toString(totalCostInDouble));
+
+            loadItemObjToListview(receipt.getItems());
+
+            submitBtn = (Button)findViewById(R.id.add_receipt_qr_btn);
+            submitBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try{
+                        DataController.addReceiptToLocal(USERID, receipt,AddReceiptByQR.this);
+                        DataController.addReceiptToDB(receipt,"http://myvmlab.senecacollege.ca:6207/addReceipt.php", AddReceiptByQR.this);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    Intent intent = new Intent(getBaseContext(),MenuActivity.class);
+                    startActivity(intent);
+                }
+            });
 
     }
 

@@ -392,6 +392,21 @@ public class MainActivity extends AppCompatActivity {
         Information.authUser = aUser;
 
 
+//<<<<<<< HEAD
+//
+//        //Saves the username of this user to preferances for next login, clean.
+//        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPref.edit();
+//        editor.putString("pref_username", aUser.getEmail());
+//        editor.apply();
+//
+//        //DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
+//
+//
+//
+//
+//
+//=======
         if(!aUser.isPhone()) {
             //Saves the username of this user to preferances for next login, clean.
             SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
@@ -401,6 +416,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
+//>>>>>>> d26349acaa677ee84a080729b32f3eed8a781aee
         Intent goToReg = new Intent(this, MenuActivity.class);
         goToReg.putExtra("finish", true);
         goToReg.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |

@@ -32,7 +32,7 @@ public class MenuActivity extends AppCompatActivity
         SettingFragment.OnFragmentInteractionListener,AboutFragment.OnFragmentInteractionListener,
         HomeFragment.OnFragmentInteractionListener,ChangeThemeFragment.OnFragmentInteractionListener,
         ChangeBGColorFragment.OnFragmentInteractionListener{
-
+    TextView t;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +79,6 @@ public class MenuActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
-
-
     }
 
     @Override
@@ -107,9 +104,14 @@ public class MenuActivity extends AppCompatActivity
     // 6/10/2018
     public void fetchProfile(){
 
+//<<<<<<< HEAD
+//        t = (TextView) findViewById(R.id.nav_head_Name);
+//        t.setText(Information.authUser.getName());
+//=======
         try {
             TextView t = (TextView) findViewById(R.id.nav_head_Name);
             t.setText(Information.authUser.getName());
+//>>>>>>> d26349acaa677ee84a080729b32f3eed8a781aee
 
             ImageView im = findViewById(R.id.nav_head_image);
             im.setImageResource(R.drawable.receiptsnap_logo);
@@ -119,6 +121,12 @@ public class MenuActivity extends AppCompatActivity
         }catch(Exception e){
 
         }
+
+    }
+
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
 
     }
 
