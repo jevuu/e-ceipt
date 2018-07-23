@@ -264,7 +264,12 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
                         //sendToDB(jsonString, "http://myvmlab.senecacollege.ca:6207/addReceipt.php");
                         Intent homeIntent = new Intent(AddReceiptFormActivity.this, MenuActivity.class);
+                        homeIntent.putExtra("finish", true);
+                        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(homeIntent);
+                        finish();
 
                     }catch(JSONException e){
                         Log.e("EXCEPTION1:", e.toString());

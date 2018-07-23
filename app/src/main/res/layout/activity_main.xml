@@ -174,7 +174,7 @@
                             android:hint="@string/main_hint_phone"
                             android:singleLine="true"
                             android:textAlignment="center"
-                            android:textSize="12sp"
+                            android:textSize="10sp"
                             android:textStyle="bold" />
 
                         <EditText

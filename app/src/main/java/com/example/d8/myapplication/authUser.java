@@ -93,7 +93,7 @@ class authUser extends User{
 
             String name = mUser.getPhoneNumber();
             setUserId(name);
-            setEmail("N/A");
+            setEmail(mUser.getPhoneNumber());
                 if(mUser.getDisplayName() == null) {
                     setName("Friendly Mobile User :)");
 

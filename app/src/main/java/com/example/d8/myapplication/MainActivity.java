@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     EditText phoneET;
     EditText codeET;
 
+    FirebaseAuth mAuth;
+
     private String mVerificationId;
     static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
     boolean mVerificationInProgress = false;
@@ -71,10 +73,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (!isTaskRoot()) {
+            finish();
+            return;
+        }
 
-
+        mAuth = FirebaseAuth.getInstance();
 
         //Firebase
         aUser = new authUser();
@@ -227,8 +234,29 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in
-        FirebaseAuth.getInstance().signOut();
-        aUser.mGoogleSignInClient.signOut();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            if(!aUser.isPhone()) {
+                //Saves the username of this user to preferances for next login, clean.
+                SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("pref_username", aUser.getEmail());
+                editor.apply();
+
+            }
+            DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
+            Intent goToReg = new Intent(this, MenuActivity.class);
+            goToReg.putExtra("finish", true);
+            goToReg.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(goToReg);
+            finish();
+
+
+        }
+       // FirebaseAuth.getInstance().signOut();
+       // aUser.mGoogleSignInClient.signOut();
 
         if (mVerificationInProgress && validatePhoneNumber()) {
             startPhoneNumberVerification(phoneET.getText().toString());
@@ -240,8 +268,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        FirebaseAuth.getInstance().signOut();
-        aUser.mGoogleSignInClient.signOut();
+      //  FirebaseAuth.getInstance().signOut();
+      //  aUser.mGoogleSignInClient.signOut();
 
     }
 
@@ -332,10 +360,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Google Auth Passed",
                                     Toast.LENGTH_SHORT).show();
                             aUser.createUser();
-
-
-
-                            aUser.contactSql_log(getBaseContext());
+                            aUser.contactSql_reg(getBaseContext());
 
                             Information.authUser = aUser;
                             onReady(this, "a");
@@ -374,7 +399,12 @@ public class MainActivity extends AppCompatActivity {
         }
         DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
         Intent goToReg = new Intent(this, MenuActivity.class);
+        goToReg.putExtra("finish", true);
+        goToReg.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(goToReg);
+        finish();
 
     }
     //Opens the Password Reset Activity

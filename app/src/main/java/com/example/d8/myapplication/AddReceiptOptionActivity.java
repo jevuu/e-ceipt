@@ -42,7 +42,12 @@ public class AddReceiptOptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent addRecpt = new Intent(getBaseContext(), OCRTextActivity.class);
+                addRecpt.putExtra("finish", true);
+                addRecpt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(addRecpt);
+                finish();
 
             }
         });
