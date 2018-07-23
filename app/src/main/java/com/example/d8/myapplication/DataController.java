@@ -1018,7 +1018,7 @@ public class DataController {
          return result;
      }
 
-    //delete local receipts data file
+    //delete local file with receipts' information as json
     public static void deleteLocalFile(Context ctx){
         String dir = ctx.getFilesDir().getAbsolutePath();
         Log.i("FilePath", dir);
