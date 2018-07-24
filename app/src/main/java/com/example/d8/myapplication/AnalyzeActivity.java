@@ -1,21 +1,15 @@
 package com.example.d8.myapplication;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Pair;
-import android.view.KeyCharacterMap;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class AnalyzeActivity extends AppCompatActivity {
 
+    //Declare TextView. I like the purple to differentiate from other variables
     TextView averageTotal;
     TextView mostExpensiveTransaction;
     TextView mostExpensiveItem;
@@ -32,6 +26,15 @@ public class AnalyzeActivity extends AppCompatActivity {
         mostExpensiveItem           = (TextView)findViewById(R.id.mostExpensiveItem);
         analyzeListView             = (ListView)findViewById(R.id.analyze_list_view);
 
+        //Declare and initialize variables
+        int receiptCount            = 0;
+        double accumulativeTotal    = 0.0;
+        double greatestTotal        = 0.0;
+        double priciestItem         = 0.0;
+        double currentReceiptTotal;
+        double currentItemPrice;
+        int currentReceiptCatID;
+
         ArrayList<Receipt> receiptList      = Information.receipts;
         ArrayList<Receipt.Item> itemList;
         ArrayList<String> categoryList      = Information.categories;
@@ -41,19 +44,11 @@ public class AnalyzeActivity extends AppCompatActivity {
             valueList.add(0.0);
         }
 
-        int receiptCount            = 0;
-        double accumulativeTotal    = 0.0;
-        double greatestTotal        = 0.0;
-        double priciestItem         = 0.0;
-        double currentReceiptTotal;
-        double currentItemPrice;
-        int currentReceiptCatID;
-
         //Calculate values
         for(Receipt receipt:receiptList){
             receiptCount ++;
             currentReceiptTotal = receipt.getTotalCost();
-            currentReceiptCatID   = categoryList.indexOf(receipt.getCategory());
+            currentReceiptCatID = categoryList.indexOf(receipt.getCategory());
             accumulativeTotal  += currentReceiptTotal;
 
             if(greatestTotal < currentReceiptTotal){

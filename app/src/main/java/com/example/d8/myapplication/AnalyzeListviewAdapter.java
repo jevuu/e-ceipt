@@ -8,21 +8,20 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Locale;
 
 public class AnalyzeListviewAdapter extends BaseAdapter {
     private Context context;
     private List<String> categories;
     private List<Double> values;
 
-
+    TextView analyzeLabel;
+    TextView analyzeValue;
 
     public AnalyzeListviewAdapter(Context context, List<String> categories, List<Double> values) {
         this.context    = context;
         this.categories = categories;
         this.values     = values;
     }
-
 
     @Override
     public int getCount() {
@@ -46,8 +45,8 @@ public class AnalyzeListviewAdapter extends BaseAdapter {
         String labelName;
         double labelValue;
 
-        TextView analyzeLabel = (TextView) v.findViewById(R.id.analyze_label);
-        TextView analyzeValue = (TextView) v.findViewById(R.id.analyze_value);
+        analyzeLabel = (TextView) v.findViewById(R.id.analyze_label);
+        analyzeValue = (TextView) v.findViewById(R.id.analyze_value);
 
         if(position != 0) {
             labelName = categories.get(position);
