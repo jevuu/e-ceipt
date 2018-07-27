@@ -18,6 +18,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -79,6 +80,14 @@
                 android:textAlignment="viewEnd"
                 android:textColor="@color/colorEceiptOrange"
                 android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/pb3"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/main_btn_login"

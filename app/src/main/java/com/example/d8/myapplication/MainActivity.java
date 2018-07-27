@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
 import android.text.TextUtils;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -59,12 +62,15 @@ public class MainActivity extends AppCompatActivity {
     Button btnSign;
     Button btnGms;
 
+    ProgressBar pb;
     Button btnPhn;
     Button btnCode;
     LinearLayout ltn;
     EditText phoneET;
     EditText codeET;
 
+
+    Boolean ltnVisFlag = false; //Flag for button visibility
     FirebaseAuth mAuth;
 
     private String mVerificationId;
@@ -84,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        pb = findViewById(R.id.pb3);
         bg = findViewById(R.id.cln);
         GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
         backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptDeepRed),getResources().getColor(R.color.colorEceiptOrange) });
@@ -300,7 +307,20 @@ public class MainActivity extends AppCompatActivity {
     }
     //Reveal the Phone Auth UI
     public void onPhoneAuth(View view){
-        ltn.setVisibility(View.VISIBLE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            TransitionManager.beginDelayedTransition(bg);
+        }
+
+
+        ///Hide or display the phone auth as pressed
+        if(!ltnVisFlag) {
+            ltn.setVisibility(View.VISIBLE);
+            ltnVisFlag = true;
+        }else{
+            ltn.setVisibility(View.GONE);
+            ltnVisFlag = false;
+        }
 
     }
 
@@ -406,21 +426,6 @@ public class MainActivity extends AppCompatActivity {
         Information.authUser = aUser;
 
 
-//<<<<<<< HEAD
-//
-//        //Saves the username of this user to preferances for next login, clean.
-//        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPref.edit();
-//        editor.putString("pref_username", aUser.getEmail());
-//        editor.apply();
-//
-//        //DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
-//
-//
-//
-//
-//
-//=======
         if(!aUser.isPhone()) {
             //Saves the username of this user to preferances for next login, clean.
             SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
@@ -430,7 +435,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
-//>>>>>>> d26349acaa677ee84a080729b32f3eed8a781aee
+
         Intent goToReg = new Intent(this, MenuActivity.class);
         goToReg.putExtra("finish", true);
         goToReg.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
@@ -471,7 +476,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
 
             btnSign.setText("Please Wait...");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                TransitionManager.beginDelayedTransition(bg);
+            }
+            userET.setVisibility(View.GONE);
+            passET.setVisibility(View.GONE);
+            pb.setVisibility(View.VISIBLE);
             btnSign.setClickable(false);
+
 
             //Firebase Authentication
             aUser.mAuth.signInWithEmailAndPassword(userString, passString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -484,6 +496,7 @@ public class MainActivity extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
+
                         Toast.makeText(MainActivity.this, "Welcome to ECeipt",
                                 Toast.LENGTH_SHORT).show();
 
@@ -496,6 +509,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
+
                         //Send Validation Email
                         aUser.sendVerification();
 
@@ -506,6 +520,14 @@ public class MainActivity extends AppCompatActivity {
                         btnSign.setText(getString(R.string.main_login));
                         btnSign.setClickable(true);
                     }
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        TransitionManager.beginDelayedTransition(bg);
+                    }
+                    userET.setVisibility(View.VISIBLE);
+                    passET.setVisibility(View.VISIBLE);
+                    pb.setVisibility(View.GONE);
+
                 }
                 //===================================//
 
