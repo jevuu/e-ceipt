@@ -3,7 +3,12 @@ package com.example.d8.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +19,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -71,11 +77,19 @@ public class MainActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "prefs_authUser";
     private static final String PREF_USERNAME = "";
 
+    private ConstraintLayout bg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        bg = findViewById(R.id.cln);
+        GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
+        backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptDeepRed),getResources().getColor(R.color.colorEceiptOrange) });
+
+
+
         if (!isTaskRoot()) {
             finish();
             return;
