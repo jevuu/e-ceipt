@@ -118,4 +118,13 @@
 
     <string name="update_item_btn">Update item</string>
 
+    <string-array name="analyzeDays">
+        <item>This week</item>
+        <item>This month</item>
+        <item>This year</item>
+        <item>Last 7 days</item>
+        <item>Last 30 days</item>
+        <item>All time</item>
+    </string-array>
+
 </resources>
