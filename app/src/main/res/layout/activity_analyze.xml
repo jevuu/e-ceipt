@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_splash"
+        android:orientation="vertical"
+        tools:context="com.example.d8.myapplication.ReceiptDetailActivity">
+
+        <!--<ImageView-->
+        <!--android:id="@+id/business_logo"-->
+        <!--android:layout_width="220dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="22dp"-->
+        <!--android:layout_marginBottom="12dp"-->
+        <!--android:scaleType="centerInside"-->
+        <!--app:srcCompat="@drawable/walmart_logo"-->
+        <!--tools:layout_editor_absoluteX="151dp"-->
+        <!--tools:layout_editor_absoluteY="88dp" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="19dp"
+            android:paddingBottom="0dp"
+            android:textSize="38dp"
+            android:textStyle="bold"
+            android:text="Analysis"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingVertical="5dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorEceiptWhite"
+                android:text="Use receipts from: "/>
+            <Spinner
+                android:id="@+id/analyze_day_spinner"
+                android:layout_width="150dp"
+                android:layout_height="40dp">
+            </Spinner>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".50"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:background="@android:color/holo_blue_dark" />
+
+            <LinearLayout
+                android:id="@+id/layout_item_list"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".50"
+                android:background="@color/colorEceiptWhite"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@android:color/holo_blue_dark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="20dp"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:text="Spent This Period: "/>
+
+                    <TextView
+                        android:id="@+id/periodTotal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingVertical="5dp"
+                        android:paddingRight="20dp"
+                        android:textSize="20dp"
+                        android:textAlignment="textEnd"
+                        android:text="$0.00"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/holo_blue_dark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="20dp"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:text="Most Expensive Transaction: "/>
+
+                    <TextView
+                        android:id="@+id/mostExpensiveTransaction"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingVertical="5dp"
+                        android:paddingRight="20dp"
+                        android:textSize="20dp"
+                        android:textAlignment="textEnd"
+                        android:text="$0.00"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/holo_blue_dark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="20dp"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:text="Most Expensive Item: "/>
+
+                    <TextView
+                        android:id="@+id/mostExpensiveItem"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingVertical="5dp"
+                        android:paddingRight="20dp"
+                        android:textSize="20dp"
+                        android:textAlignment="textEnd"
+                        android:text="$0.00"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/holo_blue_dark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="20dp"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:text="Category Breakdown"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/holo_blue_dark" />
+
+                <ListView
+                    android:id="@+id/analyze_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight=".40"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@android:color/holo_blue_dark" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                android:background="@android:color/holo_blue_dark" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:orientation="horizontal">
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
