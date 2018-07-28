@@ -121,7 +121,7 @@
                     android:gravity="end"
                     android:text="@string/receipt_cost_label_in_listview"
                     android:textColor="@color/colorEceiptDarkGrey"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -201,32 +201,21 @@
         android:layout_marginTop="10dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:weightSum="4">
+        android:weightSum="1">
 
         <Button
             android:id="@+id/analyze_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="3"
-            android:background="@drawable/btn_roundcorner"
-            android:text="@string/analyze_btn"
-            android:textColor="@color/colorEceiptWhite"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/add_btn"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@drawable/btn_roundcorner"
-            android:text="Add"
+            android:drawableStart="@drawable/analyze"
+            android:paddingRight="20dp"
+            android:paddingStart="15dp"
+            android:text="@string/analyze_btn"
             android:textColor="@color/colorEceiptWhite"
             android:textSize="18sp"
             android:textStyle="bold" />

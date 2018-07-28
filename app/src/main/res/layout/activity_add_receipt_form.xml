@@ -184,7 +184,9 @@
                     android:id="@+id/add_item_listview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:divider="@android:color/holo_blue_bright"
+                    android:dividerHeight="2dp">
 
 
                 </ListView>

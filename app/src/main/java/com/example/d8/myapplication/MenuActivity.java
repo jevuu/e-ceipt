@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MenuActivity extends AppCompatActivity
@@ -33,6 +35,7 @@ public class MenuActivity extends AppCompatActivity
         HomeFragment.OnFragmentInteractionListener,ChangeThemeFragment.OnFragmentInteractionListener,
         ChangeBGColorFragment.OnFragmentInteractionListener{
     TextView t;
+    private LinearLayout bg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,7 @@ public class MenuActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        bg = findViewById(R.id.lnb);
 
         Fragment fragment=null;
         Class fragmentClass = null;
@@ -82,12 +86,44 @@ public class MenuActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        bg = findViewById(R.id.lnb);
+        SharedPreferences colorBg  = getSharedPreferences("Settings", MODE_PRIVATE);
+        int colourBg = colorBg.getInt("bg", 0);
+        if(colourBg != 0 && bg != null){
+            GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
+            backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
+        }
+
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Fragment fragment=null;
+            Class fragmentClass;
+            fetchProfile();
+
+            fragmentClass = HomeFragment.class;
+            try
+            {
+                fragment = (Fragment)fragmentClass.newInstance();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            FragmentManager fm=getSupportFragmentManager();
+            FragmentTransaction ft=fm.beginTransaction();
+            ft.replace(R.id.fragmentContent, fragment);
+            ft.commit();
+            
+
         }
     }
 
@@ -104,14 +140,9 @@ public class MenuActivity extends AppCompatActivity
     // 6/10/2018
     public void fetchProfile(){
 
-//<<<<<<< HEAD
-//        t = (TextView) findViewById(R.id.nav_head_Name);
-//        t.setText(Information.authUser.getName());
-//=======
         try {
             TextView t = (TextView) findViewById(R.id.nav_head_Name);
             t.setText(Information.authUser.getName());
-//>>>>>>> d26349acaa677ee84a080729b32f3eed8a781aee
 
             ImageView im = findViewById(R.id.nav_head_image);
             im.setImageResource(R.drawable.receiptsnap_logo);
@@ -140,7 +171,8 @@ public class MenuActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent goOption = new Intent(this, AddReceiptOptionActivity.class);
+            startActivity(goOption);
         }
         return super.onOptionsItemSelected(item);
     }

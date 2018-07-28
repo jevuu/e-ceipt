@@ -59,7 +59,7 @@
     <string name="total_cost_label">Total cost($):</string>
 
     <string name="add_item_btn">Add</string>
-    <string name="total_cost_input_hint">100.00</string>
+    <string name="total_cost_input_hint">0.00</string>
     <string name="item_price_input_hint">Item price</string>
     <string name="item_name_input_hint">Item name</string>
     <string name="receipt_date_input_hint">Enter receipt creation date</string>
@@ -117,6 +117,8 @@
 
 
     <string name="update_item_btn">Update item</string>
+    <string name="ocr_cancel">Cancel</string>
+    <string name="addrecp_btn">Add Receipt</string>
 
     <string-array name="analyzeDays">
         <item>This week</item>

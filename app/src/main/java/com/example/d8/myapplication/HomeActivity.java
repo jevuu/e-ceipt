@@ -84,12 +84,6 @@ public class HomeActivity extends AppCompatActivity {
         try{
             String json = DataController.readJsonFile(Information.RECEIPTSLOCALFILENAME, this);
             Log.i("JSONHOME", json);
-//            if(Information.receipts.isEmpty()){
-//                DataController.loadReceiptsObj(json);
-//                loadReceiptObjToListView();
-//            }else{
-//
-//            }
             if(!Information.receipts.isEmpty()){
                 Information.receipts.clear();
             }
@@ -110,14 +104,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        btn_add = (Button)findViewById(R.id.add_btn);
-        btn_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent addOption = new Intent(getBaseContext(),AddReceiptOptionActivity.class);
-                startActivity(addOption);
-            }
-        });
 
     }
     @Override
@@ -133,6 +119,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
+
 
     private void initCustomSpinner() {
         //Set spinner for day number select
