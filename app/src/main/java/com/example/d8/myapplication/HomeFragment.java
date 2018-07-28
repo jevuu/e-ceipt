@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -57,6 +58,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     Button btn_rec;
     ListView listView=null;
     TextView receiptsTotalCost;
+    LinearLayout li;
+
 
 
     private String daysSpinnerSelect = "All receipts";
@@ -102,8 +105,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         super.onCreate(savedInstanceState);
 
-
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -129,6 +130,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         btn_add.setOnClickListener(this);
         btn_rec = (Button) v.findViewById(R.id.analyze_btn);
         btn_rec.setOnClickListener(this);
+        //li = (LinearLayout)v.findViewById(R.id.home_receipt_list_layout);
+        //li.setBackgroundColor(Color.rgb(99, 12, 11));
 
         //getData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
         //getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");

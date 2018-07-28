@@ -45,6 +45,7 @@ public class ModifyReceiptActivity extends AppCompatActivity {
     ListView listView;
 
     ArrayList<String> resourceCate = new ArrayList<String>();
+//    ArrayList<Receipt.Item>receiptItems = new ArrayList<Receipt.Item>();
 
     String category = "No category";
     String temp = "";
@@ -67,6 +68,7 @@ public class ModifyReceiptActivity extends AppCompatActivity {
         Log.i("INDEX", index);
 
         receipt  = Information.receipts.get(Integer.parseInt(index));
+
 
 
         companyName = (EditText)findViewById(R.id.company_name);
@@ -123,6 +125,45 @@ public class ModifyReceiptActivity extends AppCompatActivity {
                 Receipt.Item item= receipt.getItems().get(position);
                 itemName.setText(item.itemName);
                 itemPrice.setText(Double.toString(item.itemPrice));
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog alertDialog = new AlertDialog.Builder(ModifyReceiptActivity.this).create();
+                alertDialog.setTitle("Delete item");
+                alertDialog.setMessage("Do you want to delete this item?");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                receipt.getItems().remove(position);
+                                loadItemObjToListview(receipt.getItems());
+
+                                double totalCostInDouble = 0.0;
+                                for(int i=0; i<receipt.getItems().size(); i++){
+                                    if(receipt.getItems().get(i).getItemPrice()==-1){
+                                        totalCostInDouble+=0.00;
+                                    }else{
+                                        totalCostInDouble+=receipt.getItems().get(i).getItemPrice();
+                                    }
+
+                                }
+                                totalCost.setText(Double.toString(totalCostInDouble));
+
+                                dialog.dismiss();
+                            }
+                        });
+
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancle", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                alertDialog.show();
+
+                return true;
             }
         });
 
