@@ -167,7 +167,6 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                         Intent.FLAG_ACTIVITY_CLEAR_TASK |
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(myIntent);
-                finish();
                 break;
             case R.id.ocr_executePhoto:
                takePhoto();

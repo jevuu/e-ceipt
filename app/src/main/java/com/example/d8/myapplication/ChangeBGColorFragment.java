@@ -85,9 +85,10 @@ public class ChangeBGColorFragment extends Fragment {
                 //getActivity().recreate();
 
                 //Save color to shared preferences
+
                 SharedPreferences settings = getActivity().getSharedPreferences("Settings",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=settings.edit();
-                editor.putInt("Background_Color",color);
+                editor.putInt("bg",color);
                 editor.commit();
 
             }

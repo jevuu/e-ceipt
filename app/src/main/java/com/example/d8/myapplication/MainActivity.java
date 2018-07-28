@@ -92,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         pb = findViewById(R.id.pb3);
         bg = findViewById(R.id.cln);
-        GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
-        backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptDeepRed),getResources().getColor(R.color.colorEceiptOrange) });
+
 
 
 
@@ -137,6 +136,13 @@ public class MainActivity extends AppCompatActivity {
         String remember = sharedPref.getString("pref_username", "");
         if(!remember.isEmpty()){
             userET.setText(remember);
+        }
+
+        SharedPreferences colorBg  = getSharedPreferences("Settings", MODE_PRIVATE);
+        int colourBg = colorBg.getInt("bg", 0);
+        if(colourBg != 0){
+            GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
+            backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
         }
 
         if (savedInstanceState != null) {

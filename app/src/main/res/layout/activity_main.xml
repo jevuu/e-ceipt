@@ -125,16 +125,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:paddingBottom="10dp"-->
-            <!--android:paddingTop="10dp">-->
-
-
-            <!--</LinearLayout>-->
 
             <Button
                 android:id="@+id/main_phone"

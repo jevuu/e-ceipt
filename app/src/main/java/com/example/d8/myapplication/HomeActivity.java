@@ -2,7 +2,9 @@ package com.example.d8.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.icu.text.IDNA;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -54,6 +57,8 @@ public class HomeActivity extends AppCompatActivity {
     Button btn_add ;
     //String RECEIPTDATAFILE = "_receipts.txt";
 
+
+    private LinearLayout bg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +67,19 @@ public class HomeActivity extends AppCompatActivity {
         Log.i("SignInByUser: ", username);
         Log.i("UserFirebaseUID: ", userFirebaseUID);
         Log.i("UserEmail: ", email);
-
+        bg = findViewById(R.id.lnb);
         listView = (ListView)findViewById(R.id.receipts_list_view);
 
         //DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
 
         initCustomSpinner();
+        //Sets the colour of the background if lost
+        SharedPreferences colorBg  = getSharedPreferences("Settings", MODE_PRIVATE);
+        int colourBg = colorBg.getInt("bg", 0);
+        if(colourBg != 0){
+            GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
+            backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
+        }
 
         try{
             String json = DataController.readJsonFile(Information.RECEIPTSLOCALFILENAME, this);
@@ -108,7 +120,19 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        SharedPreferences colorBg  = getSharedPreferences("Settings", MODE_PRIVATE);
+        int colourBg = colorBg.getInt("bg", 0);
+        if(colourBg != 0){
+            GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
+            backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
+        }
+
+
+    }
 
     private void initCustomSpinner() {
         //Set spinner for day number select
