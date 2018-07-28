@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 startActivity(goToAdd);
                 break;
             case R.id.analyze_btn:
-                Intent goToRec = new Intent(getActivity(), AddReceiptFormActivity.class);
+                Intent goToRec = new Intent(getActivity(), AnalyzeActivity.class);
                 startActivity(goToRec);
             default:
                 break;

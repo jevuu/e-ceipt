@@ -9,6 +9,7 @@
 /build
 /captures
 .externalNativeBuild
+oldPHP
 PHP/conn.php
 app/google-services.json
 .git.zip
