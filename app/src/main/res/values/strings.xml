@@ -76,9 +76,9 @@
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="AppLevel">0.1 - Alpha</string>
-    <string name="about_lastCheck">Last Checked:</string>
-    <string name="about_lastCheckDate">Never</string>
+    <string name="AppLevel">1.0 - Initial</string>
+    <string name="about_lastCheck">Last Release:</string>
+    <string name="about_lastCheckDate">Aug 1st 2018</string>
     <string name="about_aboutTitle">About Us</string>
     <string name="about_TitleDesc">Just some information about your App</string>
     <string name="bg_Title">Select Background Colour</string>
@@ -109,14 +109,22 @@
     <string name="ocr_tip1">Take a Clear Photo with lots of light</string>
     <string name="ocr_tip2">Photo only the items and costs for best results. Hide any unneeded text. </string>
     <string name="ocr_tip3">Receipt Scanning has <b>limited accuracy</b>. You can correct your results/add missing information as needed.</string>
-    <string name="main_hint_code" >Security Code</string>
+    <string name="main_hint_code">Security Code</string>
     <string name="main_hint_phone">Phone: (Area Code)(Phone Num)</string>
     <string name="main_phoneAlt">Standard SMS Rates may apply!</string>
     <string name="main_phone_b1">(Re)Send SMS Code</string>
     <string name="main_phone_b2">Confirm Code</string>
 
 
-
     <string name="update_item_btn">Update item</string>
+
+    <string-array name="analyzeDays">
+        <item>This week</item>
+        <item>This month</item>
+        <item>This year</item>
+        <item>Last 7 days</item>
+        <item>Last 30 days</item>
+        <item>All time</item>
+    </string-array>
 
 </resources>
