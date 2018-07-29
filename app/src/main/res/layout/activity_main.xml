@@ -172,6 +172,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="@string/main_hint_phone"
+                            android:inputType="number"
                             android:singleLine="true"
                             android:textAlignment="center"
                             android:textSize="10sp"
@@ -189,7 +190,7 @@
                             android:textAlignment="center"
                             android:textSize="12sp"
                             android:textStyle="bold"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout

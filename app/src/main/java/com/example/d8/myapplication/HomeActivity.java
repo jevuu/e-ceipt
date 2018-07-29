@@ -7,8 +7,10 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.icu.text.IDNA;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -106,6 +108,12 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -259,6 +267,7 @@ public class HomeActivity extends AppCompatActivity {
             Log.i("RECEIPTSLOADING:", receipts.toString());
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, receipts);
+
             listView.setAdapter(arrayAdapter);
         }
     }

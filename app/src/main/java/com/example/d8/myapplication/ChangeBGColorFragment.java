@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.madrapps.eyedropper.EyeDropper;
 
@@ -82,10 +83,9 @@ public class ChangeBGColorFragment extends Fragment {
             {
                 FrameLayout fl=getActivity().findViewById(R.id.fragmentContent);
                 fl.setBackgroundColor(color);
-                //getActivity().recreate();
-
                 //Save color to shared preferences
-
+                Toast.makeText(getActivity(), "Changes will be reflected in your next sign-in!",
+                        Toast.LENGTH_SHORT).show();
                 SharedPreferences settings = getActivity().getSharedPreferences("Settings",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=settings.edit();
                 editor.putInt("bg",color);

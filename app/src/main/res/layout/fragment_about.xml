@@ -91,11 +91,11 @@
                 android:id="@+id/textViewLastCheck"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/about_lastCheckDate"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                tools:text="@string/about_lastCheckDate" />
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>

@@ -82,6 +82,13 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        bg = findViewById(R.id.lnb);
+        SharedPreferences colorBg  = getSharedPreferences("Settings", MODE_PRIVATE);
+        int colourBg = colorBg.getInt("bg", 0);
+        if(colourBg != 0 && bg != null){
+            GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
+            backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
+        }
 
     }
 
@@ -122,7 +129,7 @@ public class MenuActivity extends AppCompatActivity
             FragmentTransaction ft=fm.beginTransaction();
             ft.replace(R.id.fragmentContent, fragment);
             ft.commit();
-            
+
 
         }
     }

@@ -224,14 +224,15 @@
                 android:background="@android:color/holo_green_light"
                 android:drawableStart="@android:drawable/ic_menu_save"
                 android:text="@string/ocr_complete"
-                android:textColor="@color/colorEceiptWhite" />
+                android:textColor="@color/colorEceiptWhite"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/ocr_executePhoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/btn_roundcorner"
+                android:background="@android:color/holo_green_light"
                 android:drawableStart="@drawable/ic_main_logo"
                 android:paddingStart="8dp"
                 android:text="@string/ocr_TakePhoto"
