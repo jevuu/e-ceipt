@@ -2,7 +2,9 @@ package com.example.d8.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.icu.text.IDNA;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -36,6 +38,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 //The Home activity is implemented by the Home fragment, though to be honest this seems like redundant code.
 //To implement buttons: go to OnClick overide function
@@ -58,9 +62,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     Button btn_rec;
     ListView listView=null;
     TextView receiptsTotalCost;
-    LinearLayout li;
 
-
+    private LinearLayout bg;
 
     private String daysSpinnerSelect = "All receipts";
     private String cateSpinnerSelect = "All receipts";
@@ -77,10 +80,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.add_btn:
-                Intent goToAdd = new Intent(getActivity(), AddReceiptOptionActivity.class);
-                startActivity(goToAdd);
-                break;
             case R.id.analyze_btn:
                 Intent goToRec = new Intent(getActivity(), AnalyzeActivity.class);
                 startActivity(goToRec);
@@ -123,19 +122,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View v=inflater.inflate(R.layout.fragment_home, container, false);
         fragmentView=v;
 
-//        listView = (ListView)v.findViewById(R.id.receipts_list_view);
 
         //Adds OnClick Listeners to the lower buttons
-        btn_add = (Button) v.findViewById(R.id.add_btn);
-        btn_add.setOnClickListener(this);
         btn_rec = (Button) v.findViewById(R.id.analyze_btn);
         btn_rec.setOnClickListener(this);
         //li = (LinearLayout)v.findViewById(R.id.home_receipt_list_layout);
         //li.setBackgroundColor(Color.rgb(99, 12, 11));
 
-        //getData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
-        //getJSON("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php");
-        //DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
+        bg = getActivity().findViewById(R.id.lnb);
+        SharedPreferences colorBg  = getActivity().getSharedPreferences("Settings", MODE_PRIVATE);
+        int colourBg = colorBg.getInt("bg", 0);
+        if(colourBg != 0 && bg != null){
+            GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
+            backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
+        }
 
         initCustomSpinner();
 
@@ -216,6 +216,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {

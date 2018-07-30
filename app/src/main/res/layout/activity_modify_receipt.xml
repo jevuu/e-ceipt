@@ -25,76 +25,82 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <TextView
                     android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:padding="10dp"
                     android:text="@string/company_name"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/company_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="@string/business_name_input_hint"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <TextView
                     android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:padding="10dp"
                     android:text="@string/receipt_date"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/receipt_date"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="@string/receipt_date_input_hint"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:padding="10dp"
                     android:text="@string/receipt_category"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/modify_cate_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_weight=".50" />
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -108,10 +114,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:drawableEnd="@android:drawable/star_big_on"
+                    android:drawableStart="@android:drawable/star_big_on"
                     android:padding="10dp"
                     android:paddingBottom="22dp"
                     android:paddingTop="22dp"
                     android:text="@string/item_list_label"
+                    android:textAlignment="center"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -134,9 +143,10 @@
                         android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="1"
-                        android:paddingTop="10dp"
                         android:paddingBottom="5dp"
+                        android:paddingTop="10dp"
                         android:text="@string/item_name_label"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -172,8 +182,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:listSelector="@android:color/holo_red_dark">
-
+                    android:divider="@android:color/holo_blue_bright"
+                    android:dividerHeight="2dp"
+                    android:listSelector="@android:color/holo_red_dark"
+                    android:scrollbars="vertical">
 
 
                 </ListView>
@@ -191,7 +203,8 @@
                         android:layout_weight="3"
                         android:hint="@string/item_name_input_hint"
                         android:inputType="textPersonName"
-                        android:text="" />
+                        android:text=""
+                        android:textSize="12sp" />
 
                     <EditText
                         android:id="@+id/modify_receipt_item_price"
@@ -200,15 +213,18 @@
                         android:layout_weight="2"
                         android:hint="@string/item_price_input_hint"
                         android:inputType="numberDecimal"
-                        android:text="" />
+                        android:text=""
+                        android:textSize="12sp" />
 
                     <Button
                         android:id="@+id/modify_receipt_update_item_btn"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:background="@drawable/btn_roundcorner_alt"
                         android:text="@string/update_item_btn"
-                        android:textSize="10sp"/>
+                        android:textColor="@color/colorEceiptWhite"
+                        android:textSize="10sp" />
                 </LinearLayout>
 
             </LinearLayout>

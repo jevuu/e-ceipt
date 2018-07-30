@@ -47,21 +47,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".WelcomeActivity" />
-        <activity android:name=".ReceiptDetailActivity" />
-        <activity android:name=".PassActivity" />
-        <activity android:name=".AddReceiptOptionActivity" />
-        <activity android:name=".AddReceiptFormActivity" />
+        <activity android:name=".HomeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".RegisterActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".WelcomeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ReceiptDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".PassActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".AddReceiptOptionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".AddReceiptFormActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme" />
-        <activity android:name=".OCRActivity" />
-        <activity android:name=".BarcodeActivity" />
-        <activity android:name=".OCRTextActivity" />
-        <activity android:name=".ReceiptShareActivity" />
+        <activity android:name=".OCRActivity" android:screenOrientation="portrait" />
+        <activity android:name=".BarcodeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".OCRTextActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ReceiptShareActivity" android:screenOrientation="portrait"/>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
