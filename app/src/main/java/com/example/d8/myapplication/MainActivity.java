@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if(currentUser != null && currentUser.isEmailVerified() ){
             aUser.createUser();
             Information.authUser = aUser;
             if(!aUser.isPhone()) {
