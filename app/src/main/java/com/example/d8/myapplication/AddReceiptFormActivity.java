@@ -201,7 +201,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                             }
                         });
 
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancle", new DialogInterface.OnClickListener() {
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -224,9 +224,9 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
                 //validate text input empty
                 if(company.equals("")){
-                    Toast.makeText(getApplicationContext(),"Please enter your name!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Please enter a Business Name",Toast.LENGTH_LONG).show();
                 }else if(tCost.equals("")){
-                    Toast.makeText(getApplicationContext(),"Please enter receipt's total cost!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Please enter the total cost!",Toast.LENGTH_LONG).show();
                 }else{
                     //all input are validated!
                     String receiptsJSON = DataController.readJsonFile(USERRECEIPTFILENAME, AddReceiptFormActivity.this);

@@ -2,11 +2,15 @@ package com.example.d8.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.icu.text.IDNA;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -54,6 +59,8 @@ public class HomeActivity extends AppCompatActivity {
     Button btn_add ;
     //String RECEIPTDATAFILE = "_receipts.txt";
 
+
+    private LinearLayout bg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,22 +69,23 @@ public class HomeActivity extends AppCompatActivity {
         Log.i("SignInByUser: ", username);
         Log.i("UserFirebaseUID: ", userFirebaseUID);
         Log.i("UserEmail: ", email);
-
+        bg = findViewById(R.id.lnb);
         listView = (ListView)findViewById(R.id.receipts_list_view);
 
         //DataController.SyncronizeData("http://myvmlab.senecacollege.ca:6207/getUserReceipts.php", this);
 
         initCustomSpinner();
+        //Sets the colour of the background if lost
+        SharedPreferences colorBg  = getSharedPreferences("Settings", MODE_PRIVATE);
+        int colourBg = colorBg.getInt("bg", 0);
+        if(colourBg != 0){
+            GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
+            backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
+        }
 
         try{
             String json = DataController.readJsonFile(Information.RECEIPTSLOCALFILENAME, this);
             Log.i("JSONHOME", json);
-//            if(Information.receipts.isEmpty()){
-//                DataController.loadReceiptsObj(json);
-//                loadReceiptObjToListView();
-//            }else{
-//
-//            }
             if(!Information.receipts.isEmpty()){
                 Information.receipts.clear();
             }
@@ -98,14 +106,25 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        btn_add = (Button)findViewById(R.id.add_btn);
-        btn_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent addOption = new Intent(getBaseContext(),AddReceiptOptionActivity.class);
-                startActivity(addOption);
-            }
-        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences colorBg  = getSharedPreferences("Settings", MODE_PRIVATE);
+        int colourBg = colorBg.getInt("bg", 0);
+        if(colourBg != 0){
+            GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
+            backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
+        }
+
 
     }
 
@@ -248,6 +267,7 @@ public class HomeActivity extends AppCompatActivity {
             Log.i("RECEIPTSLOADING:", receipts.toString());
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, receipts);
+
             listView.setAdapter(arrayAdapter);
         }
     }

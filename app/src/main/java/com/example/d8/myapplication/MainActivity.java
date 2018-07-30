@@ -92,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         pb = findViewById(R.id.pb3);
         bg = findViewById(R.id.cln);
-        GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
-        backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptDeepRed),getResources().getColor(R.color.colorEceiptOrange) });
+
 
 
 
@@ -137,6 +136,13 @@ public class MainActivity extends AppCompatActivity {
         String remember = sharedPref.getString("pref_username", "");
         if(!remember.isEmpty()){
             userET.setText(remember);
+        }
+
+        SharedPreferences colorBg  = getSharedPreferences("Settings", MODE_PRIVATE);
+        int colourBg = colorBg.getInt("bg", 0);
+        if(colourBg != 0){
+            GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
+            backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
         }
 
         if (savedInstanceState != null) {
@@ -203,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         aUser.mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -251,12 +258,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //The initial function after onCreate()
+    //This checks for previously logged in users with valid sessions and logs them in.
+
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
         if(currentUser != null){
             aUser.createUser();
             Information.authUser = aUser;
@@ -265,6 +273,13 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("pref_username", aUser.getEmail());
+                editor.apply();
+
+            }else{
+                //Clears the Pref
+                SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("pref_username","");
                 editor.apply();
 
             }
@@ -279,8 +294,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-       // FirebaseAuth.getInstance().signOut();
-       // aUser.mGoogleSignInClient.signOut();
 
         if (mVerificationInProgress && validatePhoneNumber()) {
             startPhoneNumberVerification(phoneET.getText().toString());
@@ -292,8 +305,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        FirebaseAuth.getInstance().signOut();
-        aUser.mGoogleSignInClient.signOut();
 
     }
 
@@ -319,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
             ltnVisFlag = true;
         }else{
             ltn.setVisibility(View.GONE);
+
             ltnVisFlag = false;
         }
 
@@ -329,7 +341,12 @@ public class MainActivity extends AppCompatActivity {
         if (!validatePhoneNumber()) {
             return;
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            TransitionManager.beginDelayedTransition(bg);
+        }
         btnCode.setVisibility(View.VISIBLE);
+        codeET.setVisibility(View.VISIBLE);
+
         String t = phoneET.getText().toString();
         t = "+"+t;
         startPhoneNumberVerification(t);

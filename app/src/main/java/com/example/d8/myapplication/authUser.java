@@ -89,7 +89,7 @@ class authUser extends User{
         MUser();
 
         if (mUser != null) {
-            if(!isPhone()) {
+            if(mUser.getPhoneNumber() == null) {
                 String name = mUser.getEmail();
                 String[] n = name.split("@");
                 //Set Attributes
@@ -99,16 +99,18 @@ class authUser extends User{
 
             }else{
 
-            String name = mUser.getPhoneNumber();
-            setUserId(name);
-            setEmail(mUser.getPhoneNumber());
-                if(mUser.getDisplayName() == null) {
-                    setName("Friendly Mobile User :)");
+                isPhone = true;
+                String name = mUser.getPhoneNumber();
+                setUserId(name);
+                setEmail(mUser.getPhoneNumber());
+                    if(mUser.getDisplayName() == null) {
+                        setName("Friendly Mobile User :)");
 
-                }else{
-                    setName(mUser.getDisplayName());
+                    }else{
+                        setName(mUser.getDisplayName());
+                    }
                 }
-            }
+
             setFirebaseUID();
             photoUrl = mUser.getPhotoUrl();
             System.out.println("Account is as follows:" + getUserId() + " " + getEmail() + " " + photoUrl + " " + getName());

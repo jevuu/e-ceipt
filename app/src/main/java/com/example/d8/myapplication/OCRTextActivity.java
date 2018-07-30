@@ -158,7 +158,6 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.ocr_finish:
 
-
                 //When signing out, this prevents the user 'backing' into the app.
                 //finish() destroys the home activity as well.
                 Intent myIntent = new Intent(this, AddReceiptFormActivity.class);
@@ -167,12 +166,16 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                         Intent.FLAG_ACTIVITY_CLEAR_TASK |
                         Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(myIntent);
-                finish();
                 break;
             case R.id.ocr_executePhoto:
                takePhoto();
                ocr_scn.setEnabled(false);
                break;
+
+            case R.id.ocr_cancel:
+                Intent myIntent2 = new Intent(this, MenuActivity.class);
+                startActivity(myIntent2);
+
             default:
                 break;
         }

@@ -65,7 +65,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
                 AlertDialog alertDialog = new AlertDialog.Builder(ReceiptDetailActivity.this).create();
                 alertDialog.setTitle("Delete receipt");
                 alertDialog.setMessage("Do you want to delete this receipt?");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancle", new DialogInterface.OnClickListener() {
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -189,17 +189,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         total_cost = (TextView)findViewById(R.id.total_cost);
 
         double totalCostInDouble = 0.0;
-//        for(int i=0; i<receipt.getItems().size(); i++){
-//            if(receipt.getItems().get(i).getItemPrice()==-1){
-//                totalCostInDouble+=0.00;
-//            }else{
-//                totalCostInDouble+=receipt.getItems().get(i).getItemPrice();
-//            }
-//
-//        }
-//        if(receipt.getItems().size()==0){
-//            totalCostInDouble = receipt.getTotalCost();
-//        }
+
         totalCostInDouble = receipt.getTotalCost();
         total_cost.setText(Double.toString(totalCostInDouble));
 

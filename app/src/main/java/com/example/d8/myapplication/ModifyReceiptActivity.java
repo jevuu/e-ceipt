@@ -130,30 +130,7 @@ public class ModifyReceiptActivity extends AppCompatActivity {
         updateItemBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-//                if(itemIndex>=0) {
-//                    String itemname = itemName.getText().toString();
-//                    double itemprice = Double.parseDouble(itemPrice.getText().toString());
-//
-//                    Receipt.Item _item = receipt.getItems().get(itemIndex);
-//
-//                    _item.itemName = itemname;
-//                    _item.itemPrice = itemprice;
-//                    loadItemObjToListview(receipt.getItems());
-//
-//                    itemName.setText("");
-//                    itemPrice.setText("");
-//                    itemIndex = -1;
-//                }else
-//                {
-//                    //Update Total Cost
-//                    receipt.setTotalCost(receipt.getTotalCost()+itemprice);
-//
-//                    //Add item
-//                    _item=receipt.new Item();
-//                    _item.itemName = itemname;
-//                    _item.itemPrice = itemprice;
-//                    receipt.getItems().add(_item);
-//                }
+
                 try {
                     String itemname = itemName.getText().toString();
                     double itemprice = Double.parseDouble(itemPrice.getText().toString());
@@ -209,9 +186,9 @@ public class ModifyReceiptActivity extends AppCompatActivity {
 
                 //validate text input empty
                 if(company.equals("")){
-                    Toast.makeText(getApplicationContext(),"Please enter your name!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Please enter a Business name",Toast.LENGTH_LONG).show();
                 }else if(tCost.equals("")){
-                    Toast.makeText(getApplicationContext(),"Please enter receipt's total cost!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Please enter the total cost",Toast.LENGTH_LONG).show();
                 }else{
                     //all input are validated!
                     try{
