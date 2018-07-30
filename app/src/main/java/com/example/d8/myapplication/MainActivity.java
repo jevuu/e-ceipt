@@ -96,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        if (!isTaskRoot()) {
-            finish();
-            return;
-        }
+        //if (!isTaskRoot()) {
+            //finish();
+          //  return;
+        //}
 
         mAuth = FirebaseAuth.getInstance();
 
