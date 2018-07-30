@@ -1,48 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/gradient_splash"
-    tools:context=".ReceiptShareActivity">
+    android:fillViewport="true">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginStart="30dp"
-        android:textSize="26dp"
-        android:textStyle="bold"
-        android:text="Scan QR code to transfer:" />
+        android:orientation="vertical"
+        android:background="@drawable/gradient_splash"
+        tools:context=".ReceiptShareActivity">
 
-    <ImageView
-        android:id="@+id/qr_code_image_view"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="60dp"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:srcCompat="@drawable/receiptsnap_logo"
-        android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="30dp"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:text="Scan QR code to transfer:" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:textSize="26dp"
-        android:textStyle="bold"
-        android:text="Or transfer through Email:" />
+        <ImageView
+            android:id="@+id/qr_code_image_view"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="60dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:srcCompat="@drawable/receiptsnap_logo"
+            android:layout_gravity="center"
+            android:contentDescription="TODO" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="350dp"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_gravity="center"
-        android:drawableStart="@drawable/baseline_mail_outline_black_18dp"
-        android:hint="Please enter email address"
-        android:inputType="textEmailAddress" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:text="Or transfer through Email:" />
+
+        <LinearLayout
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <EditText
+                android:id="@+id/share_email"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_gravity="center"
+                android:drawableStart="@drawable/baseline_mail_outline_black_18dp"
+                android:hint="Please enter email address"
+                android:inputType="textEmailAddress" />
+
+            <Button
+                android:id="@+id/send_email_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send email"
+                android:layout_gravity="end"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

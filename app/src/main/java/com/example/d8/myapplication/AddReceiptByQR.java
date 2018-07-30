@@ -1,6 +1,9 @@
 package com.example.d8.myapplication;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,9 +35,45 @@ public class AddReceiptByQR extends AppCompatActivity {
 
         String receiptIdStr = getIntent().getStringExtra("RECEIPTID_");
 
+        //if app is opened from link, that means there's no EXTRA name "RECEIPTID_"
+        if(receiptIdStr==null){
+            Log.i("receiptIdStr", "NULL");
+
+            //get data from incoming intent
+            Intent intent = getIntent();
+            String action = intent.getAction();
+            Uri data = intent.getData();
+            String dataStr = data.toString();
+            String rId = dataStr.substring("http://www.eceipt.ca/".length());
+            Log.i("INTENTDATA", rId);
+
+            receiptIdStr = rId;
+        }
+
+        //String receiptIdStr = "270";
+
+
+
 
             try{
                 receipt = DataController.getReceiptById(Integer.parseInt(receiptIdStr),"http://myvmlab.senecacollege.ca:6207/getOneReceipt.php",AddReceiptByQR.this);
+
+                if(receipt.getReceipId()==null){
+                    Log.i("RECEIPTIDINOPTION", "Receipt Null");
+                    AlertDialog alertDialog = new AlertDialog.Builder(AddReceiptByQR.this).create();
+                    alertDialog.setTitle("Error");
+                    alertDialog.setMessage("Can't find the receipt!");
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent goToAdd = new Intent(AddReceiptByQR.this, MenuActivity.class);
+                                    startActivity(goToAdd);
+
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
 
             }catch (Exception e){
                 e.printStackTrace();

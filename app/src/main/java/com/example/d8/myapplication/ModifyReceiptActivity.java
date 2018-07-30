@@ -137,6 +137,9 @@ public class ModifyReceiptActivity extends AppCompatActivity {
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                String itemId = receipt.getItems().get(position).getItemID();
+                                Log.i("ITEMREMOVEID", itemId);
+
                                 receipt.getItems().remove(position);
                                 loadItemObjToListview(receipt.getItems());
 
