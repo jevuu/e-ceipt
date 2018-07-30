@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     Button btn_rec;
     ListView listView=null;
     TextView receiptsTotalCost;
+
     private LinearLayout bg;
 
     private String daysSpinnerSelect = "All receipts";
@@ -103,8 +104,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         super.onCreate(savedInstanceState);
 
-
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -127,6 +126,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         //Adds OnClick Listeners to the lower buttons
         btn_rec = (Button) v.findViewById(R.id.analyze_btn);
         btn_rec.setOnClickListener(this);
+        //li = (LinearLayout)v.findViewById(R.id.home_receipt_list_layout);
+        //li.setBackgroundColor(Color.rgb(99, 12, 11));
 
         bg = getActivity().findViewById(R.id.lnb);
         SharedPreferences colorBg  = getActivity().getSharedPreferences("Settings", MODE_PRIVATE);
