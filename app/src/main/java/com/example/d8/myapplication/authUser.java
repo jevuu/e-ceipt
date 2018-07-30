@@ -89,7 +89,9 @@ class authUser extends User{
         MUser();
 
         if (mUser != null) {
-            if(mUser.getPhoneNumber() == null) {
+              String t = mUser.getPhoneNumber();
+              System.out.println("Phone was: " + t);
+           if(t == null || t.isEmpty()) {
                 String name = mUser.getEmail();
                 String[] n = name.split("@");
                 //Set Attributes
@@ -98,7 +100,6 @@ class authUser extends User{
                 setName(mUser.getDisplayName());
 
             }else{
-
                 isPhone = true;
                 String name = mUser.getPhoneNumber();
                 setUserId(name);
