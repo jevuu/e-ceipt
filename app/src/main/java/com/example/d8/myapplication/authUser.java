@@ -98,7 +98,7 @@ class authUser extends User{
                 setUserId(n[0]);
                 setEmail(name);
               String h =  mUser.getDisplayName();
-                if( h != null && h.isEmpty() ) {
+                if( h == null || h.isEmpty() ) {
                     setName(getUserId());
 
                 }else{

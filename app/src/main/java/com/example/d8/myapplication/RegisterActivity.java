@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     authUser a = new authUser();
                                     a.createUser();
-
+                                    Information.authUser = a;
                                     String ab = a.getEmail();
                                     String[] n = ab.split("@");
 

@@ -70,6 +70,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
     int mMonth;
     int mDay;
 
+    boolean ocrFlag = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +90,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
         //This accepts an OCR scanned receipt and pre-loads it into the form.
         Receipt ocrScn = (Receipt)(getIntent().getSerializableExtra("ocrScan"));
       if(ocrScn != null) {
+          ocrFlag = true;
           for (int i = 0; i < ocrScn.getItems().size(); i++) {
 
               System.out.println(ocrScn.getItembyId(i).getItemName() + "--" + ocrScn.getItembyId(i).getItemPrice());
@@ -156,17 +158,19 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                 newItems.add(item);
                 loadItemObjToListview(newItems);
 
-                double totalCostInDouble = 0.0;
-                for(int i=0; i<newItems.size(); i++){
-                    if(newItems.get(i).getItemPrice()==-1){
-                        totalCostInDouble+=0.00;
-                    }else{
-                        totalCostInDouble+=newItems.get(i).getItemPrice();
-                    }
+                if(!ocrFlag) {
+                    double totalCostInDouble = 0.0;
+                    for (int i = 0; i < newItems.size(); i++) {
+                        if (newItems.get(i).getItemPrice() == -1) {
+                            totalCostInDouble += 0.00;
+                        } else {
+                            totalCostInDouble += newItems.get(i).getItemPrice();
+                        }
 
+                    }
+                    String.format("%.2f", totalCostInDouble);
+                    totalCost.setText(String.format("%.2f", totalCostInDouble));
                 }
-                String.format("%.2f",totalCostInDouble);
-                totalCost.setText(String.format("%.2f",totalCostInDouble));
                 itemName.setText("");
                 itemPrice.setText("");
             }
@@ -195,6 +199,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                                     }
 
                                 }
+                                if(!ocrFlag)
                                 totalCost.setText(Double.toString(totalCostInDouble));
 
                                 dialog.dismiss();
