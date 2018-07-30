@@ -89,7 +89,6 @@ class authUser extends User{
         MUser();
 
         if (mUser != null) {
-
             String t = mUser.getPhoneNumber();
             System.out.println("Phone was: " + t);
             if(t == null || t.isEmpty()) {

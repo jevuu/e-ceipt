@@ -93,14 +93,6 @@ public class MainActivity extends AppCompatActivity {
         pb = findViewById(R.id.pb3);
         bg = findViewById(R.id.cln);
 
-
-
-
-        //if (!isTaskRoot()) {
-            //finish();
-          //  return;
-        //}
-
         mAuth = FirebaseAuth.getInstance();
 
         //Firebase
