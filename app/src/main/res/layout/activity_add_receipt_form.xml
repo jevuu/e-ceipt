@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:fillViewport="true">-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:fillViewport="true">-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,28 +15,18 @@
     android:orientation="vertical"
     tools:context=".AddReceiptFormActivity">
 
-<!--<<<<<<< HEAD-->
-
-    <LinearLayout
-        android:id="@+id/add_receipt_form_bg"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        android:orientation="vertical">
-<!--=======-->
-    <!--<ScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="fill"-->
-        <!--android:fillViewport="true">-->
-<!--&gt;>>>>>> 83fd023a1e62567427bf10b8731a0b688a1f1d0d-->
+        android:layout_gravity="fill"
+        android:fillViewport="true">
 
         <LinearLayout
+            android:id="@+id/add_receipt_form_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="fill_vertical"
             android:layout_margin="10dp"
-            android:background="@color/colorEceiptWhite"
             android:orientation="vertical">
 
             <LinearLayout
@@ -300,7 +290,7 @@
 
         </LinearLayout>
 
-    <!--</ScrollView>-->
+    </ScrollView>
 </LinearLayout>
 
-<!--</ScrollView>-->
+    <!--</ScrollView>-->
