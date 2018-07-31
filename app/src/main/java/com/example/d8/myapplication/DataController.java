@@ -1029,4 +1029,15 @@ public class DataController {
         boolean d0 = f0.delete();
         Log.w("Delete Check", "File deleted: " + dir + "/myFile " + d0);
     }
+
+    public static Receipt getReceiptByIdThroughInfomationClass(String receiptId){
+        Receipt receipt = new Receipt();
+        for(int i = 0; i<Information.receipts.size(); i++){
+            if(Information.receipts.get(i).getReceipId().equals(receiptId)){
+                receipt = Information.receipts.get(i);
+            }
+        }
+
+        return receipt;
+    }
 }

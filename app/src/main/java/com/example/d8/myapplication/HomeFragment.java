@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private String daysSpinnerSelect = "All receipts";
     private String cateSpinnerSelect = "All receipts";
-    ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
+    ArrayList<Receipt> receiptsSelect = Information.receipts;
 
 
     private OnFragmentInteractionListener mListener;
@@ -176,8 +176,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Toast.makeText(getBaseContext(),""+position, Toast.LENGTH_LONG).show();
+                String receiptSelectId = receiptsSelect.get(position).getReceipId();
                 Intent intent = new Intent(v.getContext(),ReceiptDetailActivity.class);
-                intent.putExtra("RECEIPTINDEX", Integer.toString(position));
+                intent.putExtra("RECEIPTINDEX", receiptSelectId);
                 startActivity(intent);
             }
         });
@@ -291,7 +292,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Log.i("ITEMSAaaaaa", item);
                 double totalCost = 0.0;
 
-                ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
+                //ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
                 receiptsSelect = loadReceiptObjToListviewByDaysAndCate(Information.receipts,daysSpinnerSelect,cateSpinnerSelect);
                 loadReceiptObjToListView(receiptsSelect);
 //                if(item.equals("All receipts")){
@@ -348,7 +349,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 cateSpinnerSelect = item;
 
                 double totalCost = 0.0;
-                ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
+                //ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
                 receiptsSelect = loadReceiptObjToListviewByDaysAndCate(Information.receipts,daysSpinnerSelect,cateSpinnerSelect);
                 loadReceiptObjToListView(receiptsSelect);
                 for(Receipt receipt:receiptsSelect){

@@ -50,13 +50,14 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         String index = getIntent().getStringExtra("RECEIPTINDEX");
         Log.i("INDEX", index);
 
-        Receipt receipt = Information.receipts.get(Integer.parseInt(index));
+        //Receipt receipt = Information.receipts.get(Integer.parseInt(index));
+        Receipt receipt = DataController.getReceiptByIdThroughInfomationClass(index);
 
         String receiptIDStr_ = receipt.getReceipId();
 
         listView = (ListView)findViewById(R.id.item_list_view);
         date = (TextView)findViewById(R.id.receipt_detail_date) ;
-        date.setText(Information.receipts.get(Integer.parseInt(index)).getDate());
+        date.setText(receipt.getDate());
 
         businessName = (TextView)findViewById(R.id.business_name_in_receipt_detail);
         businessName.setText(receipt.getBusinessName());
