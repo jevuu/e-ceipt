@@ -87,7 +87,7 @@ function get_receipt($conn, $ID, $option){
 
 //Add Item
 function add_item($conn, $userID, $receiptID, $itemName, $itemDesc, $itemPrice){
-	echo "add_item called! '$userID', " . $receiptID . ", '$itemName', '$itemDesc', " . $itemPrice . "\n";
+	//echo "add_item called! '$userID', " . $receiptID . ", '$itemName', '$itemDesc', " . $itemPrice . "\n";
 	
 	$q = "INSERT INTO items (`userID`, `name`, `description`, `price`) VALUES ('$userID', '$itemName', '$itemDesc', " . $itemPrice . ")";
 	mysqli_query($conn, $q);
@@ -107,8 +107,10 @@ function add_item($conn, $userID, $receiptID, $itemName, $itemDesc, $itemPrice){
 		$q = "SELECT * FROM items WHERE itemID = " . $itemID;
 		$result = mysqli_query($conn, $q);
 		$row = mysqli_fetch_row($result);
-		echo "Item new   : " . $row[0] . ", " . $row[1] . ", " . $row[2] . ", " . $row[3] . ", " . $row[4] . "\n\n";
+		//echo "Item new   : " . $row[0] . ", " . $row[1] . ", " . $row[2] . ", " . $row[3] . ", " . $row[4] . "\n\n";
 	}
+	
+	return $itemID;
 }
 
 //Edit Item
@@ -117,7 +119,7 @@ function edit_item($conn, $userID, $receiptID, $itemID, $itemName, $itemDesc, $i
 	$q = "SELECT * FROM items WHERE itemID = " . $itemID;
 	$result = mysqli_query($conn, $q);
 	$row = mysqli_fetch_row($result);
-	echo "Item before: " . $row[0] . ", " . $row[1] . ", " . $row[2] . ", " . $row[3] . ", " . $row[4] . "\n";
+	//echo "Item before: " . $row[0] . ", " . $row[1] . ", " . $row[2] . ", " . $row[3] . ", " . $row[4] . "\n";
 
 	$qItemsString = "UPDATE items SET name = '$itemName', description = '$itemDesc', price = '$itemPrice' WHERE itemID = " . $itemID;
 	mysqli_query($conn, $qItemsString);
@@ -126,6 +128,6 @@ function edit_item($conn, $userID, $receiptID, $itemID, $itemName, $itemDesc, $i
 	$q = "SELECT * FROM items WHERE itemID = " . $itemID;
 	$result = mysqli_query($conn, $q);
 	$row = mysqli_fetch_row($result);
-	echo "Item after : " . $row[0] . ", " . $row[1] . ", " . $row[2] . ", " . $row[3] . ", " . $row[4] . "\n\n";
+	//echo "Item after : " . $row[0] . ", " . $row[1] . ", " . $row[2] . ", " . $row[3] . ", " . $row[4] . "\n\n";
 }
 ?>
