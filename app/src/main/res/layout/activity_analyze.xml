@@ -50,7 +50,6 @@
                 android:paddingVertical="5dp"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:textColor="@color/colorEceiptWhite"
                 android:text="Use receipts from: "/>
             <Spinner
                 android:id="@+id/analyze_day_spinner"
@@ -73,11 +72,10 @@
                 android:background="@android:color/holo_blue_dark" />
 
             <LinearLayout
-                android:id="@+id/layout_item_list"
+                android:id="@+id/analyze_layout_item_list"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
-                android:background="@color/colorEceiptWhite"
                 android:orientation="vertical">
 
                 <View

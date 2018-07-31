@@ -57,15 +57,15 @@ public class MenuActivity extends AppCompatActivity
         ft.replace(R.id.fragmentContent, fragment);
         ft.commit();
 
-        //Get data from shared preferences
-        SharedPreferences settings=getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        int bc=settings.getInt("Background_Color", Color.parseColor("#ffffff"));//Default white color
-        FrameLayout layoutContent=findViewById(R.id.fragmentContent);
-        layoutContent.setBackgroundColor(bc);
-
-        int themeDayNight=settings.getInt("Theme_DayNight", AppCompatDelegate.MODE_NIGHT_NO);//Default day
-        AppCompatDelegate.setDefaultNightMode(themeDayNight);
-        //recreate();
+//        //Get data from shared preferences
+//        SharedPreferences settings=getSharedPreferences("Settings", Context.MODE_PRIVATE);
+//        int bc=settings.getInt("Background_Color", Color.parseColor("#ffffff"));//Default white color
+//        FrameLayout layoutContent=findViewById(R.id.fragmentContent);
+//        layoutContent.setBackgroundColor(bc);
+//
+//        int themeDayNight=settings.getInt("Theme_DayNight", AppCompatDelegate.MODE_NIGHT_NO);//Default day
+//        AppCompatDelegate.setDefaultNightMode(themeDayNight);
+//        //recreate();
 
 
 
@@ -78,6 +78,19 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        //Get data from shared preferences
+        SharedPreferences settings=getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        if(settings!=null) {
+            int themeDayNight=settings.getInt("Theme_DayNight", AppCompatDelegate.MODE_NIGHT_NO);//Default day
+            AppCompatDelegate.setDefaultNightMode(themeDayNight);
+
+            //Set window's background color from saved settings.
+            int bc = settings.getInt("Background_Color", Color.CYAN);//Default white color
+            if(themeDayNight==AppCompatDelegate.MODE_NIGHT_YES)
+                bc=Color.GRAY;
+            navigationView.setBackgroundColor(bc);
+        }
 
     }
 
@@ -94,11 +107,17 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
+        try {
+            getMenuInflater().inflate(R.menu.menu, menu);
 
-        fetchProfile();
+            fetchProfile();
 
-        return true;
+            return true;
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
     }
     //Sets the Email, username, and picture of the current user in the nav bar.
     // 6/10/2018
@@ -166,16 +185,18 @@ public class MenuActivity extends AppCompatActivity
             fragmentClass = AboutFragment.class;
         } else if (id == R.id.nav_logout) {
 
-            //When signing out, this prevents the user 'backing' into the app.
-            //finish() destroys the home activity as well.
-            Information.authUser.signOut();
-            Intent myIntent = new Intent(this, MainActivity.class);
-            myIntent.putExtra("finish", true);
-            myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                    Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(myIntent);
-            finish();
+//            //When signing out, this prevents the user 'backing' into the app.
+//            //finish() destroys the home activity as well.
+//            Information.authUser.signOut();
+//            Intent myIntent = new Intent(this, MainActivity.class);
+//            myIntent.putExtra("finish", true);
+//            myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+//                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
+//                    Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(myIntent);
+//            finish();
+
+            logout();
             return true;
 
         }
@@ -197,6 +218,20 @@ public class MenuActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void logout(){
+        //When signing out, this prevents the user 'backing' into the app.
+        //finish() destroys the home activity as well.
+        Intent myIntent = new Intent(this, MainActivity.class);
+        myIntent.putExtra("finish", true);
+        myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(myIntent);
+        finish();
+    }
+
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 

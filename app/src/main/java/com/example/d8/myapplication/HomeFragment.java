@@ -2,12 +2,15 @@ package com.example.d8.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.icu.text.IDNA;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -180,6 +183,33 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
             }
         });
+
+        try {
+            //Set main layout background
+            SharedPreferences settings = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+            int themeDayNight=settings.getInt("Theme_DayNight", AppCompatDelegate.MODE_NIGHT_NO);//Default day
+
+            int bc = settings.getInt("Background_Color", Color.CYAN);//Default white color
+            LinearLayout constrainLayout2=(LinearLayout)v.findViewById(R.id.home_list_layout);
+            if(themeDayNight== AppCompatDelegate.MODE_NIGHT_YES){
+                bc=Color.BLACK;
+                constrainLayout2.setBackgroundColor(Color.BLACK);
+            }else {
+                constrainLayout2.setBackgroundColor(Color.WHITE);
+            }
+
+            LinearLayout constrainLayout=(LinearLayout)v.findViewById(R.id.main_layout);
+            GradientDrawable gd=(GradientDrawable)constrainLayout.getBackground();
+            gd.setColors(new int[]{Color.WHITE,bc});
+            constrainLayout.setBackground(gd);
+
+
+
+        }
+        catch(Exception ex)
+        {
+
+        }
 
         //Initialize categories to user
         Information.categories.clear();
@@ -368,7 +398,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             txt.setTextSize(18);
             txt.setGravity(Gravity.LEFT);
             txt.setText(asr.get(position));
-            txt.setTextColor(Color.parseColor("#000000"));
             return  txt;
         }
 
@@ -377,9 +406,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             txt.setGravity(Gravity.CENTER);
             txt.setPadding(16, 16, 16, 16);
             txt.setTextSize(16);
-            //txt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down, 0);
             txt.setText(asr.get(i));
-            txt.setTextColor(Color.parseColor("#000000"));
             return  txt;
         }
     }

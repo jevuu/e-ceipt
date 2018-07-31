@@ -3,6 +3,7 @@ package com.example.d8.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -13,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.transition.TransitionManager;
@@ -93,7 +95,32 @@ public class MainActivity extends AppCompatActivity {
         pb = findViewById(R.id.pb3);
         bg = findViewById(R.id.cln);
         GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
-        backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptDeepRed),getResources().getColor(R.color.colorEceiptOrange) });
+
+
+        try {
+            //Set Day-Night theme
+            SharedPreferences settings = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+            int themeDayNight=settings.getInt("Theme_DayNight", AppCompatDelegate.MODE_NIGHT_NO);//Default day
+            AppCompatDelegate.setDefaultNightMode(themeDayNight);
+
+            //Set window's background color from saved settings.
+            int bc = settings.getInt("Background_Color", Color.CYAN);//Default white color
+            if(themeDayNight==AppCompatDelegate.MODE_NIGHT_YES){
+                bc=Color.BLACK;
+                ConstraintLayout constrainLayout=(ConstraintLayout)findViewById(R.id.cln);
+                GradientDrawable gd=(GradientDrawable)constrainLayout.getBackground();
+                gd.setColors(new int[]{Color.WHITE,bc});
+                constrainLayout.setBackground(gd);
+            }
+
+
+        }
+        catch(Exception ex)
+        {
+
+        }
+
+
 
 
 

@@ -16,10 +16,10 @@
 
 
     <LinearLayout
+        android:id="@+id/add_receipt_form_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-        android:background="@color/colorEceiptWhite"
         android:orientation="vertical">
 
         <LinearLayout

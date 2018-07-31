@@ -4,6 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/main_layout"
         android:orientation="vertical"
         android:background="@drawable/gradient_splash"
         tools:context="com.example.d8.myapplication.HomeActivity">
@@ -29,8 +30,7 @@
                 <Spinner
                     android:id="@+id/spinner_daysnum_select"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown" />
+                    android:layout_height="wrap_content" />
 
                 <View
                     android:layout_width="match_parent"
@@ -73,10 +73,10 @@
             android:background="@android:color/holo_blue_dark" />
 
         <LinearLayout
+            android:id="@+id/home_list_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorEceiptWhite"
             android:orientation="vertical">
 
             <View
@@ -100,7 +100,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".30"
                     android:text="@string/company_name_label_in_listview"
-                    android:textColor="@color/colorEceiptDarkGrey"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -109,7 +108,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".20"
                     android:text="@string/date_label_in_listview"
-                    android:textColor="@color/colorEceiptDarkGrey"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -119,7 +117,6 @@
                     android:layout_weight=".25"
                     android:gravity="end"
                     android:text="@string/receipt_cost_label_in_listview"
-                    android:textColor="@color/colorEceiptDarkGrey"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
