@@ -53,23 +53,10 @@ public class AddReceiptOptionActivity extends AppCompatActivity {
         realReceiptOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//<<<<<<< HEAD
-//
-////                Intent addRecpt = new Intent(getBaseContext(), OCRTextActivity.class);
-////                startActivity(addRecpt);
-//
-//                Intent goOCR = new Intent(getBaseContext(), OCRActivity.class);
-//                startActivity(goOCR);
-//
-//=======
+
                 Intent addRecpt = new Intent(getBaseContext(), OCRTextActivity.class);
-                addRecpt.putExtra("finish", true);
-                addRecpt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(addRecpt);
-                finish();
-//>>>>>>> d26349acaa677ee84a080729b32f3eed8a781aee
+
 
             }
         });

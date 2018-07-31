@@ -73,6 +73,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
     int mMonth;
     int mDay;
 
+    boolean ocrFlag = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +93,7 @@ public class AddReceiptFormActivity extends AppCompatActivity {
         //This accepts an OCR scanned receipt and pre-loads it into the form.
         Receipt ocrScn = (Receipt)(getIntent().getSerializableExtra("ocrScan"));
       if(ocrScn != null) {
+          ocrFlag = true;
           for (int i = 0; i < ocrScn.getItems().size(); i++) {
 
               System.out.println(ocrScn.getItembyId(i).getItemName() + "--" + ocrScn.getItembyId(i).getItemPrice());
@@ -159,17 +161,19 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                 newItems.add(item);
                 loadItemObjToListview(newItems);
 
-                double totalCostInDouble = 0.0;
-                for(int i=0; i<newItems.size(); i++){
-                    if(newItems.get(i).getItemPrice()==-1){
-                        totalCostInDouble+=0.00;
-                    }else{
-                        totalCostInDouble+=newItems.get(i).getItemPrice();
-                    }
+                if(!ocrFlag) {
+                    double totalCostInDouble = 0.0;
+                    for (int i = 0; i < newItems.size(); i++) {
+                        if (newItems.get(i).getItemPrice() == -1) {
+                            totalCostInDouble += 0.00;
+                        } else {
+                            totalCostInDouble += newItems.get(i).getItemPrice();
+                        }
 
+                    }
+                    String.format("%.2f", totalCostInDouble);
+                    totalCost.setText(String.format("%.2f", totalCostInDouble));
                 }
-                String.format("%.2f",totalCostInDouble);
-                totalCost.setText(String.format("%.2f",totalCostInDouble));
                 itemName.setText("");
                 itemPrice.setText("");
             }
@@ -198,13 +202,14 @@ public class AddReceiptFormActivity extends AppCompatActivity {
                                     }
 
                                 }
+                                if(!ocrFlag)
                                 totalCost.setText(Double.toString(totalCostInDouble));
 
                                 dialog.dismiss();
                             }
                         });
 
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancle", new DialogInterface.OnClickListener() {
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -227,9 +232,9 @@ public class AddReceiptFormActivity extends AppCompatActivity {
 
                 //validate text input empty
                 if(company.equals("")){
-                    Toast.makeText(getApplicationContext(),"Please enter your name!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Please enter a Business Name",Toast.LENGTH_LONG).show();
                 }else if(tCost.equals("")){
-                    Toast.makeText(getApplicationContext(),"Please enter receipt's total cost!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Please enter the total cost!",Toast.LENGTH_LONG).show();
                 }else{
                     //all input are validated!
                     String receiptsJSON = DataController.readJsonFile(USERRECEIPTFILENAME, AddReceiptFormActivity.this);

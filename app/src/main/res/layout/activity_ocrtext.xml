@@ -52,184 +52,206 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        android:orientation="vertical"
-        android:padding="2dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0">
-
-        <TextView
-            android:id="@+id/ocr_instruc6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:drawableStart="@android:drawable/ic_dialog_alert"
-            android:padding="0dp"
-            android:text="@string/ocr_tip1"
-            android:textAlignment="center"
-            android:textColor="@color/colorEceiptWhite"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/ocr_instruc4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:drawableStart="@android:drawable/ic_dialog_alert"
-            android:padding="0dp"
-            android:text="@string/ocr_tip3"
-            android:textAlignment="center"
-            android:textColor="@color/colorEceiptWhite"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/ocr_instruc5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:drawableStart="@android:drawable/ic_dialog_alert"
-            android:padding="0dp"
-            android:text="@string/ocr_tip2"
-            android:textAlignment="center"
-            android:textColor="@color/colorEceiptWhite"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/ocr_instrucPic"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            app:srcCompat="@drawable/prj666_img" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="2dp">
-
-            <EditText
-                android:id="@+id/ocr_itemName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/ocr_itmName"
-                android:inputType="textPersonName"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/ocr_itemPrice"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:ems="10"
-                android:hint="@string/ocr_itmPrice"
-                android:inputType="numberDecimal"
-                android:textAlignment="center"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:indeterminate="true"
-            android:indeterminateTint="@android:color/holo_red_dark"
-            android:max="100"
-            tools:visibility="visible" />
+            android:layout_margin="0dp"
+            android:orientation="vertical"
+            android:padding="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/ocr_backItem"
+            <TextView
+                android:id="@+id/ocr_instruc6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+                android:layout_margin="0dp"
+                android:drawableStart="@android:drawable/ic_dialog_alert"
+                android:padding="0dp"
+                android:text="@string/ocr_tip1"
+                android:textAlignment="center"
+                android:textColor="@color/colorEceiptWhite"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ocr_instruc4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:drawableStart="@android:drawable/ic_dialog_alert"
+                android:padding="0dp"
+                android:text="@string/ocr_tip3"
+                android:textAlignment="center"
+                android:textColor="@color/colorEceiptWhite"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ocr_instruc5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:drawableStart="@android:drawable/ic_dialog_alert"
+                android:padding="0dp"
+                android:text="@string/ocr_tip2"
+                android:textAlignment="center"
+                android:textColor="@color/colorEceiptWhite"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ocr_instrucPic"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                app:srcCompat="@drawable/prj666_img" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="2dp">
+
+                <EditText
+                    android:id="@+id/ocr_itemName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/ocr_itmName"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/ocr_itemPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:ems="10"
+                    android:hint="@string/ocr_itmPrice"
+                    android:inputType="numberDecimal"
+                    android:textAlignment="center"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@android:color/holo_red_dark"
+                android:max="100"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/ocr_backItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_orange_light"
+                    android:drawableBottom="@android:drawable/ic_media_rew"
+                    android:text="@string/ocr_backItemtxt"
+                    android:textColor="@color/colorEceiptWhite"
+                    android:textStyle="bold"
+                    android:theme="?attr/buttonStyleSmall" />
+
+                <Button
+                    android:id="@+id/ocr_deleteItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_red_light"
+                    android:drawableBottom="@android:drawable/ic_delete"
+                    android:text="@string/ocr_deleteItem"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorEceiptWhite"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/ocr_fwdItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorEceiptLightBlue"
+                    android:drawableBottom="@android:drawable/ic_media_ff"
+                    android:text="@string/ocr_fwdItemtxt"
+                    android:textColor="@color/colorEceiptWhite"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ocr_instruc2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:drawableStart="@android:drawable/ic_dialog_alert"
+                android:padding="0dp"
+                android:text="@string/ocr_scanInst"
+                android:textAlignment="center"
+                android:textColor="@color/colorEceiptWhite"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/ocr_finish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_green_light"
+                android:drawableStart="@android:drawable/ic_menu_save"
+                android:text="@string/ocr_complete"
+                android:textColor="@color/colorEceiptWhite"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/ocr_executePhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/holo_green_light"
+                android:drawableStart="@drawable/ic_main_logo"
+                android:paddingStart="8dp"
+                android:text="@string/ocr_TakePhoto"
+                android:textColor="@color/colorEceiptWhite"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/ocr_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@android:color/holo_orange_light"
-                android:drawableBottom="@android:drawable/ic_media_rew"
-                android:text="@string/ocr_backItemtxt"
-                android:textColor="@color/colorEceiptWhite"
-                android:textStyle="bold"
-                android:theme="?attr/buttonStyleSmall" />
-
-            <Button
-                android:id="@+id/ocr_deleteItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_red_light"
-                android:drawableBottom="@android:drawable/ic_delete"
-                android:text="@string/ocr_deleteItem"
-                android:textAlignment="center"
-                android:textColor="@color/colorEceiptWhite"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/ocr_fwdItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:background="@color/colorEceiptLightBlue"
-                android:drawableBottom="@android:drawable/ic_media_ff"
-                android:text="@string/ocr_fwdItemtxt"
-                android:textColor="@color/colorEceiptWhite"
-                android:textStyle="bold" />
+                android:drawableStart="@android:drawable/ic_menu_close_clear_cancel"
+                android:text="@string/ocr_cancel"
+                android:textColor="@color/colorEceiptWhite" />
 
         </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/ocr_instruc2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:drawableStart="@android:drawable/ic_dialog_alert"
-            android:padding="0dp"
-            android:text="@string/ocr_scanInst"
-            android:textAlignment="center"
-            android:textColor="@color/colorEceiptWhite"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/ocr_finish"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@android:color/holo_green_light"
-            android:drawableStart="@android:drawable/ic_menu_save"
-            android:text="@string/ocr_complete"
-            android:textColor="@color/colorEceiptWhite" />
-
-        <Button
-            android:id="@+id/ocr_executePhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/btn_roundcorner"
-            android:drawableStart="@drawable/ic_main_logo"
-            android:paddingStart="8dp"
-            android:text="@string/ocr_TakePhoto"
-            android:textColor="@color/colorEceiptWhite"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
