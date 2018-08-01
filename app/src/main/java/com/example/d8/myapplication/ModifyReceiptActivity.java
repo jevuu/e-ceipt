@@ -70,7 +70,7 @@ public class ModifyReceiptActivity extends AppCompatActivity {
         String index = getIntent().getStringExtra("RECEIPTINDEX");
         Log.i("INDEX", index);
 
-        receipt  = Information.receipts.get(Integer.parseInt(index));
+        receipt  = DataController.getReceiptByIdThroughInfomationClass(index);
 
 
 
