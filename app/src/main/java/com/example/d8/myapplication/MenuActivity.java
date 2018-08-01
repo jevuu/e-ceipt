@@ -124,7 +124,8 @@ public class MenuActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent goOption = new Intent(this, AddReceiptOptionActivity.class);
+            startActivity(goOption);
         }
         return super.onOptionsItemSelected(item);
     }
