@@ -14,7 +14,7 @@ if($userID == ""){
 	$userID = "regTest";
 }
 if($name == ""){
-	$name = "registration test";
+	$name = "E-ceipt user";
 }
 if($email == ""){
 	$email = "regTest@example.com";
