@@ -177,6 +177,7 @@ public class MenuActivity extends AppCompatActivity
     public void logout(){
         //When signing out, this prevents the user 'backing' into the app.
         //finish() destroys the home activity as well.
+        Information.authUser.signOut();
         Intent myIntent = new Intent(this, MainActivity.class);
         myIntent.putExtra("finish", true);
         myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
@@ -184,6 +185,7 @@ public class MenuActivity extends AppCompatActivity
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(myIntent);
         finish();
+
     }
 
     @Override

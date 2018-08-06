@@ -133,24 +133,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         bg = getActivity().findViewById(R.id.lnb);
         SharedPreferences colorBg  = getActivity().getSharedPreferences("Settings", MODE_PRIVATE);
         int colourBg = colorBg.getInt("bg", 0);
+
         if(colourBg != 0 && bg != null){
             GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
             backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
         }
-
         initCustomSpinner();
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                //Toast.makeText(getActivity().getBaseContext(),""+position, Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(getActivity(),ReceiptDetailActivity.class);
-//                intent.putExtra("RECEIPTINDEX", Integer.toString(position));
-//                startActivity(intent);
-//            }
-//        });
-
-
         listView = (ListView)v.findViewById(R.id.receipts_list_view);
         receiptsTotalCost = (TextView)v.findViewById(R.id.total_cost) ;
 
@@ -192,24 +180,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             LinearLayout constrainLayout2=(LinearLayout)v.findViewById(R.id.home_list_layout);
             if(themeDayNight== AppCompatDelegate.MODE_NIGHT_YES){
                 bc=Color.BLACK;
-                constrainLayout2.setBackgroundColor(Color.BLACK);
+                constrainLayout2.setBackgroundColor(bc);
             }else {
-                constrainLayout2.setBackgroundColor(Color.WHITE);
+                constrainLayout2.setBackgroundColor(getResources().getColor(R.color.colorEceiptWhite));
             }
 
             LinearLayout constrainLayout=(LinearLayout)v.findViewById(R.id.main_layout);
             GradientDrawable gd=(GradientDrawable)constrainLayout.getBackground();
-            gd.setColors(new int[]{Color.WHITE,bc});
+            gd.setColors(new int[]{getResources().getColor(R.color.colorEceiptBlue),bc});
             constrainLayout.setBackground(gd);
-
-
 
         }
         catch(Exception ex)
         {
 
         }
-
         //Initialize categories to user
         Information.categories.clear();
         Information.categories.add("All categories");
@@ -226,12 +211,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
             }
         }
-
         initCustomSpinner();
-
-        //test
-        //DataController.deleteLocalFile(getActivity());
-
         return v;
     }
 

@@ -107,10 +107,10 @@ public class MainActivity extends AppCompatActivity {
             //Set window's background color from saved settings.
             int bc = settings.getInt("Background_Color", Color.CYAN);//Default white color
             if(themeDayNight==AppCompatDelegate.MODE_NIGHT_YES){
-                bc=Color.BLACK;
+                bc=getResources().getColor(R.color.colorEceiptDarkGrey);
                 ConstraintLayout constrainLayout=(ConstraintLayout)findViewById(R.id.cln);
                 GradientDrawable gd=(GradientDrawable)constrainLayout.getBackground();
-                gd.setColors(new int[]{Color.WHITE,bc});
+                gd.setColors(new int[]{getResources().getColor(R.color.colorEceiptBlue),bc});
                 constrainLayout.setBackground(gd);
             }
 
@@ -120,10 +120,6 @@ public class MainActivity extends AppCompatActivity {
         {
 
         }
-
-
-
-
 
         if (!isTaskRoot()) {
             finish();
@@ -172,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 //        int colourBg = colorBg.getInt("bg", 0);
 //        if(colourBg != 0){
 //            GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
-//            backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
+//            backgroundGradient.setColors(new int[] getResources().getColor(R.color.colorEceiptBlue),colourBg}{);
 //        }
 
         if (savedInstanceState != null) {
