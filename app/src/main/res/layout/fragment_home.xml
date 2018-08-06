@@ -9,7 +9,7 @@
     <include
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/some_id_if_needed"
+        android:id="@+id/main_layout"
         layout="@layout/activity_home" />
 
 </FrameLayout>

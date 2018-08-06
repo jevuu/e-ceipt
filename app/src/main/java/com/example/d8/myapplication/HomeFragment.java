@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -67,7 +68,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private String daysSpinnerSelect = "All receipts";
     private String cateSpinnerSelect = "All receipts";
-    ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
+    ArrayList<Receipt> receiptsSelect = Information.receipts;
 
 
     private OnFragmentInteractionListener mListener;
@@ -132,24 +133,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         bg = getActivity().findViewById(R.id.lnb);
         SharedPreferences colorBg  = getActivity().getSharedPreferences("Settings", MODE_PRIVATE);
         int colourBg = colorBg.getInt("bg", 0);
+
         if(colourBg != 0 && bg != null){
             GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
             backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
         }
-
         initCustomSpinner();
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                //Toast.makeText(getActivity().getBaseContext(),""+position, Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(getActivity(),ReceiptDetailActivity.class);
-//                intent.putExtra("RECEIPTINDEX", Integer.toString(position));
-//                startActivity(intent);
-//            }
-//        });
-
-
         listView = (ListView)v.findViewById(R.id.receipts_list_view);
         receiptsTotalCost = (TextView)v.findViewById(R.id.total_cost) ;
 
@@ -175,12 +164,37 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Toast.makeText(getBaseContext(),""+position, Toast.LENGTH_LONG).show();
+                String receiptSelectId = receiptsSelect.get(position).getReceipId();
                 Intent intent = new Intent(v.getContext(),ReceiptDetailActivity.class);
-                intent.putExtra("RECEIPTINDEX", Integer.toString(position));
+                intent.putExtra("RECEIPTINDEX", receiptSelectId);
                 startActivity(intent);
             }
         });
 
+        try {
+            //Set main layout background
+            SharedPreferences settings = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+            int themeDayNight=settings.getInt("Theme_DayNight", AppCompatDelegate.MODE_NIGHT_NO);//Default day
+
+            int bc = settings.getInt("Background_Color", Color.CYAN);//Default white color
+            LinearLayout constrainLayout2=(LinearLayout)v.findViewById(R.id.home_list_layout);
+            if(themeDayNight== AppCompatDelegate.MODE_NIGHT_YES){
+                bc=Color.BLACK;
+                constrainLayout2.setBackgroundColor(bc);
+            }else {
+                constrainLayout2.setBackgroundColor(getResources().getColor(R.color.colorEceiptWhite));
+            }
+
+            LinearLayout constrainLayout=(LinearLayout)v.findViewById(R.id.main_layout);
+            GradientDrawable gd=(GradientDrawable)constrainLayout.getBackground();
+            gd.setColors(new int[]{getResources().getColor(R.color.colorEceiptBlue),bc});
+            constrainLayout.setBackground(gd);
+
+        }
+        catch(Exception ex)
+        {
+
+        }
         //Initialize categories to user
         Information.categories.clear();
         Information.categories.add("All categories");
@@ -197,12 +211,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
             }
         }
-
         initCustomSpinner();
-
-        //test
-        //DataController.deleteLocalFile(getActivity());
-
         return v;
     }
 
@@ -263,7 +272,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Log.i("ITEMSAaaaaa", item);
                 double totalCost = 0.0;
 
-                ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
+                //ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
                 receiptsSelect = loadReceiptObjToListviewByDaysAndCate(Information.receipts,daysSpinnerSelect,cateSpinnerSelect);
                 loadReceiptObjToListView(receiptsSelect);
 //                if(item.equals("All receipts")){
@@ -320,7 +329,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 cateSpinnerSelect = item;
 
                 double totalCost = 0.0;
-                ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
+                //ArrayList<Receipt> receiptsSelect = new ArrayList<Receipt>();
                 receiptsSelect = loadReceiptObjToListviewByDaysAndCate(Information.receipts,daysSpinnerSelect,cateSpinnerSelect);
                 loadReceiptObjToListView(receiptsSelect);
                 for(Receipt receipt:receiptsSelect){
@@ -370,7 +379,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             txt.setTextSize(18);
             txt.setGravity(Gravity.LEFT);
             txt.setText(asr.get(position));
-            txt.setTextColor(Color.parseColor("#000000"));
             return  txt;
         }
 
@@ -379,9 +387,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             txt.setGravity(Gravity.CENTER);
             txt.setPadding(16, 16, 16, 16);
             txt.setTextSize(16);
-            //txt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down, 0);
             txt.setText(asr.get(i));
-            txt.setTextColor(Color.parseColor("#000000"));
             return  txt;
         }
     }

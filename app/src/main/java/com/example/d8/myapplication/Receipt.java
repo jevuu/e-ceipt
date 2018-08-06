@@ -97,6 +97,8 @@ public class Receipt implements Serializable {
     }
 
 
+
+
 //<<<<<<< HEAD
 //    public class Item{
 //=======

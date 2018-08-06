@@ -1,11 +1,16 @@
 package com.example.d8.myapplication;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -69,6 +74,24 @@ public class AnalyzeActivity extends AppCompatActivity {
         });
 
         //displayAnalysis();
+
+        try {
+            //Set main layout background
+            SharedPreferences settings = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+            int themeDayNight=settings.getInt("Theme_DayNight", AppCompatDelegate.MODE_NIGHT_NO);//Default day
+
+            LinearLayout li=(LinearLayout)findViewById(R.id.analyze_layout_item_list);
+            if(themeDayNight== AppCompatDelegate.MODE_NIGHT_YES){
+                li.setBackgroundColor(Color.BLACK);
+            }else {
+                li.setBackgroundColor(Color.WHITE);
+            }
+
+        }
+        catch(Exception ex)
+        {
+
+        }
     }
 
     //Calculates and displays the analysis

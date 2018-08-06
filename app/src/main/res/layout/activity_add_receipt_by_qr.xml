@@ -53,11 +53,10 @@
                 android:background="@android:color/holo_blue_dark" />
 
             <LinearLayout
-                android:id="@+id/add_receipt_layout_item_list"
+                android:id="@+id/add_receipt_qr_item_list"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
-                android:background="@color/colorEceiptWhite"
                 android:orientation="vertical">
 
                 <View

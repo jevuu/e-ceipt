@@ -5,9 +5,11 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,6 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -67,7 +70,7 @@ public class ModifyReceiptActivity extends AppCompatActivity {
         String index = getIntent().getStringExtra("RECEIPTINDEX");
         Log.i("INDEX", index);
 
-        receipt  = Information.receipts.get(Integer.parseInt(index));
+        receipt  = DataController.getReceiptByIdThroughInfomationClass(index);
 
 
 
@@ -279,6 +282,24 @@ public class ModifyReceiptActivity extends AppCompatActivity {
 
         initCustomSpinner();
 
+        try {
+            //Set main layout background
+            SharedPreferences settings = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+            int themeDayNight=settings.getInt("Theme_DayNight", AppCompatDelegate.MODE_NIGHT_NO);//Default day
+
+            LinearLayout li=(LinearLayout)findViewById(R.id.modify_body);
+            if(themeDayNight== AppCompatDelegate.MODE_NIGHT_YES){
+                li.setBackgroundColor(Color.BLACK);
+            }else {
+                li.setBackgroundColor(Color.WHITE);
+            }
+
+        }
+        catch(Exception ex)
+        {
+
+        }
+
     }
 
     String getCurrentDate(){
@@ -435,7 +456,6 @@ public class ModifyReceiptActivity extends AppCompatActivity {
             txt.setTextSize(18);
             txt.setGravity(Gravity.LEFT);
             txt.setText(asr.get(position));
-            txt.setTextColor(Color.parseColor("#000000"));
             return  txt;
         }
 
@@ -444,9 +464,7 @@ public class ModifyReceiptActivity extends AppCompatActivity {
             txt.setGravity(Gravity.CENTER);
             txt.setPadding(16, 16, 16, 16);
             txt.setTextSize(16);
-            //txt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down, 0);
             txt.setText(asr.get(i));
-            txt.setTextColor(Color.parseColor("#000000"));
             return  txt;
         }
     }

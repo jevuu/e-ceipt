@@ -1,16 +1,22 @@
 package com.example.d8.myapplication;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.icu.text.IDNA;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,13 +50,14 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         String index = getIntent().getStringExtra("RECEIPTINDEX");
         Log.i("INDEX", index);
 
-        Receipt receipt = Information.receipts.get(Integer.parseInt(index));
+        //Receipt receipt = Information.receipts.get(Integer.parseInt(index));
+        Receipt receipt = DataController.getReceiptByIdThroughInfomationClass(index);
 
         String receiptIDStr_ = receipt.getReceipId();
 
         listView = (ListView)findViewById(R.id.item_list_view);
         date = (TextView)findViewById(R.id.receipt_detail_date) ;
-        date.setText(Information.receipts.get(Integer.parseInt(index)).getDate());
+        date.setText(receipt.getDate());
 
         businessName = (TextView)findViewById(R.id.business_name_in_receipt_detail);
         businessName.setText(receipt.getBusinessName());
@@ -192,6 +199,25 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 
         totalCostInDouble = receipt.getTotalCost();
         total_cost.setText(Double.toString(totalCostInDouble));
+
+
+        try {
+            //Set main layout background
+            SharedPreferences settings = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+            int themeDayNight=settings.getInt("Theme_DayNight", AppCompatDelegate.MODE_NIGHT_NO);//Default day
+
+            LinearLayout constrainLayout2=(LinearLayout)findViewById(R.id.layout_item_list);
+            if(themeDayNight== AppCompatDelegate.MODE_NIGHT_YES){
+                constrainLayout2.setBackgroundColor(Color.BLACK);
+            }else {
+                constrainLayout2.setBackgroundColor(Color.WHITE);
+            }
+
+        }
+        catch(Exception ex)
+        {
+
+        }
 
     }
 
