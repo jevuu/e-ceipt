@@ -164,12 +164,12 @@ public class MainActivity extends AppCompatActivity {
             userET.setText(remember);
         }
 
-//        SharedPreferences colorBg  = getSharedPreferences("Settings", MODE_PRIVATE);
-//        int colourBg = colorBg.getInt("bg", 0);
-//        if(colourBg != 0){
-//            GradientDrawable backgroundGradient = (GradientDrawable)bg.getBackground();
-//            backgroundGradient.setColors(new int[] getResources().getColor(R.color.colorEceiptBlue),colourBg}{);
-//        }
+        SharedPreferences colorBg  = getSharedPreferences("Settings", MODE_PRIVATE);
+        int colourBg = colorBg.getInt("bg", 0);
+        if(colourBg != 0){
+           backgroundGradient = (GradientDrawable)bg.getBackground();
+           backgroundGradient.setColors(new int[] {getResources().getColor(R.color.colorEceiptBlue),colourBg});
+        }
 
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);

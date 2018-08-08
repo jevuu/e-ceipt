@@ -176,7 +176,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             SharedPreferences settings = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
             int themeDayNight=settings.getInt("Theme_DayNight", AppCompatDelegate.MODE_NIGHT_NO);//Default day
 
-            int bc = settings.getInt("Background_Color", Color.CYAN);//Default white color
+            int bc = settings.getInt("bg", 0);//Default white color
             LinearLayout constrainLayout2=(LinearLayout)v.findViewById(R.id.home_list_layout);
             if(themeDayNight== AppCompatDelegate.MODE_NIGHT_YES){
                 bc=Color.BLACK;
