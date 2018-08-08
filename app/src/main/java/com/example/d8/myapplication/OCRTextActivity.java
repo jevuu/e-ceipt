@@ -54,6 +54,7 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
     Button ocr_del;
     Button ocr_scn;
     Button ocr_fin;
+    Button ocr_can;
     ProgressBar pb;
 
     TextView ocr_instLow;
@@ -85,6 +86,10 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
         ocr_fwd.setOnClickListener(this);
         ocr_fwd.setEnabled(false);
         ocr_fin = (Button) findViewById(R.id.ocr_finish);
+        ocr_can = (Button) findViewById(R.id.ocr_cancel);
+        ocr_can.setOnClickListener(this);
+
+
         ocr_fin.setOnClickListener(this);
         ocr_fin.setEnabled(false);
         ocr_fin.setVisibility(View.GONE);
@@ -163,8 +168,8 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
                 Intent myIntent = new Intent(this, AddReceiptFormActivity.class);
                 myIntent.putExtra("ocrScan", nx);
                 myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(myIntent);
                 break;
             case R.id.ocr_executePhoto:
@@ -174,8 +179,12 @@ public class OCRTextActivity extends AppCompatActivity implements View.OnClickLi
 
             case R.id.ocr_cancel:
                 Intent myIntent2 = new Intent(this, MenuActivity.class);
+                myIntent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(myIntent2);
-
+                finish();
+                break;
             default:
                 break;
         }
